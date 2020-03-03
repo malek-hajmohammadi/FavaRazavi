@@ -1,0 +1,32 @@
+<style>
+.my_grad1 {
+    background: #ffffff;
+    background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5));
+    background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+    background: -o-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+    background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0);
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #0078ae;
+    padding: 3px 6px;
+}
+
+.myfldset {
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 7px;
+    border-color: #0078AE;
+    font-family: b nazanin;
+}
+
+.myfldset legend {
+    color: #0078AE;
+    text-shadow: 0px 2px #ccc;
+    font-family: b nazanin;
+    font-size: 16px;
+    text-align: right;
+}
+</style>
