@@ -1,19 +1,20 @@
 this.jcode = function (self) {
     self.birthdayDates = new Array();
+    self.showMode="unknown";
     self.listGuest = [[] ];
     self.showTable = function (stage) {
-        var mode="unknown";
+
         switch(stage){
             case "1":
-                mode="edit";
+                self.showMode="edit";
                 break;
             case "2":
-                mode="readOnly";
+                self.showMode="readOnly";
                 break;
 
         }
         var html = Utils.fastAjax('WorkFlowAjaxFunc', 'showGuestList_mehmansara', {
-            docId: FormView.docID,mode:mode
+            docId: FormView.docID,mode:self.showMode
         });
         return html;
     };
@@ -26,13 +27,21 @@ this.jcode = function (self) {
     };
     self.setDateobjectOne = function (index) {
         var dateValue = $jq('#birthdayDate_' + index + ' input').val(); /*FormView.allFieldsContianer[0].birthdayDates[i] = new EditCalendar('FormOnly.allFieldsContianer[0].birthdayDates[' + i + ']', 'startDate_' + i);*/
-        FormView.myForm.getItemByName('Field_15').birthdayDates[index] = new EditCalendar('FormView.myForm.getItemByName(\'Field_15\').birthdayDates[' + index + ']', 'birthdayDate_' + index);
+        FormView.myForm.getItemByName('Field_21').birthdayDates[index] = new EditCalendar('FormView.myForm.getItemByName(\'Field_21\').birthdayDates[' + index + ']', 'birthdayDate_' + index);
         if (dateValue.length > 7) {
-            FormView.myForm.getItemByName('Field_15').birthdayDates[index].setDate(dateValue);
+            FormView.myForm.getItemByName('Field_21').birthdayDates[index].setDate(dateValue);
+            if(self.showMode=="readOnly")
+                self.setReadOnly(index);
         }
     };
+    self.setReadOnly=function(index){
+        $jq('.guestTable>tbody>tr.tableRow_' +index + '>td>div[id^=\'birthday\']>span>input').attr('readonly',true);
+        $jq('.guestTable>tbody>tr.tableRow_' + index + '>td>div[id^=\'birthday\']>span>img').attr('onClick',"");
+
+
+    };
     self.setDateobjectOneForAdd=function(index){
-        FormView.myForm.getItemByName('Field_15').birthdayDates[index] = new EditCalendar('FormView.myForm.getItemByName(\'Field_15\').birthdayDates[' + index + ']', 'birthdayDate_' + index);
+        FormView.myForm.getItemByName('Field_21').birthdayDates[index] = new EditCalendar('FormView.myForm.getItemByName(\'Field_21\').birthdayDates[' + index + ']', 'birthdayDate_' + index);
 
     };
     self.addRow = function () {
@@ -45,7 +54,7 @@ this.jcode = function (self) {
             '<td class="sabeghe"  style="padding: 2px;border: 1px solid #ccc;"><span style=\"color:#004ba0;font-weight: bold;\">نامشخص</span></td>' +
             '<td class="rezvan" style="padding: 2px;border: 1px solid #ccc;"><span style=\"color:#004ba0;font-weight: bold;\">نامشخص</span></td>' +
             '<td class="ahval" style="padding: 2px;border: 1px solid #ccc;"><span style=\"color:#004ba0;font-weight: bold;\">نامشخص</span></td>' +
-            '<td id="tdDeleteImg" style="padding: 2px;background-color: #c5e1a5;border: 1px solid #ccc;">' + '<img onclick="FormView.myForm.getItemByName(\'Field_15\').removeRow(' + (lengthTable - 1) + ')"' + 'src="gfx/toolbar/cross.png" style="cursor: pointer;"/>' + '</td>' +
+            '<td id="tdDeleteImg" style="padding: 2px;background-color: #c5e1a5;border: 1px solid #ccc;">' + '<img onclick="FormView.myForm.getItemByName(\'Field_21\').removeRow(' + (lengthTable - 1) + ')"' + 'src="gfx/toolbar/cross.png" style="cursor: pointer;"/>' + '</td>' +
             '</tr>';
         $jq('.guestTable > tbody > tr').eq(lengthTable - 2).after(newTr);
         self.setDateobjectOneForAdd(lengthTable - 1);
@@ -63,7 +72,7 @@ this.jcode = function (self) {
             $jq('.guestTable >tbody > tr').eq(i).attr('class', 'tableRow_' + i);
             $jq('.guestTable>tbody>tr.tableRow_' + i + '>td>div[id^=\'birthday\']').attr('id', 'birthdayDate_' + i);
             $jq('.guestTable>tbody>tr.tableRow_' + i + '>td:first ').html(i);
-            $jq('.guestTable>tbody>tr.tableRow_' + i + '>td#tdDeleteImg>img').attr('onclick', 'FormView.myForm.getItemByName(\'Field_15\').removeRow(' + i + ')');
+            $jq('.guestTable>tbody>tr.tableRow_' + i + '>td#tdDeleteImg>img').attr('onclick', 'FormView.myForm.getItemByName(\'Field_21\').removeRow(' + i + ')');
         }
 
     };
@@ -79,9 +88,9 @@ this.jcode = function (self) {
         در غیر این صورت همه رو یکی شیفت بده بالا
          */
         for (var i = index+1; i <= lengthTable - 2; i++) {
-            FormView.myForm.getItemByName('Field_15').birthdayDates[i] = new EditCalendar('FormView.myForm.getItemByName(\'Field_15\').birthdayDates[' + i + ']', 'birthdayDate_' + i);
-            var dateValue = FormView.myForm.getItemByName('Field_15').birthdayDates[i+1].getDate();
-            FormView.myForm.getItemByName('Field_15').birthdayDates[i].setDate(dateValue);
+            FormView.myForm.getItemByName('Field_21').birthdayDates[i] = new EditCalendar('FormView.myForm.getItemByName(\'Field_21\').birthdayDates[' + i + ']', 'birthdayDate_' + i);
+            var dateValue = FormView.myForm.getItemByName('Field_21').birthdayDates[i+1].getDate();
+            FormView.myForm.getItemByName('Field_21').birthdayDates[i].setDate(dateValue);
         }
 
     };
@@ -111,7 +120,7 @@ this.jcode = function (self) {
             self.listGuest[count][0] = $jq('.guestTable>tbody>tr.tableRow_' + count + ' input[name=\'firstName\'] ').val();
             self.listGuest[count][1] = $jq('.guestTable>tbody>tr.tableRow_' + count + ' input[name=\'lastName\'] ').val();
             self.listGuest[count][2] = $jq('.guestTable>tbody>tr.tableRow_' + count + ' input[name=\'nationalCode\'] ').val();
-            self.listGuest[count][3] = FormView.myForm.getItemByName('Field_15').birthdayDates[count].getDate();
+            self.listGuest[count][3] = FormView.myForm.getItemByName('Field_21').birthdayDates[count].getDate();
             var temp;
             temp = $jq('.guestTable>tbody>tr.tableRow_' + count + '>td.sabeghe>span ').html();
             self.listGuest[count][4] = self.alter(temp);

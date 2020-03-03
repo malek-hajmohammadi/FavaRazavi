@@ -3,9 +3,9 @@ listener = function (event) {
     var waitInterval = setInterval(function () {
         if (FormView && FormView.myForm) {
            var stage=FormView.myForm.getItemByName('Field_16').getData();
-            html = FormView.myForm.getItemByName('Field_15').showTable(stage);
+            html = FormView.myForm.getItemByName('Field_21').showTable(stage);
             $jq('.tableGuest').html(html);
-            FormView.myForm.getItemByName('Field_15').setDateObjectAll();
+            FormView.myForm.getItemByName('Field_21').setDateObjectAll();
 
 
             /*برای نمایش مانده سهمیه*/

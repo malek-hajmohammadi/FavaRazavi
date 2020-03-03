@@ -534,7 +534,7 @@ foreach ($dataInTable as $value) {
     else
         $value[6] = $naMotabr;
 
-$alternative=($mode=='edit')?"<td id=\"tdDeleteImg\" style=\"padding: 2px;background - color: #c5e1a5;border: 1px solid #ccc;\"><img onclick=\"FormView.myForm.getItemByName('Field_15').removeRow($radif)\"
+$alternative=($mode=='edit')?"<td id=\"tdDeleteImg\" style=\"padding: 2px;background - color: #c5e1a5;border: 1px solid #ccc;\"><img onclick=\"FormView.myForm.getItemByName('Field_21').removeRow($radif)\"
                                                               src = \"gfx/toolbar/cross.png\" style = \"cursor: pointer;\" />
         </td >":"";
     $alternativeReadOnly=($mode=='edit')?" ":"readonly";
@@ -559,12 +559,12 @@ if ($mode == 'edit')
     $btnTableTag = "
 <tr>
         <td style=\"padding: 2px;padding-top: 7px;
-    padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\"><img onclick=\"FormView.myForm.getItemByName('Field_15').addRow()\"
+    padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\"><img onclick=\"FormView.myForm.getItemByName('Field_21').addRow()\"
                                                               src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/></td>
          <td style=\"padding: 2px;padding-top: 7px;
     padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\">
    ذخیره و بررسی
-    <img onclick=\"FormView.myForm.getItemByName('Field_15').saveGustList()\"
+    <img onclick=\"FormView.myForm.getItemByName('Field_21').saveGustList()\"
                                                               src=\"gfx/toolbar/out-regletters.png\" style=\"cursor: pointer;\"/>
                                                               </a>
                                                               </td> ";
