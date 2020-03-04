@@ -21,7 +21,7 @@ this.jcode = function (self) {
 
     self.setDateObjectAll = function () {
         var lengthTable = $jq('.guestTable > tbody > tr').length;
-        for (var i = 1; i <= lengthTable - 1; i++) {
+        for (var i = 1; i <= lengthTable - 2; i++) {
             self.setDateobjectOne(i);
         }
     };

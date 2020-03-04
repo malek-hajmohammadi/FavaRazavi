@@ -242,6 +242,33 @@ for ($count = 1; $count < count($listGuest); $count++) {
 
 
 //////////////////////////////////////پایان نعیم رضوان/////////////////////////////////////////
+/////////////////////////////////////////تست سابقه استفاده///////////////////////////////////////
+for ($count = 1; $count < count($listGuest); $count++) {
+    $nationalCode = $listGuest[$count][2];
+
+    $stateSabegheh = 1;  /*1:na moshakhas 2:mojaz 3:na motaber*/
+
+
+
+    $sql = " select count(*) as num
+FROM dm_datastoretable_1099 detail
+INNER JOIN dm_datastoretable_1098 master on(detail.MasterID = master.DocID)
+where master.Field_16>1 and detail.Field_2='$nationalCode' ";
+
+
+
+
+    $count = $db->executeScalar($sql);
+
+    if ($count > 0)
+        $stateSabegheh = 3;
+
+    $sql = "update dm_datastoretable_1099 set Field_4 =$stateNaiim where  Field_2 = '$nationalCode'";
+    $db->execute($sql);
+
+}
+/// //////////////////////////////////////////پایان سابقه استفاده/////////////////////////////////
+
 $messageString = "ذخیره سازی و بررسی اطلاعات مهمان ها با موفقيت انجام شد" . "<br/>";
 $message = RavanResult::raiseSuccess($messageString);
 //$message = RavanResult::raiseSuccess($t);
