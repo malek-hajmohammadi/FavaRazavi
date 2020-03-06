@@ -542,9 +542,9 @@ $alternative=($mode=='edit' || $mode=='justDelete')?"<td id=\"tdDeleteImg\" styl
     
     <tr class=\"tableRow_$radif\">
         <td style=\"padding: 2px;border: 1px solid #ccc;\">$radif</td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"> <input $alternativeReadOnly type=\"text\" name=\"firstName\" value=\"$value[0]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly type=\"text\" name=\"lastName\" value=\"$value[1]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly class=\"RavanMask\" data-inputmask-regex=\"([0-9]){10}\" dir=\"ltr\"  type=\"text\" name=\"nationalCode\" value=\"$value[2]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"> <input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" type=\"text\" name=\"firstName\" value=\"$value[0]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" type=\"text\" name=\"lastName\" value=\"$value[1]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" class=\"RavanMask\" data-inputmask-regex=\"([0-9]){10}\" dir=\"ltr\"  type=\"text\" name=\"nationalCode\" value=\"$value[2]\"></td>
         <td style=\"padding: 2px;border: 1px solid #ccc;\">
             <div id=\"birthdayDate_" . $radif . "\"><input type=\"text\" name=\"birthDay\" value=\"$value[3]\"></div>
         </td>

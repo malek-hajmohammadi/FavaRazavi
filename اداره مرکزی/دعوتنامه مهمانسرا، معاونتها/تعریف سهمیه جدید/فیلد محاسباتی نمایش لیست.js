@@ -65,8 +65,8 @@ this.jcode = function (self) {
             '        <td style="padding: 2px;border: 1px solid #ccc;"><div id="endDate_' + itemIndex + '"></div></td>\n' + ' ' +
             '        <td style="padding: 2px;border: 1px solid #ccc;" >\n' + ' <input onInput="FormOnly.allFieldsContianer[0].changeSum(' + itemIndex + ')" class="f-input" type="text" id="shareCount_' + itemIndex + '" value="" style="width: 40px;font-size: 16px;" />\n' + ' </td>\n' +
             '        <td style="padding: 2px;border: 1px solid #ccc;" >\n' + ' <input onInput="FormOnly.allFieldsContianer[0].changeSumTashrif('+ itemIndex + ')" class="f-input" type="text" id="shareCountTashrif_' + itemIndex + '" value="" style="width: 40px;font-size: 16px;" />\n' + ' </td>\n' +
-            '        <td readonly style="padding: 2px;border: 1px solid #ccc;" >\n' + ' <input class="f-input" type="text" id="shareCountSum_' + itemIndex + '" value="" style="width: 40px;font-size: 16px;" />\n' + ' </td>\n' +
-            '        <td readonly style="padding: 2px;border: 1px solid #ccc;" >\n' + ' <input class="f-input" type="text" id="shareCountTashrifSum_' + itemIndex + '" value="" style="width: 40px;font-size: 16px;" />\n' + ' </td>\n' +
+            '        <td  style="padding: 2px;border: 1px solid #ccc;" >\n' + ' <input readonly class="f-input" type="text" id="shareCountSum_' + itemIndex + '" value="" style="width: 40px;font-size: 16px;background-color: gainsboro;" />\n' + ' </td>\n' +
+            '        <td  style="padding: 2px;border: 1px solid #ccc;" >\n' + ' <input  readonly class="f-input" type="text" id="shareCountTashrifSum_' + itemIndex + '" value="" style="width: 40px;font-size: 16px;background-color: gainsboro;" />\n' + ' </td>\n' +
             '        <td class="remove" style="padding: 2px;border: 1px solid #ccc;"><img onclick="FormOnly.allFieldsContianer[0].removeRow(' + itemIndex + ')" src="gfx/toolbar/cross.png" style="cursor: pointer;" /></td>\n' +
             '    </tr>';
         $jq('.itemsTable > tbody').append(htmlTr);
