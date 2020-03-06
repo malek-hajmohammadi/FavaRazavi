@@ -9,7 +9,10 @@ this.jcode = function (self) {
                 self.showMode="edit";
                 break;
             case "2":
-                self.showMode="readOnly";
+                self.showMode="justDelete";
+                break;
+            case "4":
+                self.showMode="justDelete";
                 break;
 
         }
@@ -20,8 +23,9 @@ this.jcode = function (self) {
     };
 
     self.setDateObjectAll = function () {
-        var lengthTable = $jq('.guestTable > tbody > tr').length;
-        for (var i = 1; i <= lengthTable - 2; i++) {
+        var lengthTable =  $jq('.guestTable>tbody>tr[class^=\'tab\']').length;
+
+        for (var i = 1; i <= lengthTable ; i++) {
             self.setDateobjectOne(i);
         }
     };
@@ -67,8 +71,9 @@ this.jcode = function (self) {
 
     };
     self.updateFrontAfterRemove=function(){
-        var lengthTable = $jq('.guestTable > tbody > tr').length;
-        for (var i = 1; i <= lengthTable - 2; i++) {
+
+        var lengthTable =  $jq('.guestTable>tbody>tr[class^=\'tab\']').length;
+        for (var i = 1; i <= lengthTable ; i++) {
             $jq('.guestTable >tbody > tr').eq(i).attr('class', 'tableRow_' + i);
             $jq('.guestTable>tbody>tr.tableRow_' + i + '>td>div[id^=\'birthday\']').attr('id', 'birthdayDate_' + i);
             $jq('.guestTable>tbody>tr.tableRow_' + i + '>td:first ').html(i);
@@ -77,7 +82,7 @@ this.jcode = function (self) {
 
     };
     self.updateObjectsAfterRemove=function(index){
-        var lengthTable = $jq('.guestTable > tbody > tr').length;
+        var lengthTable =  $jq('.guestTable>tbody>tr[class^=\'tab\']').length;
         /*
 
         اگر خط آخر باشه لازم نیست کاری بکنیم
@@ -87,7 +92,7 @@ this.jcode = function (self) {
         /*
         در غیر این صورت همه رو یکی شیفت بده بالا
          */
-        for (var i = index+1; i <= lengthTable - 2; i++) {
+        for (var i = index+1; i <= lengthTable; i++) {
             FormView.myForm.getItemByName('Field_21').birthdayDates[i] = new EditCalendar('FormView.myForm.getItemByName(\'Field_21\').birthdayDates[' + i + ']', 'birthdayDate_' + i);
             var dateValue = FormView.myForm.getItemByName('Field_21').birthdayDates[i+1].getDate();
             FormView.myForm.getItemByName('Field_21').birthdayDates[i].setDate(dateValue);
@@ -108,14 +113,20 @@ this.jcode = function (self) {
         }
 
     }; /*  console.log(self.listGuest);*/
+    self.saveGustListLevel4=function(){
+        self.fillGuestList();
+        var tem = JSON.stringify(self.listGuest);
+        var result = Utils.fastAjax('WorkFlowAjaxFunc', 'saveLevel4_mehmansara', {docId:FormView.docID,listGuest:tem});
+    };
 
     self.fillGuestList = function () {
         /*  1:barrasi 2:mojaz 3:na motaber*/
-        var length = $jq('.guestTable > tbody > tr').length;
+
+        var length =  $jq('.guestTable>tbody>tr[class^=\'tab\']').length;
         self.listGuest = [
             []
         ];
-        for (var count = 1; count <= length - 2; count++) {
+        for (var count = 1; count <= length; count++) {
             self.listGuest[count] = [];
             self.listGuest[count][0] = $jq('.guestTable>tbody>tr.tableRow_' + count + ' input[name=\'firstName\'] ').val();
             self.listGuest[count][1] = $jq('.guestTable>tbody>tr.tableRow_' + count + ' input[name=\'lastName\'] ').val();
@@ -186,8 +197,9 @@ this.jcode = function (self) {
         if (temp === 'نامعتبر') return 3;
     };
     self.inProcess = function () {
-        var length = $jq('.guestTable > tbody > tr').length;
-        for (var count = 1; count <= length - 2; count++) {
+
+        var length =  $jq('.guestTable>tbody>tr[class^=\'tab\']').length;
+        for (var count = 1; count <= length; count++) {
             var thinking="<img  src=\"gfx/toolbar/sort.png\" />";
             $jq('.guestTable>tbody>tr.tableRow_' + count + '>td.sabeghe>span ').html(thinking);
             $jq('.guestTable>tbody>tr.tableRow_' + count + '>td.rezvan>span ').html(thinking);

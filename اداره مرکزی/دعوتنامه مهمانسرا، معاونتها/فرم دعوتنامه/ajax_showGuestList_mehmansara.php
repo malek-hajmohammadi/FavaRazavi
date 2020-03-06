@@ -486,7 +486,7 @@ $style = "<style>
 $defineTableTag = "<table width=\"100%\" class=\"f-table guestTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"rtl\">
     <tbody>";
 
-if($mode=='edit')
+if($mode=='edit'|| $mode=='justDelete')
     $alternative="<th width=\"3%\" style=\"padding: 2px; \">حذف</th>";
 else
     $alternative="";
@@ -534,7 +534,7 @@ foreach ($dataInTable as $value) {
     else
         $value[6] = $naMotabr;
 
-$alternative=($mode=='edit')?"<td id=\"tdDeleteImg\" style=\"padding: 2px;background - color: #c5e1a5;border: 1px solid #ccc;\"><img onclick=\"FormView.myForm.getItemByName('Field_21').removeRow($radif)\"
+$alternative=($mode=='edit' || $mode=='justDelete')?"<td id=\"tdDeleteImg\" style=\"padding: 2px;background - color: #c5e1a5;border: 1px solid #ccc;\"><img onclick=\"FormView.myForm.getItemByName('Field_21').removeRow($radif)\"
                                                               src = \"gfx/toolbar/cross.png\" style = \"cursor: pointer;\" />
         </td >":"";
     $alternativeReadOnly=($mode=='edit')?" ":"readonly";
@@ -568,6 +568,17 @@ if ($mode == 'edit')
                                                               src=\"gfx/toolbar/out-regletters.png\" style=\"cursor: pointer;\"/>
                                                               </a>
                                                               </td> ";
+elseif($mode == 'justDelete')
+    $btnTableTag = "
+<tr>
+       
+         <td style=\"padding: 2px;padding-top: 7px;
+    padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\">
+   
+    <img onclick=\"FormView.myForm.getItemByName('Field_21').saveGustListLevel4()\"
+              src=\"gfx/toolbar/out-regletters.png\" style=\"cursor: pointer;\"/>
+                                                              </td>                                                           
+                                                               ";
 else
     $btnTableTag = "";
  $endTableTag = "                                                             

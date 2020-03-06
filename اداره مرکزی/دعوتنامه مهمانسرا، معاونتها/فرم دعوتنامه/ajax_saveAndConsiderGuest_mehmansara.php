@@ -258,12 +258,13 @@ where master.Field_16>1 and detail.Field_2='$nationalCode' ";
 
 
 
-    $count = $db->executeScalar($sql);
+    $num = $db->executeScalar($sql);
 
-    if ($count > 0)
+    if ($num > 0)
         $stateSabegheh = 3;
+    else $stateSabegheh=2;
 
-    $sql = "update dm_datastoretable_1099 set Field_4 =$stateNaiim where  Field_2 = '$nationalCode'";
+    $sql = "update dm_datastoretable_1099 set Field_4 =$stateSabegheh where  Field_2 = '$nationalCode'";
     $db->execute($sql);
 
 }
