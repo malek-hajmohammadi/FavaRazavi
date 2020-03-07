@@ -17,7 +17,7 @@ this.jcode = function (self) {
                 self.showMode="edit";
                 break;
             case "2":
-                self.showMode="justDelete";
+                self.showMode="readOnly";
                 break;
             case "4":
                 self.showMode="justDelete";

@@ -25,11 +25,20 @@ listener = function (event) {
                 'reptId': reptId
             });
 
-
-
             FormView.myForm.getItemByName('Field_7').setData(res);
 
             /*اتمام نمایش مانده از سهمیه*/
+            if(stage=="4"){
+                var lengthTable =  $jq('.guestTable>tbody>tr[class^=\'tab\']').length;
+                FormView.myForm.getItemByName('Field_11').setData(lengthTable); /*تعداد وعده تایید شده ، مقدار پیش فرض*/
+
+                var requiredDate=FormView.myForm.getItemByName('Field_4').getData();
+                FormView.myForm.getItemByName('Field_10').setData(requiredDate); /*فیلد تاریخ تایید شده بصورت پیش فرض*/
+
+                var vadeh=FormView.myForm.getItemByName('Field_3').getData();
+                FormView.myForm.getItemByName('Field_12').setData(vadeh);
+
+            }
 
 
         }
