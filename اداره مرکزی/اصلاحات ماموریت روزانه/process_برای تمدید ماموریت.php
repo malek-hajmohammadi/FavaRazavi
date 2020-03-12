@@ -19,6 +19,20 @@ class calssName
         $param=array('username'=>'8bfc0e61722d9e9c9bb2138cb359fef9','password'=>'085c734188fb09a96eba5d22893a44c4','objStr'=>$sql);
         $resp=$client->RunQuery($param);
 
+        if ($resp==0) {
+            $execution->setVariable('checkExtend', '0');
+            $referID = $execution->workflow->myForm->referInsID;
+            $newReferNote="تمدید ماموریت در تورال ثبت نشد ، لطفا به صورت دستی انجام دهید";
+            $sql = "UPDATE oa_doc_refer SET NoteDesc='".$newReferNote."' WHERE oa_doc_refer.ParentID = $referID limit 1";
+            $db = MySQLAdapter::getInstance();
+            $db->execute($sql);
+
+        }
+        else
+            $execution->setVariable('checkExtend', '1');
+
+
+
     }
 }
 

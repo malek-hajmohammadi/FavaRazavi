@@ -82,6 +82,8 @@ for ($count = 1; $count < count($listGuest); $count++) {
      */
 
 
+
+
     $user = "ravan-aqr";
     $pass = "587ebw667nwf989";
 
@@ -91,6 +93,11 @@ for ($count = 1; $count < count($listGuest); $count++) {
     curl_setopt($client, CURLOPT_HEADER, true);
     curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($client, CURLOPT_VERBOSE, true);
+
+    curl_setopt($client, CURLOPT_CONNECTTIMEOUT, 0);
+    curl_setopt($client, CURLOPT_TIMEOUT, 15); //timeout in seconds
+
+
 
     $params = array(
         "apiUser" => "$user",
@@ -109,56 +116,58 @@ for ($count = 1; $count < count($listGuest); $count++) {
     curl_close($client);
     $res = substr($res, $header_size);
 
-    $state = -1;
-    /*
-    $sql = "update dm_datastoretable_964 set Field_27 = 'national-code-verify=$httpcode' where  Field_6 = '$nationalCode'";
-    $db->execute($sql);
-    */
+    if($res) {
 
-    if (intval($httpcode == 200)) {
-        $state = true;
-        $stateAhval = 2;
-    } else {
-        switch ($httpcode) {
-            case 403:
-                $state = ' كابر يا كلمه عبور نامعتبر در اعتبار سنجي ';
-                $stateAhval = 1;
-                break;
-            case 412:
-                $state = ' اطلاعات نامعتبر ميباشد<br> لطفا اطلاعات خود را بررسي نماييد';
-                $stateAhval = 3;
-                break;
-            case 404:
-                $state = ' فردي با چنين مشخصات وجود ندارد<br>لطفا اطلاعات خود را بررسي نماييد';
-                $stateAhval = 3;
-                break;
-            case 409:
-                $state = ' اطلاعات شخص معتبر نيست<br> لطفا اطلاعات خود را بررسي نماييد';
-                $stateAhval = 3;
-                break;
-            case 410:
-                $state = ' با توجه به اطلاعات واصله اين فرد فوت كرده است';
-                $stateAhval = 3;
-                break;
-            case 403:
-                $state = ' عدم امكان برفراري ارتباط';
-                $stateAhval = 1;
-                break;
-            case 503:
-                $state = ' 503: موقتا امكان بررسي وجود ندارد';
-                $stateAhval = 1;
-                break;
-            case 500:
-                $state = ' 500: موقتا امكان بررسي وجود ندارد';
-                $stateAhval = 1;
-                break;
-            default:
-                $state = $httpcode;
-                $stateAhval = 1;
+        $state = -1;
+        /*
+        $sql = "update dm_datastoretable_964 set Field_27 = 'national-code-verify=$httpcode' where  Field_6 = '$nationalCode'";
+        $db->execute($sql);
+        */
+
+        if (intval($httpcode == 200)) {
+            $state = true;
+            $stateAhval = 2;
+        } else {
+            switch ($httpcode) {
+                case 403:
+                    $state = ' كابر يا كلمه عبور نامعتبر در اعتبار سنجي ';
+                    $stateAhval = 1;
+                    break;
+                case 412:
+                    $state = ' اطلاعات نامعتبر ميباشد<br> لطفا اطلاعات خود را بررسي نماييد';
+                    $stateAhval = 3;
+                    break;
+                case 404:
+                    $state = ' فردي با چنين مشخصات وجود ندارد<br>لطفا اطلاعات خود را بررسي نماييد';
+                    $stateAhval = 3;
+                    break;
+                case 409:
+                    $state = ' اطلاعات شخص معتبر نيست<br> لطفا اطلاعات خود را بررسي نماييد';
+                    $stateAhval = 3;
+                    break;
+                case 410:
+                    $state = ' با توجه به اطلاعات واصله اين فرد فوت كرده است';
+                    $stateAhval = 3;
+                    break;
+                case 403:
+                    $state = ' عدم امكان برفراري ارتباط';
+                    $stateAhval = 1;
+                    break;
+                case 503:
+                    $state = ' 503: موقتا امكان بررسي وجود ندارد';
+                    $stateAhval = 1;
+                    break;
+                case 500:
+                    $state = ' 500: موقتا امكان بررسي وجود ندارد';
+                    $stateAhval = 1;
+                    break;
+                default:
+                    $state = $httpcode;
+                    $stateAhval = 1;
+            }
         }
+        $messageString .= $state . "<br/>";
     }
-    $messageString .= $state . "<br/>";
-
     $sql = "update dm_datastoretable_1099 set Field_6 =$stateAhval where  Field_2 = '$nationalCode'";
     $db->execute($sql);
 
@@ -189,6 +198,11 @@ for ($count = 1; $count < count($listGuest); $count++) {
     curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($client, CURLOPT_VERBOSE, true);
 
+    curl_setopt($client, CURLOPT_CONNECTTIMEOUT, 0);
+    curl_setopt($client, CURLOPT_TIMEOUT, 15); //timeout in seconds
+
+
+
     $params = array(
         "apiUser" => "ravan.aqr.ir",
         "apiKey" => "D5hX(#N3*DhpfDR",
@@ -203,28 +217,31 @@ for ($count = 1; $count < count($listGuest); $count++) {
 
     $header_size = curl_getinfo($client, CURLINFO_HEADER_SIZE);
     $httpcode = curl_getinfo($client, CURLINFO_HTTP_CODE);
+
     curl_close($client);
 
-
-    $httpcode = intval($httpcode);
-    if ($httpcode >= 200 and $httpcode < 300) {
+    if($res) {
 
 
-        $res = substr($res, $header_size);
-        $res = json_decode($res, true);
-        $value = $res['reserveCount'];
+        $httpcode = intval($httpcode);
+        if ($httpcode >= 200 and $httpcode < 300) {
 
-        if ($value==0)
-        ///کل سابقه رو چک می کند که بعدا درستش کنم برای فقط چک کردن سه سال اخیر//
-          $stateNaiim=2;
+
+            $res = substr($res, $header_size);
+            $res = json_decode($res, true);
+            $value = $res['reserveCount'];
+
+            if ($value == 0)
+                ///کل سابقه رو چک می کند که بعدا درستش کنم برای فقط چک کردن سه سال اخیر//
+                $stateNaiim = 2;
+            else
+                $stateNaiim = 3;
+
+        } else if ($httpcode == 412)
+            $stateNaiim = 3;
         else
-          $stateNaiim=3;
-          
+            $stateNaiim = 1;
     }
-    else if($httpcode == 412)
-      $stateNaiim=3;
-    else
-      $stateNaiim=1;
 
 
     
