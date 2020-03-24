@@ -4,10 +4,9 @@ listener = function (event) {
         if (FormView && FormView.myForm) {
 
             FormView.myForm.getItemByName('Field_49').loadForm();
-
-
+            clearInterval(waitInterval);
 
         }
-        clearInterval(waitInterval);
-    }, 300);
+
+    }, 20);
 };
