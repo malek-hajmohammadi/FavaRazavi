@@ -31,4 +31,22 @@ this.jcode = function(self){
 
     };
 
+    self.updateMobileNumber=function(userId){
+
+        let mobile = Utils.fastAjax('WorkFlowAjaxFunc', 'f268getMobile',{userId:userId});
+        FormView.myForm.getItemByName('Field_53').setData(mobile);
+
+    };
+
+    self.loadForm=function(){
+        $jq('.userField input').focusout( function (e) {
+
+            let f=FormView.myForm.getItemByName('Field_24').getData();
+            let userId=f[0].uid;
+            FormView.myForm.getItemByName('Field_52').updateMobileNumber(userId)
+
+        });
+
+    };
+
 };
