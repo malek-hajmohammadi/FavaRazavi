@@ -21,17 +21,18 @@ class calssName
 
     public function execute(ezcWorkflowExecution $execution)
     {
-        filerecorder::recorder("MS_TRACE_start_P2", 1);
+        filerecorder::recorder("MS_TRACE_start_P2", 1); //این خط چه کار می کند//
 
-        $error_field = 'Field_47';
+        $error_field = 'Field_47';//پیام سیستم//
         $execution->workflow->myForm->setFieldValueByName($error_field, '');
-        $DocID = $execution->workflow->myForm->instanceID;
+        $DocID = $execution->workflow->myForm->instanceID;//آیا این خط همیشه docId رو می ده//
         $execution->setVariable('emp', '0');
         $execution->setVariable('accept', '1');
-        filerecorder::recorder("MS_TRACE_start_P22", 1);
+        filerecorder::recorder("MS_TRACE_start_P22", 1);//این خط به شکل دیگر دوباره امده//
 
 
         $s0 = 'SELECT `uid`,`rid` FROM `vi_form_userrole`  where docID="' . $DocID . '"  and `FieldName`="Field_24" ';
+        //این جدول vi_form_userrole چه جدولی است//
         $db = MySQLAdapter::getInstance();
         $db->executeSelect($s0);
         $user_row = $db->fetchAssoc();
@@ -167,7 +168,13 @@ rotbeNew_Title
             $execution->workflow->myForm->setFieldValueByName('Field_0', urldecode($row[5]));
             $execution->workflow->myForm->setFieldValueByName('Field_1', urldecode($row[4]));
             $execution->workflow->myForm->setFieldValueByName('Field_2', urldecode($row[3]));
+            /*
             $execution->workflow->myForm->setFieldValueByName('Field_25', urldecode($row[2]));
+            چون گفتند که فقط این فیلد گاهی مشکل داره  این رو کامنت کردم و مقدار رو از همینجا می گیرم
+            به جای انیکه از وب سرویس بگیرم
+            */
+            $execution->workflow->myForm->setFieldValueByName('Field_25', urldecode($emp));
+
             $execution->workflow->myForm->setFieldValueByName('Field_5', urldecode($row[6]));
             $execution->workflow->myForm->setFieldValueByName('Field_4', urldecode($row[10]) . ' _ ' . urldecode($row[11]));
             $execution->workflow->myForm->setFieldValueByName('Field_9', urldecode($row[15]));
