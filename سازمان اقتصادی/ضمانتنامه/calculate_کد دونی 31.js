@@ -38,12 +38,14 @@ this.jcode = function(self) {
 
     };
     self.changeBackgroundFieldSet = function () {
+        let defaultColor="#ffffff";
+        let activeColor="#c8e6c9";
 
-        $jq('.fieldSet1').css("background-color", "#ffffff");
-        $jq('.fieldSet2').css("background-color", "#ffffff");
-        $jq('.fieldSet3').css("background-color", "#ffffff");
-        $jq('.fieldSet4').css("background-color", "#ffffff");
-        $jq('.fieldSet5').css("background-color", "#ffffff");
+        $jq('.fieldSet1').css("background-color", defaultColor);
+        $jq('.fieldSet2').css("background-color", defaultColor);
+        $jq('.fieldSet3').css("background-color", defaultColor);
+        $jq('.fieldSet4').css("background-color",defaultColor);
+        $jq('.fieldSet5').css("background-color", defaultColor);
 
         let stage = 0;
         if (FormView.myForm.info.settings.nodeName) {
@@ -62,22 +64,22 @@ this.jcode = function(self) {
 
             switch (stage) {
                 case  1 :
-                    $jq('.fieldSet1').css("background-color", "#CCFF90 ");
+                    $jq('.fieldSet1').css("background-color", activeColor);
                     break;
                 case 2:
-                    $jq('.fieldSet2').css("background-color", "#CCFF90 ");
-                    $jq('.fieldSet3').css("background-color", "#CCFF90 ");
-                    $jq('.fieldSet4').css("background-color", "#CCFF90 ");
+                    $jq('.fieldSet2').css("background-color", activeColor);
+                    $jq('.fieldSet3').css("background-color",activeColor);
+                    $jq('.fieldSet4').css("background-color", activeColor);
 
                     break;
                 case 3:
-                    $jq('.fieldSet3').css("background-color", "#CCFF90 ");
+                    $jq('.fieldSet3').css("background-color",activeColor);
                     break;
                 case 4:
-                    $jq('.fieldSet4').css("background-color", "#CCFF90 ");
+                    $jq('.fieldSet4').css("background-color", activeColor);
                     break;
                 case 5:
-                    $jq('.fieldSet5').css("background-color", "#CCFF90 ");
+                    $jq('.fieldSet5').css("background-color", activeColor);
                     break;
             }
 
