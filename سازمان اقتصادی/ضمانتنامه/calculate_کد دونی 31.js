@@ -40,6 +40,7 @@ this.jcode = function(self) {
     self.changeBackgroundFieldSet = function () {
         let defaultColor="#ffffff";
         let activeColor="#c8e6c9";
+        let activeColorTitle="#98e6c9";
 
         $jq('.fieldSet1').css("background-color", defaultColor);
         $jq('.fieldSet2').css("background-color", defaultColor);
@@ -65,21 +66,29 @@ this.jcode = function(self) {
             switch (stage) {
                 case  1 :
                     $jq('.fieldSet1').css("background-color", activeColor);
+                    $jq('.fieldSet1 >legend').css("background-color", activeColorTitle);
+
                     break;
                 case 2:
                     $jq('.fieldSet2').css("background-color", activeColor);
+                    $jq('.fieldSet2 >legend').css("background-color", activeColorTitle);
                     $jq('.fieldSet3').css("background-color",activeColor);
+                    $jq('.fieldSet3 >legend').css("background-color", activeColorTitle);
                     $jq('.fieldSet4').css("background-color", activeColor);
+                    $jq('.fieldSet4 >legend').css("background-color", activeColorTitle);
 
                     break;
                 case 3:
                     $jq('.fieldSet3').css("background-color",activeColor);
+                    $jq('.fieldSet3 >legend').css("background-color", activeColorTitle);
                     break;
                 case 4:
                     $jq('.fieldSet4').css("background-color", activeColor);
+                    $jq('.fieldSet4 >legend').css("background-color", activeColorTitle);
                     break;
                 case 5:
                     $jq('.fieldSet5').css("background-color", activeColor);
+                    $jq('.fieldSet5 >legend').css("background-color", activeColorTitle);
                     break;
             }
 
@@ -119,7 +128,7 @@ this.jcode = function(self) {
         }
 
         var mandehTashilat = FormView.myForm.getItemByName('Field_11').getData();
-        if (mandehTashilat < 3) {
+        if (parseInt(mandehTashilat) <0) {
             Utils.showModalMessage('لطفا مانده تسهیلات را وارد کنید');
             return false;
         }
@@ -135,6 +144,13 @@ this.jcode = function(self) {
             Utils.showModalMessage('لطفا فیلد اظهارنظر سرپرست حسابداری را انتخاب کنید');
             return false;
         }
+
+        var saghfZemanatnameh=FormView.myForm.getItemByName('Field_12').getData();
+        if(parseInt(mablaghZemanatnameh)>parseInt(saghfZemanatnameh)){
+            Utils.showModalMessage('مبلغ ضمانتنامه از سقف مبلغ ضمانتنامه بیشتر است');
+            return false;
+        }
+
 
 
 
@@ -198,5 +214,22 @@ this.jcode = function(self) {
 
 
     };
+    self.changeSaghf=function(){
+       let saghfZemanatnameh=70/100*FormView.myForm.getItemByName('Field_10').getData()*FormView.myForm.getItemByName('Field_25').getData();
+
+/*
+        let st=saghfZemanatnameh.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+       FormView.myForm.getItemByName('Field_12').setData(st);
+*/
+        FormView.myForm.getItemByName('Field_12').setData(saghfZemanatnameh);
+
+    };
+
+    self.addChangeEvent=function(){
+        $jq('.taraznameh >input').keyup(function(){  FormView.myForm.getItemByName('Field_31').changeSaghf()});
+
+    };
+
+
 
 };

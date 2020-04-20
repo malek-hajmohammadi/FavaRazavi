@@ -13,7 +13,10 @@ class calssName
         $rid = $acm->getRoleID();
         $uid = $acm->getUserID();
 
-        $formDocID = $execution->workflow->myForm->instanceID; //شماره فرم رو برمی گردونه//
+
+
+
+       $formDocID = $execution->workflow->myForm->instanceID; //شماره فرم رو برمی گردونه//
         //یک الگوی نامه درست می کنم که عنوانش رو انگلیسی می گذارم و در کوئری پایین می گذارم//
 
         $sql = "SELECT * FROM `oa_per_letter_template` where Title = 'zemanatnamehBanki'";
@@ -55,14 +58,37 @@ class calssName
         $referID = DocRefer::ReferDraft($did, $uid, $rid, 0);//نامه صاحب پیدا می کند//
 
         TextContent::UpdateDocContent($did, $html);//متن نامه رو تغییر می ده//
-        Letter::SetSigners( $lid,  $uid.','.$rid);//محل امضاء درست می کند//
 
 
 
+        $receivers=array();
+        $receivers[0]=array();
+        $receivers[0]['type'] = 2; //
+
+        /*
+         * uid modir amel 1636
+         * rid 2296
+         */
+        $receivers[0]['uid'] = 1;
+        $receivers[0]['rid'] = 666;
+        $receivers[0]['oid'] = 'null';
+        $receivers[0]['oname'] = '';
+        $receivers[0]['iscc'] = 0;  ///رو نوشت باشه یه/
+        /// 1 باشه رونوشت
+        /// 0 ارجاع معمولی
+        DocRefer::ReferDocRefer($referID, $receivers, 'احتراما جهت استحضار');
+
+
+
+
+
+        // Letter::SetSigners( $lid,  $uid.','.$rid);//محل امضاء درست می کند////در اینجا نمی خواهیم نامه امضاء بشه//
         DocLink::AddLink(null, $did, $rid, $template['Subject'], 1, $formDocID, null); //پیرو می کنه به فرم//
 
        // Letter::Sign($referID);
         //نامه وقتی امضا می شه با این دستور مستقیم می ره به دبیرخانه//
+
+
 
 
     }
