@@ -144,12 +144,18 @@ this.jcode = function(self) {
             Utils.showModalMessage('لطفا فیلد اظهارنظر سرپرست حسابداری را انتخاب کنید');
             return false;
         }
+        else if (ezharNazarHesabdari == "2") {
+            Utils.showModalMessage('با توجه به اظهارنظر، تایید فرم و ارسال به مدیر مالی امکان پذیر نیست');
+            return false;
+        }
 
         var saghfZemanatnameh=FormView.myForm.getItemByName('Field_12').getData();
         if(parseInt(mablaghZemanatnameh)>parseInt(saghfZemanatnameh)){
             Utils.showModalMessage('مبلغ ضمانتنامه از سقف مبلغ ضمانتنامه بیشتر است');
             return false;
         }
+
+
 
 
 
@@ -202,11 +208,16 @@ this.jcode = function(self) {
 
 
     };
+
     self.btnConfirmMoavenat=function(){
 
         var ezharNazarMoavenat = FormView.myForm.getItemByName('Field_23').getData();
         if (ezharNazarMoavenat == "0") {
             Utils.showModalMessage('لطفا فیلد اظهارنظر معاونت را انتخاب کنید');
+            return false;
+        }
+        else if (ezharNazarMoavenat == "2") {
+            Utils.showModalMessage('با توجه به اظهار نظر انتخاب شده، تایید فرم و ارسال به مدیر عامل امکان پذیر نیست');
             return false;
         }
         return true;
