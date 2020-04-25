@@ -34,6 +34,68 @@ this.jcode = function(self) {
             Utils.showModalMessage('لطفا طول مدت بازپرداخت را وارد کنید');
             return false;
         }
+
+        var numMosavabehHeiatModireh = FormView.myForm.getItemByName('Field_27').getData().length;
+        if (numMosavabehHeiatModireh < 3) {
+            Utils.showModalMessage('لطفا شماره مصوبه هیئت مدیره را وارد کنید');
+            return false;
+        }
+
+        var dateMosavabehHeiatModireh = FormView.myForm.getItemByName('Field_28').getData().length;
+        if (dateMosavabehHeiatModireh < 8) {
+            Utils.showModalMessage('لطفا تاریخ مصوبه هیئت مدیره را به درستی وارد کنید');
+            return false;
+        }
+
+        var arzeshTaraznameh = FormView.myForm.getItemByName('Field_10').getData();
+        if (arzeshTaraznameh < 3) {
+            Utils.showModalMessage('لطفا ارزش دارایی شرکت (ترازنامه) را وارد کنید');
+            return false;
+        }
+
+        var mandehTashilat = FormView.myForm.getItemByName('Field_11').getData();
+        if (parseInt(mandehTashilat) <0) {
+            Utils.showModalMessage('لطفا مانده تسهیلات را وارد کنید');
+            return false;
+        }
+
+        var mablaghZemanatnameh = FormView.myForm.getItemByName('Field_15').getData();
+        if (mablaghZemanatnameh < 3) {
+            Utils.showModalMessage('لطفا مبلغ ضمانتنامه را وارد کنید');
+            return false;
+        }
+
+        var darsadSaham = FormView.myForm.getItemByName('Field_25').getData();
+        if (darsadSaham > 100 || darsadSaham<1 ) {
+            Utils.showModalMessage('درصد سهام آستان قدس باید عددی بین 1 تا 100 باشد');
+            return false;
+        }
+
+
+        var saghfZemanatnameh=FormView.myForm.getItemByName('Field_12').getData();
+        if(parseInt(mablaghZemanatnameh)>parseInt(saghfZemanatnameh)){
+            Utils.showModalMessage('مبلغ ضمانتنامه از سقف مبلغ ضمانتنامه بیشتر است');
+            return false;
+        }
+
+        var attachFile = FormView.myForm.getItemByName('Field_7').getData().length;
+        if (attachFile < 3) {
+            Utils.showModalMessage('لطفا اسناد مصوبه هیئت مدیره را  پیوست کنید');
+            return false;
+        }
+
+        var attachFile = FormView.myForm.getItemByName('Field_9').getData().length;
+        if (attachFile < 3) {
+            Utils.showModalMessage('لطفا جدول تسهیلات مالی را پیوست کنید');
+            return false;
+        }
+
+        var attachFile = FormView.myForm.getItemByName('Field_35').getData().length;
+        if (attachFile < 3) {
+            Utils.showModalMessage('لطفا  تصویر آخرین ترازنامه تایید شده را پیوست کنید');
+            return false;
+        }
+
         return true;
 
     };
@@ -60,7 +122,7 @@ this.jcode = function(self) {
             if (nodeName == 'مدیر-حسابرسی-و-مجامع' || nodeName2 == 'مدیر-حسابرسی-و-مجامع') stage = 2;
             if (nodeName == 'مسئول-انتظامی' || nodeName2 == 'مسئول-انتظامی') stage = 3;
             if (nodeName == 'مسئول-صندوق' || nodeName2 == 'مسئول-صندوق') stage = 4;
-            if (nodeName == 'معاونت-شرکتها' || nodeName2 == 'معاونت-شرکتها') stage = 5;
+            if (nodeName == 'حسابداری-نهایی' || nodeName2 == 'حسابداری-نهایی') stage = 5;
 
 
             switch (stage) {
@@ -72,10 +134,7 @@ this.jcode = function(self) {
                 case 2:
                     $jq('.fieldSet2').css("background-color", activeColor);
                     $jq('.fieldSet2 >legend').css("background-color", activeColorTitle);
-                    $jq('.fieldSet3').css("background-color",activeColor);
-                    $jq('.fieldSet3 >legend').css("background-color", activeColorTitle);
-                    $jq('.fieldSet4').css("background-color", activeColor);
-                    $jq('.fieldSet4 >legend').css("background-color", activeColorTitle);
+
 
                     break;
                 case 3:
@@ -99,45 +158,24 @@ this.jcode = function(self) {
     self.btnConfirmHesabdariFirst=function(){
         var tikMosavabehHeiatModireh = FormView.myForm.getItemByName('Field_6').getData();
         if (tikMosavabehHeiatModireh == false) {
-            Utils.showModalMessage('لطفا مصوبه هیئت مدیره را پیوست کنید');
+            Utils.showModalMessage('لطفا مصوبه هیئت مدیره را تایید نمایید');
             return false;
         }
 
-        var numMosavabehHeiatModireh = FormView.myForm.getItemByName('Field_27').getData().length;
-        if (numMosavabehHeiatModireh < 3) {
-            Utils.showModalMessage('لطفا شماره مصوبه هیئت مدیره را وارد کنید');
-            return false;
-        }
-
-        var dateMosavabehHeiatModireh = FormView.myForm.getItemByName('Field_28').getData().length;
-        if (dateMosavabehHeiatModireh < 8) {
-            Utils.showModalMessage('لطفا تاریخ مصوبه هیئت مدیره را به درستی وارد کنید');
-            return false;
-        }
 
         var tikJadvalTashilatMali = FormView.myForm.getItemByName('Field_8').getData();
         if (tikJadvalTashilatMali == false) {
-            Utils.showModalMessage('لطفا جدول تسهیلات مالی شرکت را پیوست کنید');
+            Utils.showModalMessage('لطفا جدول تسهیلات مالی شرکت را تایید نمایید');
             return false;
         }
 
-        var arzeshTaraznameh = FormView.myForm.getItemByName('Field_10').getData();
-        if (arzeshTaraznameh < 3) {
-            Utils.showModalMessage('لطفا ارزش دارایی شرکت (ترازنامه) را وارد کنید');
+        var tikTaraznameh = FormView.myForm.getItemByName('Field_36').getData();
+        if (tikTaraznameh == false) {
+            Utils.showModalMessage('لطفا آخرین ترازنامه شرکت مربوطه را تایید کنید');
             return false;
         }
 
-        var mandehTashilat = FormView.myForm.getItemByName('Field_11').getData();
-        if (parseInt(mandehTashilat) <0) {
-            Utils.showModalMessage('لطفا مانده تسهیلات را وارد کنید');
-            return false;
-        }
-
-        var mablaghZemanatnameh = FormView.myForm.getItemByName('Field_15').getData();
-        if (mablaghZemanatnameh < 3) {
-            Utils.showModalMessage('لطفا مبلغ ضمانتنامه را وارد کنید');
-            return false;
-        }
+/*
 
         var ezharNazarHesabdari = FormView.myForm.getItemByName('Field_13').getData();
         if (ezharNazarHesabdari == "0") {
@@ -149,20 +187,9 @@ this.jcode = function(self) {
             return false;
         }
 
-        var saghfZemanatnameh=FormView.myForm.getItemByName('Field_12').getData();
-        if(parseInt(mablaghZemanatnameh)>parseInt(saghfZemanatnameh)){
-            Utils.showModalMessage('مبلغ ضمانتنامه از سقف مبلغ ضمانتنامه بیشتر است');
-            return false;
-        }
-
-
-
-
-
+*/
 
         return true;
-
-
 
     };
     self.btnConfirmEntezami=function(){
@@ -173,9 +200,9 @@ this.jcode = function(self) {
             return false;
         }
 
-        var numSanadCheckZemanat = FormView.myForm.getItemByName('Field_17').getData().length;
-        if (numSanadCheckZemanat < 3) {
-            Utils.showModalMessage('لطفا شماره سند دریافت چک ضمانت را وارد کنید');
+        var mablaghZemanat = FormView.myForm.getItemByName('Field_37').getData().length;
+        if (mablaghZemanat < 3) {
+            Utils.showModalMessage('لطفا مبلغ چک ضمانت را وارد کنید');
             return false;
         }
         return true;
@@ -191,17 +218,19 @@ this.jcode = function(self) {
             return false;
         }
 
-        var numSanadCheckKarmozd = FormView.myForm.getItemByName('Field_19').getData().length;
-        if (numSanadCheckKarmozd < 3) {
-            Utils.showModalMessage('لطفا شماره سند دریافت چک کارمزد را وارد کنید');
-            return false;
-        }
 
         var dateChekKarmozd = FormView.myForm.getItemByName('Field_21').getData().length;
         if (dateChekKarmozd < 8) {
             Utils.showModalMessage('لطفا تاریخ چک کارمزد را به درستی وارد کنید');
             return false;
         }
+
+        var numSanadCheckKarmozd = FormView.myForm.getItemByName('Field_38').getData().length;
+        if (numSanadCheckKarmozd < 3) {
+            Utils.showModalMessage('لطفا مبلغ چک کارمزد را وارد کنید');
+            return false;
+        }
+
         return true;
 
 
@@ -226,7 +255,7 @@ this.jcode = function(self) {
 
     };
     self.changeSaghf=function(){
-       let saghfZemanatnameh=70/100*FormView.myForm.getItemByName('Field_10').getData()*FormView.myForm.getItemByName('Field_25').getData();
+       let saghfZemanatnameh=(70/10000*FormView.myForm.getItemByName('Field_10').getData()*FormView.myForm.getItemByName('Field_25').getData())-FormView.myForm.getItemByName('Field_11').getData();
 
 /*
         let st=saghfZemanatnameh.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -237,7 +266,10 @@ this.jcode = function(self) {
     };
 
     self.addChangeEvent=function(){
+        $jq('.saham >input').keyup(function(){  FormView.myForm.getItemByName('Field_31').changeSaghf()});
         $jq('.taraznameh >input').keyup(function(){  FormView.myForm.getItemByName('Field_31').changeSaghf()});
+        $jq('.tashilat >input').keyup(function(){  FormView.myForm.getItemByName('Field_31').changeSaghf()});
+        FormView.myForm.getItemByName('Field_31').changeSaghf();
 
     };
 

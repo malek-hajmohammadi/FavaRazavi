@@ -118,8 +118,8 @@ class calssName
         $receivers[0]['isCC'] = 0;  ///رو نوشت باشه یه/
         /// 1 باشه رونوشت
         /// 0 ارجاع معمولی
-        $newRefer = DocRefer::ReferDocRefer($referID, $receivers, 'احتراما جهت استحضار');
-        $execution->setVariable('signRefer', $newRefer);
+       // $newRefer = DocRefer::ReferDocRefer($referID, $receivers, 'احتراما جهت استحضار');
+      //  $execution->setVariable('signRefer', $newRefer);
     }
 
     public function bankName($index){
