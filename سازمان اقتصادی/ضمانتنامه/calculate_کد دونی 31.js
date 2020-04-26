@@ -1,9 +1,9 @@
 this.jcode = function(self) {
     self.btnConfirmMoteghazi = function () {
 
-        var companyName = FormView.myForm.getItemByName('Field_0').getData().length;
-        if (companyName < 3) {
-            Utils.showModalMessage('لطفا نام شرکت را مشخص کنید');
+        var companyName = FormView.myForm.getItemByName('Field_33').getData().length;
+        if (companyName < 1) {
+            Utils.showModalMessage('شما قادر به  ثبت درخواست ضمانتنامه بانکی نیستید');
             return false;
         }
         var mablaghTashilat = FormView.myForm.getItemByName('Field_2').getData();
@@ -118,8 +118,7 @@ this.jcode = function(self) {
             while (nodeName2 && nodeName2.indexOf(String.fromCharCode(1740)) >= 0) nodeName2 = nodeName2.replace(String.fromCharCode(1740), String.fromCharCode(1610));
             if (nodeName == 'شرکت-متقاضی' || nodeName2 == 'شرکت-متقاضی') stage = 1;
             if (nodeName == 'رئیس-حسابداری' || nodeName2 == 'رئیس-حسابداری') stage = 2;
-            if (nodeName == 'مدیر-مالی' || nodeName2 == 'مدیر-مالی') stage = 2;
-            if (nodeName == 'مدیر-حسابرسی-و-مجامع' || nodeName2 == 'مدیر-حسابرسی-و-مجامع') stage = 2;
+
             if (nodeName == 'مسئول-انتظامی' || nodeName2 == 'مسئول-انتظامی') stage = 3;
             if (nodeName == 'مسئول-صندوق' || nodeName2 == 'مسئول-صندوق') stage = 4;
             if (nodeName == 'حسابداری-نهایی' || nodeName2 == 'حسابداری-نهایی') stage = 5;
@@ -148,6 +147,10 @@ this.jcode = function(self) {
                 case 5:
                     $jq('.fieldSet5').css("background-color", activeColor);
                     $jq('.fieldSet5 >legend').css("background-color", activeColorTitle);
+
+                    $jq('.fieldSet6').css("background-color", activeColor);
+                    $jq('.fieldSet6 >legend').css("background-color", activeColorTitle);
+
                     break;
             }
 
@@ -248,6 +251,7 @@ this.jcode = function(self) {
 
     self.btnConfirmMoavenat=function(){
 
+        /*
         var ezharNazarMoavenat = FormView.myForm.getItemByName('Field_23').getData();
         if (ezharNazarMoavenat == "0") {
             Utils.showModalMessage('لطفا فیلد اظهارنظر معاونت را انتخاب کنید');
@@ -257,6 +261,9 @@ this.jcode = function(self) {
             Utils.showModalMessage('با توجه به اظهار نظر انتخاب شده، تایید فرم و ارسال به مدیر عامل امکان پذیر نیست');
             return false;
         }
+
+
+         */
         return true;
 
 

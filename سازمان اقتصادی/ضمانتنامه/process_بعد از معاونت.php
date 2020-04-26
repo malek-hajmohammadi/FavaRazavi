@@ -41,7 +41,7 @@ class calssName
         $html = str_replace('body', $body, $html);
 
 
-        $subject = "نامه ضمانتنامه بانکی شرکت ".$company;
+        $subject = " ضمانتنامه بانکی شرکت ".$company;
 
         $docDesc = $subject;
 
