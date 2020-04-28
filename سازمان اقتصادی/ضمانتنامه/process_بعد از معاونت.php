@@ -31,7 +31,8 @@ class calssName
         $bankID = $execution->workflow->myForm->getFieldValueByName( 'Field_24');
         $bank=$this->bankName($bankID);
         $shobeh=$execution->workflow->myForm->getFieldValueByName( 'Field_26');
-        $company=$execution->workflow->myForm->getFieldValueByName( 'Field_0');
+       // $company=$execution->workflow->myForm->getFieldValueByName( 'Field_33');
+        $company=$execution->getVariable('companyName');
         $body=$execution->workflow->myForm->getFieldValueByName( 'Field_30');
 
 

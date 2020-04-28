@@ -39,6 +39,7 @@ class calssName
             $db->execute($sql);
         }
 
+        $execution->setVariable('companyName', $dept);
 
         $execution->workflow->myForm->setFieldValueByName( 'Field_32', 0);
 
