@@ -6,7 +6,7 @@ class calssName
     public function __construct(){}
     public function execute(ezcWorkflowExecution $execution)
     {
-
+/*
         $db = MySQLAdapter::getInstance();
 
         $acm = AccessControlManager::getInstance();
@@ -69,8 +69,9 @@ class calssName
             $title->desc = 'ریاست محترم بانک ' . $bank . ' شعبه ' . $shobeh;
             $titles = [$title];
         }
-
+*/
         /* create new secOutPerson or fetch if exist */
+        /*
         $sid = SecUser::GetCurrUserSecID();
         $db = PDOAdapter::getInstance();
         $sql = "select RowID from oa_sec_outpersons where Name = :name AND SecID=:sid";//add SecID sh_$$RAVAN1531_
@@ -108,10 +109,12 @@ class calssName
         $receivers=array();
         $receivers[0]=array();
         $receivers[0]['type'] = 2; //
+        */
         /*
          * uid modir amel 1636
          * rid 2296
          */
+        /*
         $receivers[0]['uid'] = 1;
         $receivers[0]['rid'] = 666;
         $receivers[0]['oid'] = 'null';
@@ -121,9 +124,11 @@ class calssName
         /// 0 ارجاع معمولی
        // $newRefer = DocRefer::ReferDocRefer($referID, $receivers, 'احتراما جهت استحضار');
       //  $execution->setVariable('signRefer', $newRefer);
+        */
     }
 
     public function bankName($index){
+        /*
         $bankName="";
         switch ($index){
             case 1: $bankName="صادرات";
@@ -135,6 +140,7 @@ class calssName
         }
 
         return $bankName;
+        */
 
     }
 }

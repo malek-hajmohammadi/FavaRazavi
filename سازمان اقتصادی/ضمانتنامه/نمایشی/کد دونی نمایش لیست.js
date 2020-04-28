@@ -23,14 +23,10 @@ this.jcode = function (self) {
             data: {
                 datasets: [{
                     data: data,
-                    backgroundColor: [window.chartColors.blue, window.chartColors.purple, window.chartColors.yellow, window.chartColors.red, window.chartColors.green, window.chartColors.orange,'rgba(25, 41, 144)',
-                        'rgba(85, 26, 139)',
-                        'rgba(61, 89, 171)',
-                        'rgba(119, 139, 153)',
-                        'rgba(60, 179, 113)'],
+                    backgroundColor: [window.chartColors.blue, window.chartColors.purple, window.chartColors.yellow, window.chartColors.red, window.chartColors.green, window.chartColors.orange],
                     label: 'گزارش فرم هاي ضمانت نامه'
                 }],
-                labels: ['پيشنويس', 'تاييد رئيس حسابداري', 'تاييد چك ضمانت', 'تاييد چك كارمزد', 'تاييد نهايي رئيس حسابداري', 'تاييد مدير مالي', 'تاييد مدير حسابرسي و مجامع', 'تاييد معاون شركت ها', 'درحال صدور ضمانتنامه', 'تاييد مديرعامل', 'تاييد شده']
+                labels: ['پيشنويس', 'تاييد رئيس حسابداري', 'تاييد مدير مالي', 'تاييد مدير حسابرسي و مجامع', 'تاييد معاون شركت ها', 'درحال صدور ضمانتنامه']
             },
             options: {responsive: true, legend: {display: true, position: 'right'}}
         };

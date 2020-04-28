@@ -1,4 +1,8 @@
 this.jcode = function (self) {
+    let template;
+    let company;
+    let bank;
+    let shobeh;
     self.btnConfirmMoteghazi = function () {
 
         var companyName = FormView.myForm.getItemByName('Field_33').getData().length;
@@ -18,8 +22,8 @@ this.jcode = function (self) {
             return false;
         }
 
-        var bank = FormView.myForm.getItemByName('Field_24').getData();
-        if (bank == "0") {
+        var bank =  FormView.myForm.getItemByName('Field_40').getData();
+        if (bank.length < 1) {
             Utils.showModalMessage('لطفا نام بانک یا موسسه  را انتخاب کنید');
             return false;
         }
@@ -123,12 +127,14 @@ this.jcode = function (self) {
             if (nodeName == 'مسئول-صندوق' || nodeName2 == 'مسئول-صندوق') stage = 4;
             if (nodeName == 'حسابداری-نهایی' || nodeName2 == 'حسابداری-نهایی') stage = 5;
 
-
+/*
             if(stage==2)
                 $jq('.fieldset6').css("display","");
             else
                 $jq('.fieldset6').css("display","none");
-            
+
+
+ */
             switch (stage) {
                 case  1 :
                     $jq('.fieldSet1').css("background-color", activeColor);
@@ -308,30 +314,36 @@ this.jcode = function (self) {
             .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 
 
-        let company = FormView.myForm.getItemByName('Field_33').currentData[1];
+        self.company = FormView.myForm.getItemByName('Field_33').currentData[1];
+
+        self.bank=FormView.myForm.getItemByName('Field_40').currentData[1];
+        self.shobeh=FormView.myForm.getItemByName('Field_26').getData();
         
 
-        template1 = "نظر به اینکه شرکت " + company;
+        template1 = "نظر به اینکه شرکت " + self.company;
         template1 += " متعلق به آستان قدس رضوی تقاضای اخذ تسهیلات به مبلغ " + tashilat;
         template1 += " ریال را از آن بانک دارد، لذا بدینوسیله اعلام میدارد در صورت عدم پرداخت تعهدات توسط شرکت مذکور، این سازان بازپرداخت بدهی فوق الذکر (اصل ، سود و وجه التزام) را در موعد مقرر تعهد و تضمین می نماید. لازم به ذکر است که این ضمانتنامه بابت یک نوبت می باشد.";
 
-        template2 = "در راستاي اجراي تفاهم نامه شماره 863762/98 مورخ 13/08/98 في مابين بانك صادرات ايران و سازمان اقتصادي رضوي و با عنايت به درخواست تسهيلات شركت " + company;
-        template2 += "به شماره ثبت ................. و شناسه ملي ....................... به مبلغ " + tashilat;
+        template2 = "در راستاي اجراي تفاهم نامه شماره 863762/98 مورخ 13/08/98 في مابين بانك صادرات ايران و سازمان اقتصادي رضوي و با عنايت به درخواست تسهيلات شركت " + self.company;
+        template2 += " به شماره ثبت ................. و شناسه ملي ....................... به مبلغ " + tashilat;
 
-        template2 += " بدينوسيله اين سازمان با نمايندگي مديرعامل، امضاداران مجاز سازمان، قبول و تضمين نمود كه متضامناً با آن شركت متعهد به پرداخت مطالبات بانك خواهد بود لذا در صورت عدم پرداخت هر قسط از اقساط معوقه از طرف شركت " + company;
+        template2 += " بدينوسيله اين سازمان با نمايندگي مديرعامل، امضاداران مجاز سازمان، قبول و تضمين نمود كه متضامناً با آن شركت متعهد به پرداخت مطالبات بانك خواهد بود لذا در صورت عدم پرداخت هر قسط از اقساط معوقه از طرف شركت " + self.company;
         template2 += "به محض دريافت اولين تقاضاي كتبي از سوي بانك، بدون احتياج به صدور اظهار نامه ، مبلغ مورد درخواست را در وجه بانك بپردازد . در غير اين صورت بانك به طور غير قابل برگشت و در هر زمان ولو كرارا و راسا حق و اختيار دارد نسبت به برداشت مبلغ هر يك از اقساط ( اعم از اصل و سود و جرائم تاخير تا روز تسويه ) از محل كليه حسابهاي اين سازمان نزد خود برداشت و مراتب را به سازمان منعكس نمايد بنابراین در صورت عدم كفايت موجودي حسابها ، بانك حق و اختيار دارد به منظور وصول مطالبات خود نسبت به انجام پيگيري هاي قضائي اقدام نمايد . مدت اعتبار اين تضمين نامه از تاريخ صدور تا زمان تسويه كامل بدهي معتبر خواهد بود .";
 
 
         if (SelectGhalebMatn == "0") {
             FormView.myForm.getItemByName('Field_30').setData("");
+            self.template="";
             return;
         }
         if (SelectGhalebMatn == "1") {
             FormView.myForm.getItemByName('Field_30').setData(template1);
+            self.template=template1;
             return;
         }
         if (SelectGhalebMatn == "2") {
             FormView.myForm.getItemByName('Field_30').setData(template2);
+            self.template=template2;
             return;
         }
         
@@ -354,9 +366,273 @@ this.jcode = function (self) {
             FormView.myForm.getItemByName('Field_31').setGhalebMatn()
         });
         $jq('.saghf >input').attr("readonly","true");
-        $jq('.saghf >input').css("background","gainsboro")
+        $jq('.saghf >input').css("background","gainsboro");
+
+        $res = "<button id='SearchButton' onclick='FormView.myForm.getItemByName(\"Field_0\").LoadJS()'>جستجو</button>";
+
 
     };
+    self.printZemanatnamehWithoutRonevesht=function(){
+        self.setGhalebMatn();
+        let htmlZemanatnameh="<!DOCTYPE html>\n" +
+            "<html lang=\"fa\">\n" +
+            "<head>\n" +
+            "    <meta charset=\"UTF-8\">\n" +
+            "    <title>ضمانتنامه ارائه به بانک</title>\n" +
+            "    <style>\n" +
+            "        .print-body{\n" +
+            "            margin: 0;\n" +
+            "            padding: 0;\n" +
+            "        }\n" +
+            "        .print-div-1{\n" +
+            "            margin: 0 auto;\n" +
+            "            position: relative;\n" +
+            "            width: 210mm;\n" +
+            "            height: 297mm;\n" +
+            "            padding: 20mm 20mm 0 0;\n" +
+            "            direction: rtl;\n" +
+            "            background-image: url(\"../../../formimages/BG-A5.jpg\");\n" +
+            "            background-position: left top;\n" +
+            "            background-repeat: no-repeat;\n" +
+            "            background-size: cover;\n" +
+            "        }\n" +
+            "        .print-div-2{\n" +
+            "            padding: 0;\n" +
+            "            width: 175mm;\n" +
+            "            height: 100%;\n" +
+            "        }\n" +
+            "        .print-god{\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            "            font-size: 11pt;\n" +
+            "            margin-bottom: 20px;\n" +
+            "        }\n" +
+            "        .print-title{\n" +
+            "            font-family: \"B Titr\";\n" +
+            "            font-size: 16pt;\n" +
+            "            margin-bottom: 20px;\n" +
+            "        }\n" +
+            "        .print-text{\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            "            font-size: 16pt;\n" +
+            "            text-align: justify;\n" +
+            "            direction: rtl;\n" +
+            "        }\n" +
+            "        .print-text-salavat{\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            "            font-size: 14pt;\n" +
+            "\n" +
+            "            direction: rtl;\n" +
+            "        }\n" +
+            "        .print-sign-img{\n" +
+            "            width: 150px;\n" +
+            "            height: 150px;\n" +
+            "            text-align: center;\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            "            font-size: 10pt;\n" +
+            "            /*padding: 0 !important;*/\n" +
+            "            position: relative;\n" +
+            "            margin-left: 0;\n" +
+            "            margin-right: auto;\n" +
+            "        }\n" +
+            "        .print-sign-img div{\n" +
+            "            z-index: 10 !important;\n" +
+            "            /*margin-right: 20px;*/\n" +
+            "        }\n" +
+            "        .print-sign-text{\n" +
+            "            width: 250px;\n" +
+            "            height: 50px;\n" +
+            "            text-align: center;\n" +
+            "            font-family: \"B Titr\";\n" +
+            "            font-size: 16pt;\n" +
+            "            margin-top: -90px;\n" +
+            "            margin-right: auto;\n" +
+            "            margin-left: 0;\n" +
+            "            z-index: 20 !important;\n" +
+            "        }\n" +
+            "        .print-dn{\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            "            font-size: 11pt;\n" +
+            "            text-align: right;\n" +
+            "            position: absolute;\n" +
+            "            top: 46mm;\n" +
+            "            left: 8mm;\n" +
+            "            direction: rtl;\n" +
+            "        }\n" +
+            "    </style>\n" +
+            "</head>\n" +
+            "<body class=\"print-body\">\n" +
+            "    <div class=\"print-div-1\">\n" +
+            "        <div align=\"center\" class=\"print-dn\"> <span id=\"NNumber\"></span> <br> <span id=\"NDate\"></span> </div>\n" +
+            "        <div class=\"print-div-2\">\n" +
+            "            <div align=\"center\" class=\"print-god\">بسمه تعالی</div>\n" +
+            "            <div align=\"right\" class=\"print-title\">"+"ریاست محترم "+self.bank+" شعبه "+self.shobeh+
+            "<br/>"+
+            "            <br/><div align=\"center\" class=\"print-text-salavat\"> با صلوات بر محمد و آل محمد(ص)</div>\n" +
+            "            <div align=\"right\" class=\"print-text\">سلام علیکم</div>\n" +
+            "            <div align=\"right\" class=\"print-text\">";
+         htmlZemanatnameh+=self.template;
+        htmlZemanatnameh+="</div>\n" +
+            "            <div align=\"left\" class=\"print-sign-img\" id=\"LetterSign2\"></div>\n" +
+            "            <div align=\"left\" class=\"print-sign-text\">\n" +
+            "                سید رضا فاطمی امین <br/>\n" +
+            "                مدیرعامل\n" +
+            "            </div>\n" +
+            "        </div>\n" +
+            "    </div>\n" +
+            "</body>\n" +
+            "</html>";
+
+        var printWin = window.open('','A','left=0,top=0,height='+screen.height+',width='+screen.width+',resizable=0,toolbar=0,scrollbars=0,status=0,fullscreen=1');
+        printWin.document.write(htmlZemanatnameh);
+        printWin.document.close();
+        printWin.focus();
+        printWin.print();
+        printWin.close();
+
+    };
+
+    self.printZemanatnamehWithRonevesht=function(){
+        self.setGhalebMatn();
+        let htmlZemanatnameh="<!DOCTYPE html>\n" +
+            "<html lang=\"fa\">\n" +
+            "<head>\n" +
+            "    <meta charset=\"UTF-8\">\n" +
+            "    <title>نامه ارائه به بانک</title>\n" +
+            "    <style>\n" +
+            "        .print-body{\n" +
+            "            margin: 0;\n" +
+            "            padding: 0;\n" +
+            "        }\n" +
+            "        .print-div-1{\n" +
+            "            margin: 0 auto;\n" +
+            "            position: relative;\n" +
+            "            width: 210mm;\n" +
+            "            height: 297mm;\n" +
+            "            padding: 20mm 20mm 0 0;\n" +
+            "            direction: rtl;\n" +
+            "            background-image: url(\"../../../formimages/BG-A5.jpg\");\n" +
+            "            background-position: left top;\n" +
+            "            background-repeat: no-repeat;\n" +
+            "            background-size: cover;\n" +
+            "        }\n" +
+            "        .print-div-2{\n" +
+            "            padding: 0;\n" +
+            "            width: 175mm;\n" +
+            "            height: 100%;\n" +
+            "        }\n" +
+            "        .print-god{\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            "            font-size: 11pt;\n" +
+            "            margin-bottom: 20px;\n" +
+            "        }\n" +
+            "        .print-title{\n" +
+            "            font-family: \"B Titr\";\n" +
+            "            font-size: 16pt;\n" +
+            "            margin-bottom: 20px;\n" +
+            "        }\n" +
+            "        .print-ronevesht{\n" +
+            "            font-family: \"B Titr\";\n" +
+            "            position: absolute;\n" +
+            "            font-size: 12pt;\n" +
+            "            bottom: 150px;\n" +
+            "        }\n" +
+            "        .print-ronevesht-details{\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            "            margin-right: 30px;\n" +
+            "            position: absolute;\n" +
+            "            font-size: 14pt;\n" +
+            "            bottom: 65px;\n" +
+            "        }\n" +
+            "\n" +
+            "        .print-text{\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            "            font-size: 16pt;\n" +
+            "            text-align: justify;\n" +
+            "            direction: rtl;\n" +
+            "        }\n" +
+            "        .print-text-salavat{\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            "            font-size: 14pt;\n" +
+            "\n" +
+            "            direction: rtl;\n" +
+            "        }\n" +
+            "        .print-sign-img{\n" +
+            "            width: 150px;\n" +
+            "            height: 150px;\n" +
+            "            text-align: center;\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            "            font-size: 10pt;\n" +
+            "            /*padding: 0 !important;*/\n" +
+            "            position: relative;\n" +
+            "            margin-left: 0;\n" +
+            "            margin-right: auto;\n" +
+            "        }\n" +
+            "        .print-sign-img div{\n" +
+            "            z-index: 10 !important;\n" +
+            "            /*margin-right: 20px;*/\n" +
+            "        }\n" +
+            "        .print-sign-text{\n" +
+            "            width: 250px;\n" +
+            "            height: 50px;\n" +
+            "            text-align: center;\n" +
+            "            font-family: \"B Titr\";\n" +
+            "            font-size: 16pt;\n" +
+            "            margin-top: -90px;\n" +
+            "            margin-right: auto;\n" +
+            "            margin-left: 0;\n" +
+            "            z-index: 20 !important;\n" +
+            "        }\n" +
+            "        .print-dn{\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            "            font-size: 11pt;\n" +
+            "            text-align: right;\n" +
+            "            position: absolute;\n" +
+            "            top: 46mm;\n" +
+            "            left: 8mm;\n" +
+            "            direction: rtl;\n" +
+            "        }\n" +
+            "    </style>\n" +
+            "</head>\n" +
+            "<body class=\"print-body\">\n" +
+            "    <div class=\"print-div-1\">\n" +
+            "        <div align=\"center\" class=\"print-dn\"> <span id=\"NNumber\"></span> <br> <span id=\"NDate\"></span> </div>\n" +
+            "        <div class=\"print-div-2\">\n" +
+            "            <div align=\"center\" class=\"print-god\">بسمه تعالی</div>\n" +
+            "            <div align=\"right\" class=\"print-title\">"+"ریاست محترم "+self.bank+" شعبه "+self.shobeh+
+            "<br/>"+
+            "            <br/><div align=\"center\" class=\"print-text-salavat\"> با صلوات بر محمد و آل محمد(ص)</div>\n" +
+            "            <div align=\"right\" class=\"print-text\">سلام علیکم</div>\n" +
+            "            <div align=\"right\" class=\"print-text\">";
+        htmlZemanatnameh+=self.template;
+        htmlZemanatnameh+="</div>\n" +
+            "            <div align=\"left\" class=\"print-sign-img\" id=\"LetterSign2\"></div>\n" +
+            "            <div align=\"left\" class=\"print-sign-text\">\n" +
+            "                سید رضا فاطمی امین <br/>\n" +
+            "                مدیرعامل\n" +
+            "            </div>\n" +
+            "        </div>\n" +
+            "        <div align=\"right\" class=\"print-ronevesht\">رونوشت:</div>\n" +
+            "        <div aligh=\"right\" class=\"print-ronevesht-details\">\n" +
+            "            معاونت محترم امور شرکتها و مجامع جهت اطلاع<br/>\n" +
+            "            مدیرعامل محترم شرکت " ;
+            htmlZemanatnameh+=self.company;
+            htmlZemanatnameh+="<br/>\n";
+            htmlZemanatnameh+="            امور مالی جهت اطلاع و ثبت در دفاتر<br/>\n" +
+            "        </div>\n" +
+            "    </div>\n" +
+            "</body>\n" +
+            "</html>";
+
+        var printWin = window.open('','A','left=0,top=0,height='+screen.height+',width='+screen.width+',resizable=0,toolbar=0,scrollbars=0,status=0,fullscreen=1');
+        printWin.document.write(htmlZemanatnameh);
+        printWin.document.close();
+        printWin.focus();
+        printWin.print();
+        printWin.close();
+
+    };
+
+
 
 
 };
