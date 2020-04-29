@@ -47,7 +47,8 @@ this.jcode = function (self) {
     };
     self.getSearchFields = function () {
         var searchFields = {};
-        if ($jq('#companyName').val().trim().length > 0) searchFields.companyName = $jq('#companyName').val().trim();
+
+       /* if ($jq('#companyName > input').val().trim().length > 0) searchFields.companyName = $jq('#companyName').val().trim();*/
         if ($jq('#priceFrom').val().trim().length > 0) searchFields.priceFrom = $jq('#priceFrom').val().trim();
         if ($jq('#priceTo').val().trim().length > 0) searchFields.priceTo = $jq('#priceTo').val().trim();
         if ($jq('#checkNum1').val().trim().length > 0) searchFields.checkNum1 = $jq('#checkNum1').val().trim();
@@ -55,7 +56,7 @@ this.jcode = function (self) {
         if ($jq('#checkDoc1').val().trim().length > 0) searchFields.checkDoc1 = $jq('#checkDoc1').val().trim();
         if ($jq('#checkDoc2').val().trim().length > 0) searchFields.checkDoc2 = $jq('#checkDoc2').val().trim();
         if ($jq('#loanType').val() != 0) searchFields.loanType = $jq('#loanType').val();
-        if ($jq('#bankID').val() != 0) searchFields.bankID = $jq('#bankID').val();
+       /* if ($jq('#bankID').val() != 0) searchFields.bankID = $jq('#bankID').val();*/
         if ($jq('#acceptOne').val() != 0) searchFields.acceptOne = $jq('#acceptOne').val();
         if ($jq('#acceptTwo').val() != 0) searchFields.acceptTwo = $jq('#acceptTwo').val();
         if ($jq('#requestStatus').val() > 0) searchFields.requestStatus = $jq('#requestStatus').val();
@@ -66,6 +67,16 @@ this.jcode = function (self) {
         if (createDateFrom.length > 0) searchFields.createDateFrom = createDateFrom;
         var createDateTo = FormOnly.allFieldsContianer[2].getData();
         if (createDateFrom.length > 0) searchFields.createDateTo = createDateTo;
+
+        let companyName=FormOnly.allFieldsContianer[4].getData();
+        if (companyName.length>0)
+            searchFields.companyName=companyName;
+
+       /* let bankId=FormOnly.allFieldsContianer[5].getData();*/
+
+
+
+
         var pageNumber = parseInt($jq('#pageNumber').val());
         if (isNaN(pageNumber) || pageNumber < 1) pageNumber = 1;
         searchFields.pageNumber = pageNumber;

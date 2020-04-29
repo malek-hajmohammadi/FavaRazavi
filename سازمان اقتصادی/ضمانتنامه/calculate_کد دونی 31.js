@@ -126,15 +126,17 @@ this.jcode = function (self) {
             if (nodeName == 'مسئول-انتظامی' || nodeName2 == 'مسئول-انتظامی') stage = 3;
             if (nodeName == 'مسئول-صندوق' || nodeName2 == 'مسئول-صندوق') stage = 4;
             if (nodeName == 'حسابداری-نهایی' || nodeName2 == 'حسابداری-نهایی') stage = 5;
+            if (nodeName == 'دبیرخانه' || nodeName2 == 'دبیرخانه') stage =7;
 
-/*
-            if(stage==2)
-                $jq('.fieldset6').css("display","");
+
+
+            if(stage==7)
+                $jq('.btnTd').css("display","");
             else
-                $jq('.fieldset6').css("display","none");
+                $jq('.btnTd').css("display","none");
 
 
- */
+
             switch (stage) {
                 case  1 :
                     $jq('.fieldSet1').css("background-color", activeColor);
@@ -373,7 +375,12 @@ this.jcode = function (self) {
 
     };
     self.printZemanatnamehWithoutRonevesht=function(){
-        self.setGhalebMatn();
+        self.company = FormView.myForm.getItemByName('Field_33').currentData[1];
+        self.bank=FormView.myForm.getItemByName('Field_40').currentData[1];
+        self.shobeh=FormView.myForm.getItemByName('Field_26').getData();
+        self.template=FormView.myForm.getItemByName('Field_30').getData();
+
+        /* self.setGhalebMatn();*/
         let htmlZemanatnameh="<!DOCTYPE html>\n" +
             "<html lang=\"fa\">\n" +
             "<head>\n" +
@@ -492,7 +499,11 @@ this.jcode = function (self) {
     };
 
     self.printZemanatnamehWithRonevesht=function(){
-        self.setGhalebMatn();
+        self.company = FormView.myForm.getItemByName('Field_33').currentData[1];
+        self.bank=FormView.myForm.getItemByName('Field_40').currentData[1];
+        self.shobeh=FormView.myForm.getItemByName('Field_26').getData();
+        self.template=FormView.myForm.getItemByName('Field_30').getData();
+
         let htmlZemanatnameh="<!DOCTYPE html>\n" +
             "<html lang=\"fa\">\n" +
             "<head>\n" +
@@ -531,17 +542,16 @@ this.jcode = function (self) {
             "            margin-bottom: 20px;\n" +
             "        }\n" +
             "        .print-ronevesht{\n" +
-            "            font-family: \"B Titr\";\n" +
-            "            position: absolute;\n" +
+            "            font-family: \"B Nazanin\";\n" +
+            " font-weight: bold;\n"+
+            " margin-top:100px;\n"+
             "            font-size: 12pt;\n" +
             "            bottom: 150px;\n" +
             "        }\n" +
             "        .print-ronevesht-details{\n" +
             "            font-family: \"B Nazanin\";\n" +
             "            margin-right: 30px;\n" +
-            "            position: absolute;\n" +
             "            font-size: 14pt;\n" +
-            "            bottom: 65px;\n" +
             "        }\n" +
             "\n" +
             "        .print-text{\n" +
@@ -610,7 +620,7 @@ this.jcode = function (self) {
             "                سید رضا فاطمی امین <br/>\n" +
             "                مدیرعامل\n" +
             "            </div>\n" +
-            "        </div>\n" +
+
             "        <div align=\"right\" class=\"print-ronevesht\">رونوشت:</div>\n" +
             "        <div aligh=\"right\" class=\"print-ronevesht-details\">\n" +
             "            معاونت محترم امور شرکتها و مجامع جهت اطلاع<br/>\n" +
@@ -619,6 +629,7 @@ this.jcode = function (self) {
             htmlZemanatnameh+="<br/>\n";
             htmlZemanatnameh+="            امور مالی جهت اطلاع و ثبت در دفاتر<br/>\n" +
             "        </div>\n" +
+                "        </div>\n" +
             "    </div>\n" +
             "</body>\n" +
             "</html>";
