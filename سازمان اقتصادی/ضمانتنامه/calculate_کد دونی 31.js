@@ -129,12 +129,12 @@ this.jcode = function (self) {
             if (nodeName == 'دبیرخانه' || nodeName2 == 'دبیرخانه') stage =7;
 
 
-
+/*
             if(stage==7)
                 $jq('.btnTd').css("display","");
             else
                 $jq('.btnTd').css("display","none");
-
+*/
 
 
             switch (stage) {
@@ -171,6 +171,11 @@ this.jcode = function (self) {
 
 
         }
+
+    };
+    self.printPievastha=function(){
+        let did=FormView.did;
+        Utils.windowOpen('../Runtime/process.php?module=DocAttachs&action=createImageAtachesPDF&refer=' + did);
 
     };
     self.btnConfirmHesabdariFirst = function () {
@@ -320,6 +325,10 @@ this.jcode = function (self) {
 
         self.bank=FormView.myForm.getItemByName('Field_40').currentData[1];
         self.shobeh=FormView.myForm.getItemByName('Field_26').getData();
+
+        let shomarehSabt=FormView.myForm.getItemByName('Field_41').getData();
+        let shenaseMeli=FormView.myForm.getItemByName('Field_43').getData();
+       
         
 
         template1 = "نظر به اینکه شرکت " + self.company;
@@ -327,7 +336,7 @@ this.jcode = function (self) {
         template1 += " ریال را از آن بانک دارد، لذا بدینوسیله اعلام میدارد در صورت عدم پرداخت تعهدات توسط شرکت مذکور، این سازان بازپرداخت بدهی فوق الذکر (اصل ، سود و وجه التزام) را در موعد مقرر تعهد و تضمین می نماید. لازم به ذکر است که این ضمانتنامه بابت یک نوبت می باشد.";
 
         template2 = "در راستاي اجراي تفاهم نامه شماره 863762/98 مورخ 13/08/98 في مابين بانك صادرات ايران و سازمان اقتصادي رضوي و با عنايت به درخواست تسهيلات شركت " + self.company;
-        template2 += " به شماره ثبت ................. و شناسه ملي ....................... به مبلغ " + tashilat;
+        template2 += " به شماره ثبت "+shomarehSabt+" و شناسه ملي "+shenaseMeli+" به مبلغ " + tashilat;
 
         template2 += " بدينوسيله اين سازمان با نمايندگي مديرعامل، امضاداران مجاز سازمان، قبول و تضمين نمود كه متضامناً با آن شركت متعهد به پرداخت مطالبات بانك خواهد بود لذا در صورت عدم پرداخت هر قسط از اقساط معوقه از طرف شركت " + self.company;
         template2 += "به محض دريافت اولين تقاضاي كتبي از سوي بانك، بدون احتياج به صدور اظهار نامه ، مبلغ مورد درخواست را در وجه بانك بپردازد . در غير اين صورت بانك به طور غير قابل برگشت و در هر زمان ولو كرارا و راسا حق و اختيار دارد نسبت به برداشت مبلغ هر يك از اقساط ( اعم از اصل و سود و جرائم تاخير تا روز تسويه ) از محل كليه حسابهاي اين سازمان نزد خود برداشت و مراتب را به سازمان منعكس نمايد بنابراین در صورت عدم كفايت موجودي حسابها ، بانك حق و اختيار دارد به منظور وصول مطالبات خود نسبت به انجام پيگيري هاي قضائي اقدام نمايد . مدت اعتبار اين تضمين نامه از تاريخ صدور تا زمان تسويه كامل بدهي معتبر خواهد بود .";

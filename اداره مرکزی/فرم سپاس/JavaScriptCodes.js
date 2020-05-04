@@ -24,6 +24,8 @@ listener = function (event) {
             $jq('.c3').css("background-color", "#e0e0e0");
             $jq('.c4').css("background-color", "#e0e0e0");
 
+            $jq('.operator >input').attr("readonly","true");
+
             let stage=0;
             if (FormView.myForm.info.settings.nodeName) {
                 var nodeName = FormView.myForm.info.settings.nodeName;

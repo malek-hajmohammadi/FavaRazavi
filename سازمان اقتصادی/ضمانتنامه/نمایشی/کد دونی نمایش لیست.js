@@ -49,6 +49,8 @@ this.jcode = function (self) {
         var searchFields = {};
 
        /* if ($jq('#companyName > input').val().trim().length > 0) searchFields.companyName = $jq('#companyName').val().trim();*/
+       let company=FormOnly.allFieldsContianer[3].getData();
+        searchFields.companyName= FormOnly.allFieldsContianer[3].getData();
         if ($jq('#priceFrom').val().trim().length > 0) searchFields.priceFrom = $jq('#priceFrom').val().trim();
         if ($jq('#priceTo').val().trim().length > 0) searchFields.priceTo = $jq('#priceTo').val().trim();
         if ($jq('#checkNum1').val().trim().length > 0) searchFields.checkNum1 = $jq('#checkNum1').val().trim();

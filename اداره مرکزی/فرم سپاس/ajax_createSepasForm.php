@@ -17,7 +17,7 @@ $tags = "tags";
 $situationPlace = "situationPlace";
 $grouping = "grouping";
 $registerDate = "1398/05/05";
-$relatedDomain = "relatedDomain";
+
 $employeeID = 0;
 if (Request::getInstance()->varCleanFromInput('name'))
     $name = Request::getInstance()->varCleanFromInput('name');
@@ -53,8 +53,7 @@ if (Request::getInstance()->varCleanFromInput('grouping'))
     $grouping = Request::getInstance()->varCleanFromInput('grouping');
 if (Request::getInstance()->varCleanFromInput('registerDate'))
     $registerDate = Request::getInstance()->varCleanFromInput('registerDate');
-if (Request::getInstance()->varCleanFromInput('relatedDomain'))
-    $relatedDomain = Request::getInstance()->varCleanFromInput('relatedDomain');
+
 
 
 //---------------make draft email--------------------------------------//
@@ -84,7 +83,6 @@ $fdata = array(
     "13440" => $ageGroup,
     "13441" => $subject,
     "13442" => $message,
-    "13443" => $relatedDomain,
     "13444" => $priority,
     "13445" => $tags,
     "13446" => $situationPlace,

@@ -274,6 +274,10 @@ $db->executeSelect($sqlForChart, $PDOParams);
 $counts = array();
 $sumCount = 0;
 while ($row = $db->fetchAssoc()) {
+
+    $state=$row['Field_32'];
+    if ($state=="2" || $state=="3" || $state=="4" )
+        continue;
     $sumCount += $row['offerCount'];
     $counts[] = $row;
 }

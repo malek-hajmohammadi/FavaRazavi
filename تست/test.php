@@ -1,115 +1,196 @@
 <?php
 
-class calssName
+class calssName // do not change this line
 {
-    public function __construct(){}
-    public function execute(ezcWorkflowExecution $execution, ezcWorkflowNodeAction $caller = null)
+    //protected $variable = null; define vars sample
+
+
+    public function __construct()
     {
+        // must be empty
+    }
+
+    private function nationalCodeCheck($nationalCode, $birthDate)
+    {
+        $user = "mohammadzadeh";
+        $pass = "722yap788zkh";
+
+        $client = curl_init('https://sabt-api.aqr.ir/api/national-code-verify/');
+
+        curl_setopt($client, CURLOPT_POST, 1);
+        curl_setopt($client, CURLOPT_HEADER, true);
+        curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($client, CURLOPT_VERBOSE, true);
+
+        $params = array(
+            "apiUser" => "$user",
+            "apiKey" => "$pass",
+            "nationalCode" => "$nationalCode",
+            "birthDate" => "$birthDate"
+        );
+        $params = json_encode($params);
+
+        curl_setopt($client, CURLOPT_POSTFIELDS, $params);
+
+        $res = curl_exec($client);
+
+        $header_size = curl_getinfo($client, CURLINFO_HEADER_SIZE);
+        $httpcode = curl_getinfo($client, CURLINFO_HTTP_CODE);
+        curl_close($client);
+        $res = substr($res, $header_size);
+
+        if(intval($httpcode == 200))
+            return true;
+        else {
+            switch ($httpcode){
+                case 403:
+                    return 'كابر يا كلمه عبور نامعتبر';
+                    break;
+                case 412:
+                    return 'خطاي اعتبار سنجي';
+                    break;
+                case 404:
+                    return 'فردي با چنين مشخصات وجود ندارد';
+                    break;
+                case 409:
+                    return 'اطلاعات شخص معتبر نيست به اداره ثبت احوال مراجعه نماييد';
+                    break;
+                case 410:
+                    return 'فرد فوت كرده است';
+                    break;
+                case 403:
+                    return 'عدم امكان برفراري ارتباط';
+                    break;
+                Default:
+                    return $httpcode;
+            }
+
+        }
+
+    }
+
+    public function execute(ezcWorkflowExecution $execution) // $execution refer to active workflow that call this class
+    {
+
         $docID = $execution->workflow->myForm->instanceID;
 
-        //$rid = MySQLAdapter::getInstance()->executeScalar("SELECT CreatorRoleID FROM oa_document WHERE RowID = $docID");
-        //$rid = AccessControlManager::getInstance()->getRoleID();
-        $person = $execution->workflow->myForm->getFieldValueByName( 'Field_0');
-        $rid = $person[0]['rid'];
-        $path = MySQLAdapter::getInstance()->executeScalar("SELECT path FROM oa_depts_roles WHERE RowID = $rid");
-        $mainSecRid = '874';
-        $mainSecUid = '2152';
-        $arr = array(
-            '/3458/' => array('uid' => '1881', 'rid' => '2074'), // مديريت آموزش يعقوبي
-            '/3473/' => array('uid' => '380', 'rid' => '883'), // هسته گزينش مركزي جعفري
-            '/3464/'=> array('uid' => $mainSecUid, 'rid' => $mainSecRid), // حراست باقي زاده
-            '/3472/'=> array('uid' => $mainSecUid, 'rid' => $mainSecRid), // نذورات باقي زاده
-            '/3478/'=> array('uid' => $mainSecUid, 'rid' => $mainSecRid), // بازرسي باقي زاده
-            '/3444/' => array('uid' => '945', 'rid' => '850'), // شوراي عالي مسلمان
-            '/3445/'=> array('uid' => $mainSecUid, 'rid' => $mainSecRid), // دفتر ويژه باقي زاده
-            '/3437/'=> array('uid' => $mainSecUid, 'rid' => $mainSecRid), //مشاورين باقي زاده
-            '/3433/' => array('uid' => $mainSecUid, 'rid' => $mainSecRid), // دفاتر ستادي باقي زاده
-            '/3537/' => array('uid' => '899', 'rid' => '1723'), // موقوفات احمدي مقدم
-            '/3536/' => array('uid' => '2057', 'rid' => '916'), // حقوقي یعقوبی کلاغ آباد
-
-            //abdollahi 980819-------------------
-            // حسب درخواست آقاي صباغيان در معاونت حقوقي بجاي ايشان خانم احتشام ثبات شدند
-            '/3440/' => array('uid' => '1389', 'rid' => '3757'), //معاونت امور حقوقي وموقوفات آستان قدس رضوي فاطمه مظفريان مقدم
-
-            '/3439/' => array('uid' => '1308', 'rid' => '4820'), //املاك و اراضي باقري
-            '/3567/' => array('uid' => '1308', 'rid' => '4820'), //املاك و اراضي باقري
-            '/3442/' => array('uid' => '1881', 'rid' => '2074'), //پشتيباني يعقوبي
-            '/9816/' => array('uid' => '4052', 'rid' => '5708'),// سازمان حرم مطهر رضوي مجيد وفائي جهان
-            //'/3438/' => array('uid' => '870', 'rid' => '1690'), //اماكن حامد فارمدي Added by Borsipour 95/12/21 نامه 459363
-            //'/3438/' => array('uid' => '4052', 'rid' => '5708'), //اماكن مجيد وفائي جهان Added by Borsipour 95/12/21 نامه 459363
-            '/3443/' => array('uid' => '3827', 'rid' => '2886'), //فني روحبخش
-            //'/3441/' => array('uid' => '972', 'rid' => '1759'), //تبليغات افخمي
-            //'/3441/' => array('uid' => '4052', 'rid' => '5708'), //تبليغات مجيد وفائي جهان Added by Akhavan 97/11/11 نامه 467330
-            '/3467/'=> array('uid' => $mainSecUid, 'rid' => $mainSecRid), //دبيرخامه كل باقي زاده
-            '/3556/' => array('uid' => '1238', 'rid' => '1304'), //نقليه رحماني
-//حسب نامه 414953 معاونت امداد افزوده شد 951127
-            '/6488/' => array('uid' => '3557', 'rid' => '6492'), //معاونت امداد _ اسماعيل ناظري
-            '/6290/' => array('uid' => '4811', 'rid' => '6300'), //تستي تستي
-            '/9533/' => array('uid' => '2105', 'rid' => '3038'), //معاونت ارتباطات و رسانه محمود نجفي
-            '/9725/' => array('uid' => '64', 'rid' => '1232'), //معاونت برنامه و بودجه عبدالله نظري Add By Akhavan 97/05/22 - Form ICT 8731148
-            '/8660/' => array('uid' => '1185', 'rid' => '2163'),// مركز فناوري اطلاعات و فضاي مجازي مرتضي يزدي
-            //'/9856/' => array('uid' => '972', 'rid' => '1759'), //مديريت برنامه و بودجه سازمان حرم مطهّر رضوي افخمي
-            //'/9847/' => array('uid' => '972', 'rid' => '1759'), //مديريت پشتيباني سازمان حرم مطهّر رضوي افخمي
-            '/3629/' => array('uid' => '5083', 'rid' => '6475'), //مديريت املاك و اراضي سرخس هادي شايق
-            '/8674/' => array('uid' => '332', 'rid' => '9848') //معاونت علمي آستان قدس رضوي جواد ديانتي نيت
-        );
-
-        if( (strpos($path, '/3438/') !== false) || (strpos($path, '/3441/') !== false)|| (strpos($path, '/3472/') !== false)|| (strpos($path, '/3466/') !== false)){
-            $execution->setVariable('haram', '1');
-        }else{
-            $execution->setVariable('haram', '0');
+        $sql = "SELECT 
+            oa_content.IsScan,
+            oa_content.RealFileName, 
+            oa_content.RowID, 
+            oa_content.MimeType, 
+            Date(oa_content.CreateDate) AS CD, 
+            oa_content.EncryptedHeader,
+            oa_content.ContentType, 
+            oa_content.PhysicalFileName, 
+            oa_content.CurrentAddress,
+            oa_content.DocReferID, 
+            oa_content.SecID 
+        FROM oa_content
+        INNER JOIN dm_structure_field on(dm_structure_field.StructID = 873 and oa_content.PersistFileName = dm_structure_field.RowID)
+        WHERE 
+            oa_content.DocReferID = $docID 
+            AND oa_content.contentState = 1
+            and dm_structure_field.FieldName = 'field_6' 
+            and dm_structure_field.IsEnable = 1";
+        $db = MySQLAdapter::getInstance();
+        $db->executeSelect($sql);
+        if (!$row = $db->fetchAssoc()) {
+            $res = '<span style="color:red">فايل  پيوست يافت نشد</span>';
+            $execution->workflow->myForm->setFieldValueByName('Field_11', $res);
+            return false;
         }
+        $file_name = $row['RealFileName'];
+        $cid = $row['RowID'];
+        $type = $row['MimeType'];
+        $isScan = $row['IsScan'];
+        $referDocId = $row['DocReferID'];
 
-        /* add by mohammadzadeh for fava users */
-        $person = $execution->workflow->myForm->getFieldValueByName( 'Field_0');
-        $rid = $person[0]['rid'];
-        $acm = AccessControlManager::getInstance();
-        $gid = $acm->getUserGroupID($rid);
-        $gids = explode(',', $gid);
-        $execution->setVariable('favaEmp', '0');
-        if(in_array(25, $gids)){
-            $execution->workflow->myForm->setFieldValueByName( 'Field_11', array( array('uid' => '1185', 'rid' => '2163') ) ); // مرتضي يزدي
-            $execution->setVariable('favaEmp', '1');
-            return true;
-        }
+        Response::getInstance()->doGenerate = false;
 
-        /* انتخاب ثبات پرسنل امريه */
-        if(in_array(35, $gids)){
-            $execution->workflow->myForm->setFieldValueByName( 'Field_11', array( array('uid' => '4509', 'rid' => '1273') ) ); //  جواد فاني ديسفاني
-            return true;
-        }
+        $date = explode('-', $row['CD']);
+        $now = Date::gregorian_to_jalali($date[0], $date[1], $date[2]);
 
-        $vtype = $execution->workflow->myForm->getFieldValueByName( 'Field_5');
-        $vlen = $execution->workflow->myForm->getFieldValueByName( 'Field_4');
-        /* add type 32 by mohammadzadeh */
-        /* add type 4 by mohammadzadeh */
-        /* add type 33 by mohammadzadeh */
-        if( intval($vtype) == 20 || intval($vtype) == 31 || intval($vtype) == 5 || intval($vtype) == 32 || intval($vtype) == 4 || intval($vtype) == 33  ||  intval($vtype) == 50){
-            //changed by abdollahi 950530
-            $execution->workflow->myForm->setFieldValueByName( 'Field_11', array( array('uid' => '9070', 'rid' => '1866') ) ); // محمدعلی رضائی
-            if( intval($vtype) == 50)//990106 added by abdollahi
-                $execution->workflow->myForm->setFieldValueByName( 'Field_11', array( array('uid' => '1024', 'rid' => '1270') ) ); //مسلم فدایی
-            return true;
-        }
 
-        $execution->setVariable('specRegister', '0');
-        foreach($arr as $key => $value){
-            if( strpos($path, $key) !== false){
-                $execution->workflow->myForm->setFieldValueByName( 'Field_11', array($value) );
+        $path = SecUtils::GetStoragePath($row['SecID'], $now[0], $now[1]);
 
-                // add by mohammadzadeh for irajZad
-                if ($value['rid'] == $mainSecRid)
-                    $execution->setVariable('specRegister', '1');
+        $cont = $row['EncryptedHeader'];
+        $cont = SecureContent::Decode($cont);
+        $detailID = 875;
 
-                return true;
+        if (file_exists($path . $cid)) {
+
+            $content = $cont . file_get_contents($path . $cid);
+            $content = base64_encode($content);
+
+            $client = new SoapClient('http://10.10.10.113/WSExcelTools/default.asmx?wsdl');
+            $html = '';
+            $param = array('strBase64FileData' => $content, 'extension' => 'xlsx');
+            $resp1 = $client->ExcelToJson($param);
+            $lines = $resp1->ExcelToJsonResult;
+            $lines = json_decode($lines, true);
+
+            $repeat = array();
+            $fails = array();
+
+            if(!$lines || count($lines) == 0) {
+                $res = '<span style="color:red">ليست وارد شده خالي ميباشد<br>('.var_export($resp1->ExcelToJsonResult, true).')</span>';
+                $execution->workflow->myForm->setFieldValueByName('Field_11', $res);
+                return;
             }
+            foreach ($lines as $line) {
+                // Skip the empty line
+                if (empty($line)) continue;
+                $nationalCode = $line['field_0'];
+                $sql = "select count(dm.RowID) from dm_datastoretable_$detailID dm
+                inner join oa_document on(oa_document.RowID = dm.DocID and oa_document.IsEnable = 1)
+                inner join dm_datastoretable_873 pdm on(pdm.DocID = dm.MasterID)
+                inner join oa_document parentDocument on(parentDocument.RowID = pdm.DocID and parentDocument.IsEnable = 1)
+                inner join wf_execution on(wf_execution.execution_doc_id = pdm.DocID AND wf_execution.is_enable = 1)
+                where dm.Field_0 like '$nationalCode' and pdm.Field_12 > 2";
+                $check = $db->executeScalar($sql);
+
+                $birthDate = Date::JalaliToGreg($line['field_1']);
+                $validCheck = $this->nationalCodeCheck($nationalCode, $birthDate);
+                if (intval($check) > 0) {
+                    $repeat[] = $nationalCode;
+                }
+                elseif ($validCheck !== true){
+                    $fails[] = $nationalCode.'('.$validCheck.') ';
+                }
+            }
+            if(count($repeat) || count($fails)){
+                if(count($repeat)) {
+                    $res = '<span style="color:red">اين شماره ملي ها قبلا در سيستم ثبت گرديده: <br>' . implode(',', $repeat).'</span>';
+                }
+                if(count($fails)) {
+                    $res .= '<br><span style="color:red">اين شماره ملي ها معتبر نميباشند، شماره ملي و تاريخ تولد هريك را بررسي نماييد: <br>' . implode(',', $fails).'</span>';
+                }
+                $execution->workflow->myForm->setFieldValueByName('Field_11', $res);
+                return;
+            }
+            foreach ($lines as $line) {
+                // Skip the empty line
+                if (empty($line)) continue;
+
+                $nationalCode = $line['field_0'];
+                $birthDate = $line['field_1'];
+                $name = $line['field_2'];
+                $family = $line['field_3'];
+
+                $myForm = new DMSNFC_form(array('fieldid' => $detailID, 'docid' => null, 'referid' => null, 'masterid' => $docID));
+                $fdata = array("10690" => $nationalCode, "10695" => $name, "10697" => $family, "11765" => $birthDate);
+                $myForm->setData($fdata);
+            }
+
+        } else {
+            $res = '<span style="color:red">متاسفانه فايل پيوست يافت نشد</span>';
+            $execution->workflow->myForm->setFieldValueByName('Field_11', $res);
+            return;
         }
-        $execution->workflow->myForm->setFieldValueByName( 'Field_11', array(array('uid' => $mainSecUid, 'rid' => $mainSecRid) ) );
-        $execution->setVariable('specRegister', '1');
-        return true;
+
 
     }
 }
-
 
 ?>

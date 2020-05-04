@@ -29,6 +29,9 @@ class calssName
             }
         }
 
+
+
+
         if ($selectedDept) {
             $sql = "select Name 
                         from oa_depts_roles
@@ -38,6 +41,8 @@ class calssName
             $sql = "update oa_document set Subject = concat(Subject,'$dept') where RowID = $docID";
             $db->execute($sql);
         }
+
+
 
         $execution->setVariable('companyName', $dept);
 
