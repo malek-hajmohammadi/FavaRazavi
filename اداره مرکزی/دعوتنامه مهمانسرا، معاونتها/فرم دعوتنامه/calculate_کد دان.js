@@ -1,5 +1,8 @@
 this.jcode = function (self) {
     self.birthdayDates = new Array();
+    self.output;
+    self.fileName;
+
 
     /*هر دو پس از ذخیره سازی جدول true می شوند*/
     self.isSaved=false;
@@ -336,4 +339,76 @@ this.jcode = function (self) {
 
 
     };
+
+   /*زمانیکه دکمه استخراج از فایل اکسل را زد تابع زیر فراخوانی می شود*/
+    self.exportExcelToTable=function(){
+
+
+        let fileName= FormView.myForm.getItemByName('Field_9').getData();
+        if(fileName==""){
+            Utils.showModalMessage('فایلی پیوست نشده است');
+            return;
+        }
+        if(fileName==self.fileName){
+            Utils.showModalMessage('فایل پیوست یکبار به لیست اضافه شده است');
+            return;
+        }
+        self.fileName=fileName;
+
+
+        var gotResponse = function (o) {
+
+
+            Utils.showProgress(false);
+            let listExcel=JSON.parse(o.responseText);
+
+
+/* به جای json.parse از eval استفاده کنیم که اگر مشکلی در جیسون بود این تابع رفعش می کنه*/
+
+            var i=0;
+            var item="";
+
+            var lengthTable = $jq('.guestTable > tbody > tr').length;
+            let newTrId=lengthTable-1;
+
+
+
+
+            self.output=listExcel;
+            for(let i=0;i<listExcel.length;i++){
+                item=listExcel[i];
+
+
+
+
+                let firstName=item['name'];
+                let lastName=item['family'];
+                let birthday=item['birthDate'];
+                let nationalCode=item['nationalCode'];
+                self.addRow(birthday);
+                $jq('.guestTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'firstName\'] ').val(firstName);
+                $jq('.guestTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'lastName\'] ').val(lastName);
+                $jq('.guestTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'nationalCode\'] ').val(nationalCode);
+
+                var lengthTable = $jq('.guestTable > tbody > tr').length;
+                self.birthdayDates[lengthTable-2].setDate(birthday);
+
+
+                newTrId++;
+
+            }
+            self.fillGuestList();
+
+
+        };
+
+
+        var callback = {
+            success: gotResponse
+        };
+        var url = "../Runtime/process.php";
+        var param = 'module=WorkFlowAjaxFunc&action=extractExcel&docId=' + FormView.docID;
+        SAMA.util.Connect.asyncRequest('POST', url, callback, param);
+    };
+
 };

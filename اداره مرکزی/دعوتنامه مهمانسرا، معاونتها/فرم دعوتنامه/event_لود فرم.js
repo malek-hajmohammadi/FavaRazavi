@@ -3,6 +3,13 @@ listener = function (event) {
     var waitInterval = setInterval(function () {
         if (FormView && FormView.myForm) {
            var stage=FormView.myForm.getItemByName('Field_16').getData();
+
+           if(stage!="1")/*edit mode*/
+           {
+               $jq(".excelDiv").css("display","none")
+           }
+
+
             html = FormView.myForm.getItemByName('Field_21').showTable(stage);
             $jq('.tableGuest').html(html);
             FormView.myForm.getItemByName('Field_21').setDateObjectAll();
