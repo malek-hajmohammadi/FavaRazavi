@@ -192,7 +192,7 @@ this.jcode = function (self) {
         let resCheck = self.isAllItemFilled();
         if (resCheck == 0) {
           self.buildResultString();
-           /* Utils.fastAjax('WorkFlowAjaxFunc', 'saveQuestionerNegaresh');*/
+            Utils.fastAjax('WorkFlowAjaxFunc', 'saveQuestionerNegaresh',{userId:120,questionerList:"malek"});
             Utils.showModalMessage('با تشکر، پاسخنامه شما با موفقیت ثبت شد');
         } else {
             Utils.showModalMessage('لطفا به آیتم ردیف' + resCheck + 'پاسخ دهید');

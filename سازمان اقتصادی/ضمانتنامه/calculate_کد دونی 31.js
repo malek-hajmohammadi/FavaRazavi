@@ -651,8 +651,11 @@ this.jcode = function (self) {
         printWin.close();
 
     };
+    self.downloadAtachment=function(){
+        let docId=FormView.did;
+        let url="https://ravan.reo.ir/RAVAN/Runtime/process.php?module=WorkFlowAjaxFunc&amp;action=getAttachments&amp;docID="+docId;
+        window.open(url);
 
-
-
+    };
 
 };
