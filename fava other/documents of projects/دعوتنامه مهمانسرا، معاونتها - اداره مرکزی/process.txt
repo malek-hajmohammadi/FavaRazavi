@@ -1,0 +1,80 @@
+-------------------------------
+request JSON sample:
+-------------------------------
+{
+	"apiKey": "aqrezvan",
+	"apiPass": "**********",
+	"letterNo": "123456",
+	"yearNo": "1398"
+}
+
+
+-------------------------------
+response JSON samples:
+-------------------------------
+{
+	"isFound": True,
+	"status": "verified",
+	"quotaType": "تشریفات",
+	"requestedBy": "عباسی",
+	"verifiedBy": "امینی گازار",
+	"verifiedMeal": "l",
+	"verifiedDate": "1398-12-18",
+	"count": 2,
+	"verifyNotes": "فیلد توضیحات تایید کننده...",
+	"persons":
+	[
+		{
+			"nationalCode": "0123456789",
+			"birthDate": "1370-01-01",
+			"mobile": "09151234567",
+			"verifyBySabt": True
+		},
+		{
+			"nationalCode": "0123456790",
+			"birthDate": "1370-01-02",
+			"mobile": "09151234567"
+			"verifyBySabt": True
+		},
+	]
+}
+----------------------
+{
+	"isFound": False,
+	"status": null
+	"quotaType": null
+	"requestedBy": null
+	"verifiedBy": null
+	"verifiedMeal": null
+	"verifiedDate": null,
+	"count": null,
+	"verifyNotes": null,
+	"persons":null,
+}
+----------------------
+{
+	"isFound": True,
+	"status": "in_progress",
+	"quotaType": "تشریفاتی",
+	"requestedBy": "عباسی",
+	"verifiedBy": "امینی گازار",
+	"verifiedMeal": "d",
+	"verifiedDate": "1398-12-18",
+	"count": 2,
+	"verifyNotes": "فیلد توضیحات تایید کننده...",
+	"persons":
+	[
+		{
+			"nationalCode": "0123456789",
+			"birthDate": "1370-01-01",
+			"mobile": "09151234567",
+			"verifyBySabt": True
+		},
+		{
+			"nationalCode": "0123456790",
+			"birthDate": "1370-01-02",
+			"mobile": "09151234567",
+			"verifyBySabt": True
+		},
+	]
+}
