@@ -51,28 +51,33 @@ this.jcode = function (self) {
        /* if ($jq('#companyName > input').val().trim().length > 0) searchFields.companyName = $jq('#companyName').val().trim();*/
        let company=FormOnly.allFieldsContianer[3].getData();
         searchFields.companyName= FormOnly.allFieldsContianer[3].getData();
+        searchFields.bankID= FormOnly.allFieldsContianer[4].getData();
+
+        /*بازه مبلغ*/
         if ($jq('#priceFrom').val().trim().length > 0) searchFields.priceFrom = $jq('#priceFrom').val().trim();
         if ($jq('#priceTo').val().trim().length > 0) searchFields.priceTo = $jq('#priceTo').val().trim();
+        /*شماره چک ها*/
         if ($jq('#checkNum1').val().trim().length > 0) searchFields.checkNum1 = $jq('#checkNum1').val().trim();
         if ($jq('#checkNum2').val().trim().length > 0) searchFields.checkNum2 = $jq('#checkNum2').val().trim();
-        if ($jq('#checkDoc1').val().trim().length > 0) searchFields.checkDoc1 = $jq('#checkDoc1').val().trim();
-        if ($jq('#checkDoc2').val().trim().length > 0) searchFields.checkDoc2 = $jq('#checkDoc2').val().trim();
+
+        /*نوع تسهیلات*/
         if ($jq('#loanType').val() != 0) searchFields.loanType = $jq('#loanType').val();
        /* if ($jq('#bankID').val() != 0) searchFields.bankID = $jq('#bankID').val();*/
-        if ($jq('#acceptOne').val() != 0) searchFields.acceptOne = $jq('#acceptOne').val();
-        if ($jq('#acceptTwo').val() != 0) searchFields.acceptTwo = $jq('#acceptTwo').val();
+
+        /*وضعیت درخواست*/
         if ($jq('#requestStatus').val() > 0) searchFields.requestStatus = $jq('#requestStatus').val();
+
+        /*شرح درخواست*/
         if ($jq('#requestDesc').val().trim().length > 0) searchFields.requestDesc = $jq('#requestDesc').val().trim();
+        /*شرح دلایل حسابداری*/
         if ($jq('#descOne').val().trim().length > 0) searchFields.descOne = $jq('#descOne').val().trim();
-        if ($jq('#descTwo').val().trim().length > 0) searchFields.descTwo = $jq('#descTwo').val().trim();
+
         var createDateFrom = FormOnly.allFieldsContianer[1].getData();
         if (createDateFrom.length > 0) searchFields.createDateFrom = createDateFrom;
         var createDateTo = FormOnly.allFieldsContianer[2].getData();
         if (createDateFrom.length > 0) searchFields.createDateTo = createDateTo;
 
-        let companyName=FormOnly.allFieldsContianer[4].getData();
-        if (companyName.length>0)
-            searchFields.companyName=companyName;
+
 
        /* let bankId=FormOnly.allFieldsContianer[5].getData();*/
 

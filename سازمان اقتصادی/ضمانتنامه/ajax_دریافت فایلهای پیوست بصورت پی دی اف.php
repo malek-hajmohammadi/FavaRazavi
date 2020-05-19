@@ -18,7 +18,7 @@ $sql = "SELECT oa_content.RealFileName,
               oa_content.SecID
         FROM oa_content
         WHERE (oa_content.DocReferID = :did) 
-            AND (oa_content.MimeType like '%image/jpeg%' OR oa_content.RealFileName LIKE '%.jpg' OR oa_content.RealFileName LIKE '%.jpeg')
+            AND (oa_content.MimeType like '%image/jpeg%' OR oa_content.RealFileName LIKE '%.jpg' OR oa_content.RealFileName LIKE '%.jpeg') and  (oa_content.contentState = 1)
 		  ";
 $db->executeSelect($sql, $PDOParams);
 

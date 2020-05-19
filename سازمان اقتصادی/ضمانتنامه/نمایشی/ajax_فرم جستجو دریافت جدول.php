@@ -7,14 +7,14 @@ $rid = $acm->getRoleID();
 $uid = $acm->getUserID();
 
 $PDOParams = array();
-
+/*INNER JOIN oa_doc_refer on(oa_doc_refer.DocID = oa_document.RowID)*/
 $sql = "
 from  dm_datastoretable_50 dm
 INNER JOIN oa_document on(oa_document.RowID = dm.DocID and oa_document.IsEnable = 1)
-INNER JOIN oa_doc_refer on(oa_doc_refer.DocID = oa_document.RowID)
+
 INNER JOIN wf_execution on(wf_execution.execution_doc_id = dm.DocID AND wf_execution.is_enable = 1)
 ";
-$sqlWhere .= " where dm.Field_32 > 0 ";
+$sqlWhere .= " where dm.Field_32 >= 0 ";
 
 
 $companyName = Request::getInstance()->varCleanFromInput('companyName');
@@ -66,7 +66,7 @@ if ($loanType && intval($loanType) != 0) {
 
 $bankID = Request::getInstance()->varCleanFromInput('bankID');
 if ($bankID && intval($bankID) != 0) {
-    $sqlWhere .= " and dm.Field_24 = :bankID";
+    $sqlWhere .= " and dm.Field_40 = :bankID";
     $PDOParams[] = array('name' => 'bankID', 'value' => $bankID, 'type' => PDO::PARAM_INT);
 }
 
@@ -236,17 +236,99 @@ $db->executeSelect($sqlList, $PDOParams);
 $rowIndex = $rowsStart;
 while ($row = $db->fetchAssoc()) {
 
-    $bankName="";
-    switch ($row['Field_24']){
-        case 1: $bankName="صادرات";
+    $bankName = "";
+    switch ($row['Field_40']) {
+        case 30:
+            $bankName = "بانک صادرات";
             break;
-        case 2:$bankName= "ملت";
+        case 1:
+            $bankName = "بانک ملت";
             break;
-        case 3:$bankName="تجارت";
+        case 2:
+            $bankName = "بانک ملی ایران";
+            break;
+        case 3:
+            $bankName = "بانک سپه";
+            break;
+        case 4:
+            $bankName = "بانک اقتصاد نوین";
+            break;
+        case 5:
+            $bankName = "بانک قرض‌الحسنه مهر ایران";
+            break;
+        case 6:
+            $bankName = "بانک پارسیان";
+            break;
+        case 7:
+            $bankName = "بانک قرض‌الحسنه رسالت";
+            break;
+        case 8:
+            $bankName = "بانک صنعت و معدن";
+            break;
+        case 9:
+            $bankName = "بانک کارآفرین";
+            break;
+        case 10:
+            $bankName = "بانک کشاورزی";
+            break;
+        case 11:
+            $bankName = "بانک سامان";
+            break;
+        case 12:
+            $bankName = "بانک مسکن";
+            break;
+        case 13:
+            $bankName = "بانک سینا";
+            break;
+        case 14:
+            $bankName = "بانک توسعه صادرات ایران";
+            break;
+        case 15:
+            $bankName = "بانک خاور میانه";
+            break;
+        case 16:
+            $bankName = "بانک توسعه تعاون";
+            break;
+        case 17:
+            $bankName = "بانک شهر";
+            break;
+        case 18:
+            $bankName = "پست بانک ایران";
+            break;
+        case 19:
+            $bankName = "بانک دی";
+            break;
+        case 20:
+            $bankName = "بانک ملت";
+            break;
+        case 21:
+            $bankName = "بانک تجارت";
+            break;
+        case 22:
+            $bankName = "بانک رفاه";
+            break;
+        case 23:
+            $bankName = "بانک حکمت ایرانیان";
+            break;
+        case 24:
+            $bankName = "بانک گردشگری";
+            break;
+        case 25:
+            $bankName = "بانک ایران زمین";
+            break;
+        case 26:
+            $bankName = "بانک قوامین";
+            break;
+        case 27:
+            $bankName = "بانک انصار";
+            break;
+        case 28:
+            $bankName = "بانک سرمایه";
+            break;
+        case 29:
+            $bankName = "بانک پاسارگاد";
             break;
     }
-
-
 
     $referDate = Date::GregToJalali($row['ReferDate']) . '<br>' . ((explode(' ', $row['ReferDate'])[1]));
     $status = $statusArray[intval($row['Field_32'])];
@@ -256,7 +338,7 @@ while ($row = $db->fetchAssoc()) {
     $row['Field_2'] = strrev($price);
     $body .= '
 <tr id="accessRow_' . (++$i) . '" >
-    <td style="padding: 2px;border: 1px solid #ccc;" >' . $rowIndex++ . '</td>
+    <td style="padding: 2px;border: 1px solid #ccc;" >' . ++$rowIndex . '</td>
     <td style="padding: 2px;border: 1px solid #ccc;" >' . $row['DocID'] . '</td>
     <td style="padding: 2px;border: 1px solid #ccc;" onmouseover="Tooltip.show(this, \'<b>شرح درخواست:</b> ' . filter_var($row['Field_5'], FILTER_SANITIZE_STRING) . '\',\'500px\')" onmouseout="Tooltip.hide()">' . $row['Field_0'] . '</td>
     <td style="padding: 2px;border: 1px solid #ccc;" >' . $row['Field_2'] . '</td>
@@ -276,8 +358,6 @@ $sumCount = 0;
 while ($row = $db->fetchAssoc()) {
 
     $state=$row['Field_32'];
-    if ($state=="2" || $state=="3" || $state=="4" )
-        continue;
     $sumCount += $row['offerCount'];
     $counts[] = $row;
 }

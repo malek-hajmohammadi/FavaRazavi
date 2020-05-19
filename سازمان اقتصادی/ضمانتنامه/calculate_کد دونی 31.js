@@ -5,7 +5,7 @@ this.jcode = function (self) {
     let shobeh;
     self.btnConfirmMoteghazi = function () {
 
-        var companyName = FormView.myForm.getItemByName('Field_33').getData().length;
+        var companyName = FormView.myForm.getItemByName('Field_0').getData().length;
         if (companyName < 1) {
             Utils.showModalMessage('شما قادر به  ثبت درخواست ضمانتنامه بانکی نیستید');
             return false;
@@ -321,7 +321,7 @@ this.jcode = function (self) {
             .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 
 
-        self.company = FormView.myForm.getItemByName('Field_33').currentData[1];
+        self.company = FormView.myForm.getItemByName('Field_0').getData();
 
         self.bank=FormView.myForm.getItemByName('Field_40').currentData[1];
         self.shobeh=FormView.myForm.getItemByName('Field_26').getData();
@@ -331,11 +331,11 @@ this.jcode = function (self) {
        
         
 
-        template1 = "نظر به اینکه شرکت " + self.company;
+        template1 = "نظر به اینکه  " + self.company;
         template1 += " متعلق به آستان قدس رضوی تقاضای اخذ تسهیلات به مبلغ " + tashilat;
         template1 += " ریال را از آن بانک دارد، لذا بدینوسیله اعلام میدارد در صورت عدم پرداخت تعهدات توسط شرکت مذکور، این سازان بازپرداخت بدهی فوق الذکر (اصل ، سود و وجه التزام) را در موعد مقرر تعهد و تضمین می نماید. لازم به ذکر است که این ضمانتنامه بابت یک نوبت می باشد.";
 
-        template2 = "در راستاي اجراي تفاهم نامه شماره 863762/98 مورخ 13/08/98 في مابين بانك صادرات ايران و سازمان اقتصادي رضوي و با عنايت به درخواست تسهيلات شركت " + self.company;
+        template2 = "در راستاي اجراي تفاهم نامه شماره 863762/98 مورخ 13/08/98 في مابين بانك صادرات ايران و سازمان اقتصادي رضوي و با عنايت به درخواست تسهيلات  " + self.company;
         template2 += " به شماره ثبت "+shomarehSabt+" و شناسه ملي "+shenaseMeli+" به مبلغ " + tashilat;
 
         template2 += " بدينوسيله اين سازمان با نمايندگي مديرعامل، امضاداران مجاز سازمان، قبول و تضمين نمود كه متضامناً با آن شركت متعهد به پرداخت مطالبات بانك خواهد بود لذا در صورت عدم پرداخت هر قسط از اقساط معوقه از طرف شركت " + self.company;
@@ -378,13 +378,15 @@ this.jcode = function (self) {
         });
         $jq('.saghf >input').attr("readonly","true");
         $jq('.saghf >input').css("background","gainsboro");
+        $jq('.company >input').attr("readonly","true");
+        $jq('.company >input').css("background","gainsboro");
 
         $res = "<button id='SearchButton' onclick='FormView.myForm.getItemByName(\"Field_0\").LoadJS()'>جستجو</button>";
 
 
     };
     self.printZemanatnamehWithoutRonevesht=function(){
-        self.company = FormView.myForm.getItemByName('Field_33').currentData[1];
+        self.company = FormView.myForm.getItemByName('Field_0').getData();
         self.bank=FormView.myForm.getItemByName('Field_40').currentData[1];
         self.shobeh=FormView.myForm.getItemByName('Field_26').getData();
         self.template=FormView.myForm.getItemByName('Field_30').getData();
@@ -508,7 +510,7 @@ this.jcode = function (self) {
     };
 
     self.printZemanatnamehWithRonevesht=function(){
-        self.company = FormView.myForm.getItemByName('Field_33').currentData[1];
+        self.company = FormView.myForm.getItemByName('Field_0').getData();
         self.bank=FormView.myForm.getItemByName('Field_40').currentData[1];
         self.shobeh=FormView.myForm.getItemByName('Field_26').getData();
         self.template=FormView.myForm.getItemByName('Field_30').getData();
@@ -653,7 +655,7 @@ this.jcode = function (self) {
     };
     self.downloadAtachment=function(){
         let docId=FormView.did;
-        let url="https://ravan.reo.ir/RAVAN/Runtime/process.php?module=WorkFlowAjaxFunc&amp;action=getAttachments&amp;docID="+docId;
+        let url="https://ravan.reo.ir/RAVAN/Runtime/process.php?module=WorkFlowAjaxFunc&action=getAttachments&docID="+docId;
         window.open(url);
 
     };

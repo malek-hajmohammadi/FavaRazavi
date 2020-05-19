@@ -13,7 +13,12 @@ class calssName
         $db = MySQLAdapter::getInstance();
         $docID = $execution->workflow->myForm->instanceID;
 
-        $depts = array(1848, 3159, 3158);
+        /*
+         2528 :شرکت شبکه بازار رضوی
+        2966: شرکت صنایع پیشرفته رضوی
+         */
+
+        $depts = array(1848,2966,2528 );
         $selectedDept = 0;
         $sql = "select path 
                         from oa_depts_roles
@@ -23,7 +28,7 @@ class calssName
         foreach ($depts as $deptID) {
 
             if (strpos($path, "/$deptID/") > 0) {
-                $execution->workflow->myForm->setFieldValueByName('Field_33', $deptID);
+
                 $selectedDept = $deptID;
                 break;
             }
@@ -39,6 +44,8 @@ class calssName
                         WHERE RowID = $selectedDept";
             $name = $db->executeScalar($sql);
             $dept = ' ' . $name;
+            $execution->workflow->myForm->setFieldValueByName('Field_0', $name);
+
             $sql = "update oa_document set Subject = concat(Subject,'$dept') where RowID = $docID";
             $db->execute($sql);
         }
