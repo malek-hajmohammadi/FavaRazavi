@@ -45,6 +45,7 @@ class calssName
             $name = $db->executeScalar($sql);
             $dept = ' ' . $name;
             $execution->workflow->myForm->setFieldValueByName('Field_0', $name);
+            $execution->workflow->myForm->setFieldValueByName('Field_33', $selectedDept);
 
             $sql = "update oa_document set Subject = concat(Subject,'$dept') where RowID = $docID";
             $db->execute($sql);

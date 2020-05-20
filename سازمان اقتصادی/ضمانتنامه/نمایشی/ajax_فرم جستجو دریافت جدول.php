@@ -5,21 +5,21 @@ $db = PDOAdapter::getInstance();
 $acm = AccessControlManager::getInstance();
 $rid = $acm->getRoleID();
 $uid = $acm->getUserID();
-
+/*INNER JOIN wf_execution on(wf_execution.execution_doc_id = dm.DocID AND wf_execution.is_enable = 1)*/
 $PDOParams = array();
-/*INNER JOIN oa_doc_refer on(oa_doc_refer.DocID = oa_document.RowID)*/
+
 $sql = "
 from  dm_datastoretable_50 dm
 INNER JOIN oa_document on(oa_document.RowID = dm.DocID and oa_document.IsEnable = 1)
+INNER JOIN oa_doc_refer on(oa_doc_refer.DocID = oa_document.RowID)
 
-INNER JOIN wf_execution on(wf_execution.execution_doc_id = dm.DocID AND wf_execution.is_enable = 1)
 ";
 $sqlWhere .= " where dm.Field_32 >= 0 ";
 
 
 $companyName = Request::getInstance()->varCleanFromInput('companyName');
 if ($companyName && strlen($companyName) > 0) {
-    $sqlWhere .= " and dm.Field_0 like :companyName";
+    $sqlWhere .= " and dm.Field_33 like :companyName";
     $PDOParams[] = array('name' => 'companyName', 'value' => "%$companyName%", 'type' => PDO::PARAM_INT);
 }
 
