@@ -380,8 +380,16 @@ this.jcode = function (self) {
         $jq('.saghf >input').css("background","gainsboro");
         $jq('.company >input').attr("readonly","true");
         $jq('.company >input').css("background","gainsboro");
+        $jq('.companyT ').css("display","none");
 
-        $res = "<button id='SearchButton' onclick='FormView.myForm.getItemByName(\"Field_0\").LoadJS()'>جستجو</button>";
+
+        /*برای اینکه دکمه ها فقط در مرحله دبیرخانه دیده بشوند*/
+        if(self.shobeh=FormView.myForm.getItemByName('Field_32').getData()<5)
+           $jq('.btntd ').css("display","none");
+
+
+
+
 
 
     };
