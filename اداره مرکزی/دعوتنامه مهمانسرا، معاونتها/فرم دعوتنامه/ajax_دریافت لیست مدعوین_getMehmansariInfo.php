@@ -1,8 +1,8 @@
 <?php
-
+/*
 $docId = 12010559;//تایید شده//
 $docId = 22287812;//وجود ندارد//
-$docId = 12287004; //مهمان دارد//
+$docId = 12287004; //مهمان دارد//*/
 
 $jsonReturn = array();
 $jsonReturn['isFound'] = true;
@@ -28,7 +28,7 @@ $jsonReturn['persons'][1]['birthDate'] = "1390/01/01";
 $jsonReturn['persons'][1]['mobile'] = "24244242";
 $jsonReturn['persons'][1]['verifyBySabt'] = false;
 
-/*
+
 if (!Request::getInstance()->varCleanFromInput('docId')) {
     $returnString="پارامتر docId ورودی ندارد";
     Response::getInstance()->response = $returnString;
@@ -36,7 +36,7 @@ if (!Request::getInstance()->varCleanFromInput('docId')) {
 }
 
 $docId=Request::getInstance()->varCleanFromInput('docId');
-*/
+
 $sql = "SELECT * FROM `dm_datastoretable_1098` WHERE `DocID`=:docId";
 $db = PDOAdapter::getInstance();
 $PDOParams = array(

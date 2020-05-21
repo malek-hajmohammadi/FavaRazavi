@@ -384,8 +384,13 @@ this.jcode = function (self) {
 
 
         /*برای اینکه دکمه ها فقط در مرحله دبیرخانه دیده بشوند*/
-        if(self.shobeh=FormView.myForm.getItemByName('Field_32').getData()<5)
+        if(FormView.myForm.getItemByName('Field_32').getData()<5)
            $jq('.btntd ').css("display","none");
+
+        /*برای اینکه انتخاب قالب فقط برای حسابداری دیده بشه*/
+        if(FormView.myForm.getItemByName('Field_32').getData()!=1)
+            $jq('.selectTemplate ').css("display","none");
+
 
 
 

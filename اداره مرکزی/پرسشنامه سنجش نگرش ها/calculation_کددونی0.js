@@ -2,7 +2,7 @@ this.jcode = function (self) {
     self.listOfQuestions = [];
     self.tagQuestion = [];
     self.htmlToAdd = "";
-    self.resultString = "";
+    self.resultString=[] ;
     self.loadForm = function () {
         self.fillListOfQuestions();
         self.createTagQuestions();
@@ -189,34 +189,43 @@ this.jcode = function (self) {
     };
 
     self.saveQuestioner = function () {
-        let resCheck = self.isAllItemFilled();
+        let resCheck = self.fillAnswers();
         if (resCheck == 0) {
-          self.buildResultString();
-            Utils.fastAjax('WorkFlowAjaxFunc', 'saveQuestionerNegaresh',{userId:120,questionerList:"malek"});
+
+            var userId=Main["FirstPageParameters"]["userInfo"]['id'];
+            var dep=FormOnly.allFieldsContianer[1].getData();
+            Utils.fastAjax('WorkFlowAjaxFunc', 'saveQuestionerNegaresh',{userId:userId,questionerList:JSON.stringify(self.resultString),dep:dep});
             Utils.showModalMessage('با تشکر، پاسخنامه شما با موفقیت ثبت شد');
         } else {
             Utils.showModalMessage('لطفا به آیتم ردیف' + resCheck + 'پاسخ دهید');
         }
     };
 
-    self.isAllItemFilled = function () {
-       /* for (i = 1; i <= self.listOfQuestions.length; i++) {
-            let value = $jq("input[name='rGroupS2R68']:checked").val();
-            if (!value){
-                return i;
-            }
-        }*/
 
-        return 0;
+    self.fillAnswers= function () {
 
-    };
-    self.buildResultString = function () {
-        for (i = 1; i <= self.listOfQuestions.length; i++) {
-            let value = $jq("input[name='rGroupS2R68']:checked").val();
+        for (i = 1; i <= 5; i++) {
+            let item="rGroupS1R"+i;
+            let value = $jq("input[name='"+item+"']:checked").val();
             if (!value) value = 9;
-            let response = "item" + i + "=" + value+";";
-            self.resultString += response;
+
+            let obj=new Object();
+            obj.question=item;
+            obj.answer=value;
+            self.resultString.push(obj);
+
         }
+        for (i = 1; i <= self.listOfQuestions.length; i++) {
+            let item="rGroupS2R"+i;
+            let value = $jq("input[name='"+item+"']:checked").val();
+            if (!value) value = 9;
+
+            let obj=new Object();
+            obj.question=item;
+            obj.answer=value;
+            self.resultString.push(obj);
+        }
+        return 0;
     };
 
 };
