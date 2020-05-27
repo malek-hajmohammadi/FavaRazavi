@@ -70,11 +70,7 @@ if (file_exists($path . $cid)) {
 
     $client = new SoapClient('http://10.10.10.113/WSExcelTools/default.asmx?wsdl');
     $html = '';
-    $param = array('strBase64FileData' => $content, 'extension' => 'xlsx');
 
-    $resp1 = $client->ExcelToJson($param);
-
-    $lines = $resp1->ExcelToJsonResult;
     $lines = json_decode($lines, true);
 
     $outputList = array();
