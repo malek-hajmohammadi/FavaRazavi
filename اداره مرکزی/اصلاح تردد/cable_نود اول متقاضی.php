@@ -39,9 +39,11 @@ class calssName // do not change this line
             $execution->setVariable('first-run', '1');
             /////اصلاح حاج محمدی : جهت افزودن نام و تاریخ متقاضی در موضوع و چکیده نامه////
 
-            $name=$person['fname']+$person['lname'];
+            $name=$person['fname']." ".$person['lname'];
             $date=$execution->workflow->myForm->getFieldValueByName('Field_12');
-            $subject="درخواست اصلاح تردد "+$name+" مورخه "+$date;
+            $subject="درخواست اصلاح تردد ".$name;
+            if (strlen($date)>5)
+                $subject.=" مورخه ".$date;
             MySQLAdapter::getInstance()->execute("UPDATE oa_document SET Subject = '$subject', DocDesc='$subject' WHERE RowID = " . $execution->workflow->myForm->instanceID);
 
             ///اتمام ////
