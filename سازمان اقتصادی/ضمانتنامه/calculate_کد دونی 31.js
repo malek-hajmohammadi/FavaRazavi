@@ -275,7 +275,6 @@ this.jcode = function (self) {
 
 
     };
-
     self.btnConfirmMoavenat = function () {
 
         /*
@@ -521,7 +520,6 @@ this.jcode = function (self) {
         printWin.close();
 
     };
-
     self.printZemanatnamehWithRonevesht=function(){
         self.company = FormView.myForm.getItemByName('Field_0').getData();
         self.bank=FormView.myForm.getItemByName('Field_40').currentData[1];
