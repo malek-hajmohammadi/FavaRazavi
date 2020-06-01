@@ -110,9 +110,9 @@ class calssName {
         /*sending SMS*/
 
         $letterNumForSMS=$did;
-        $fname."<br>"; /*آقای جواد جوادی*/
+        $fname."\n\r"; /*آقای جواد جوادی*/
         $text=$fname;
-        $text.="معرفی نامه به مراکز مشاوره صادر شد"."<br>"."شماره نامه: ".$letterNumForSMS;
+        $text.="معرفی نامه به مراکز مشاوره صادر شد"."\n\r"."شماره نامه: ".$letterNumForSMS;
         if(strlen($mobileForSMS)>0) {
             /*ثابت*/
             $db = PDOAdapter::getInstance();

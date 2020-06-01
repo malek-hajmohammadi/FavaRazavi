@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- ساخت دکمه که در ضمانتنامه استفاده شده-->
+<td class="btnTd" onfocus="FormBuilder.activateCell(this)" style="border: 1px dotted; width: 50%; height: 30px; text-align: center;"
+    tabindex="1">
+    <!--اگر خواستی تغییر در ظاهرش بدی، در تگ style این کار رو بکنم و اینکه td رو کپی نکنم-->
+    <style>        #buttoni {
+        transition-duration: 0.4s;
+        border: 2px solid #263238;
+        border-radius: 4px;
+        padding: 8px
+    }
+
+    #buttoni:hover {
+        background-color: #263238;
+        color: white;
+    } </style>
+    <button id="buttoni"
+            onclick="FormView.myForm.getItemByName(&quot;Field_31&quot;).printZemanatnamehWithoutRonevesht()"
+            tabindex="6001">چاپ ضمانتنامه رسمي
+    </button>
+
+</td>
+
+</body>
+</html>
