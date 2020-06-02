@@ -439,14 +439,12 @@ if(3) {
         $alternative = "";
 
     $header = "<tr>
-        <th width=\"5%\" style=\"padding: 2px; \">ردیف</th>
-        <th width=\"15%\" style=\"padding: 2px; \">نام</th>
-        <th width=\"20%\" style=\"padding: 2px; \">نام خانوادگی</th>
-        <th width=\"15%\" style=\"padding: 2px; \">کد ملی</th>
-        <th width=\"22%\" style=\"padding: 2px; \">تاریخ تولد</th>
-        <th width=\"5%\" style=\"padding: 2px; \">سابقه استفاده</th>
-        <th width=\"5%\" style=\"padding: 2px; \">نعیم رضوان</th>
-        <th width=\"5%\" style=\"padding: 2px; \">ثبت احوال</th>
+        <th width=\"10px\" style=\"padding: 2px; \">ردیف</th>
+        <th width=\"100px\" style=\"padding: 2px; \">نام</th>
+        <th width=\"20px\" style=\"padding: 2px; \">نام خانوادگی</th>
+         <th width=\"10px\" style=\"padding: 2px; \">شماره کارت</th>
+         <th width=\"20px\" style=\"padding: 2px; \">اضافه کار انجام شده</th>
+         <th width=\"20px\" style=\"padding: 2px; \">اضافه کار تایید شده</th>
         $alternative
          </tr>";
 }/*3- تعریف استایل و هیدر جدول*/
@@ -477,29 +475,7 @@ if(5){
     foreach ($dataInTable as $value) {
         $radif++;
 
-        $mojaz = " <span style=\"color:#00600f;font-weight: bold;\">مجاز</span>";
-        $barrasi = " <span style=\"color:#004ba0;font-weight: bold;\">نامشخص</span>";
-        $naMotabr = " <span style=\"color:#9a0007;font-weight: bold;\">نامعتبر</span>";
-        if ($value[4] == 1)
-            $value[4] = $barrasi;
-        else if ($value[4] == 2)
-            $value[4] = $mojaz;
-        else
-            $value[4] = $naMotabr;
 
-        if ($value[5] == 1)
-            $value[5] = $barrasi;
-        else if ($value[5] == 2)
-            $value[5] = $mojaz;
-        else
-            $value[5] = $naMotabr;
-
-        if ($value[6] == 1)
-            $value[6] = $barrasi;
-        else if ($value[6] == 2)
-            $value[6] = $mojaz;
-        else
-            $value[6] = $naMotabr;
 
         $alternative=($mode=='edit' || $mode=='justDelete')?"<td id=\"tdDeleteImg\" style=\"padding: 2px;background - color: #c5e1a5;border: 1px solid #ccc;\"><img onclick=\"FormView.myForm.getItemByName('Field_21').removeRow($radif)\"
                                                               src = \"gfx/toolbar/cross.png\" style = \"cursor: pointer;\" />
@@ -509,15 +485,13 @@ if(5){
     
     <tr class=\"tableRow_$radif\">
         <td style=\"padding: 2px;border: 1px solid #ccc;\">$radif</td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"> <input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" type=\"text\" name=\"firstName\" value=\"$value[0]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"> <input  $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" type=\"text\" name=\"firstName\" value=\"$value[0]\"></td>
         <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" type=\"text\" name=\"lastName\" value=\"$value[1]\"></td>
         <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" class=\"RavanMask\" data-inputmask-regex=\"([0-9]){10}\" dir=\"ltr\"  type=\"text\" name=\"nationalCode\" value=\"$value[2]\"></td>
         <td style=\"padding: 2px;border: 1px solid #ccc;\">
             <div id=\"birthdayDate_" . $radif . "\"><input type=\"text\" name=\"birthDay\" value=\"$value[3]\"></div>
         </td>
-        <td class='sabeghe' style=\"padding: 2px;border: 1px solid #ccc;\">$value[4]</td>
-        <td class='rezvan' style=\"padding: 2px;border: 1px solid #ccc;\">$value[5]</td>
-        <td class='ahval' style=\"padding: 2px;border: 1px solid #ccc;\">$value[6]</td>
+        
         $alternative
     </tr>";
     }
@@ -525,21 +499,7 @@ if(5){
 
 if (6) {
     $alternativeReadOnly = ($mode == 'edit') ? " " : "readonly";
-    $table .= "
-    
-    <tr class=\"tableRow_$radif\">
-        <td style=\"padding: 2px;border: 1px solid #ccc;\">$radif</td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"> <input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" type=\"text\" name=\"firstName\" value=\"$value[0]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" type=\"text\" name=\"lastName\" value=\"$value[1]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" class=\"RavanMask\" data-inputmask-regex=\"([0-9]){10}\" dir=\"ltr\"  type=\"text\" name=\"nationalCode\" value=\"$value[2]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\">
-            <div id=\"birthdayDate_" . $radif . "\"><input type=\"text\" name=\"birthDay\" value=\"$value[3]\"></div>
-        </td>
-        <td class='sabeghe' style=\"padding: 2px;border: 1px solid #ccc;\">$value[4]</td>
-        <td class='rezvan' style=\"padding: 2px;border: 1px solid #ccc;\">$value[5]</td>
-        <td class='ahval' style=\"padding: 2px;border: 1px solid #ccc;\">$value[6]</td>
-        $alternative
-    </tr>";
+
 
 
     if ($mode == 'edit')
@@ -550,10 +510,23 @@ if (6) {
                                                               src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/></td>
          <td style=\"padding: 2px;padding-top: 7px;
     padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\">
-   ذخیره و بررسی
-    <img onclick=\"FormView.myForm.getItemByName('Field_21').saveGustList()\"
-                                                              src=\"gfx/toolbar/out-regletters.png\" style=\"cursor: pointer;\"/>
-                                                              </a>
+    <style>        #buttoni {
+        transition-duration: 0.4s;
+        border: 2px solid #263238;
+        border-radius: 4px;
+        padding: 8px
+    }
+
+    #buttoni:hover {
+        background-color: #263238;
+        color: white;
+    } </style>
+    <button id=\"buttoni\"
+            onclick=\"FormView.myForm.getItemByName('Field_21').saveGustList()\"
+            tabindex=\"6001\">ذخیره و بررسی
+            <img src=\"gfx / toolbar / out - regletters . png\" style=\"cursor: pointer;\"/>
+    </button>
+   
                                                               </td> ";
     elseif ($mode == 'justDelete')
         $btnTableTag = "
@@ -564,8 +537,8 @@ if (6) {
    
     <img onclick=\"FormView.myForm.getItemByName('Field_21').saveGustListLevel4()\"
               src=\"gfx/toolbar/out-regletters.png\" style=\"cursor: pointer;\"/>
-                                                              </td>                                                           
-                                                               ";
+                                </td>                                                           
+     ";
     else
         $btnTableTag = "";
     $endTableTag = "                                                             
