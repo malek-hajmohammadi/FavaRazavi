@@ -430,7 +430,40 @@ if(3) {
         background-color: #bbdefb
     }
     </style>";
-    $defineTableTag = "<table width=\"100%\" class=\"f-table guestTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"rtl\">
+    /*سایز ستون ها*/
+    $style .="<style>
+input[name=firstName] {
+        width: 100px;
+        text-align: right !important;
+        padding: 0;
+    }
+    input[name=lastName] {
+        width: 150px;
+        text-align: right !important;
+        padding: 0;
+    }
+    input[name=cardNumber] {
+        width: 80px;
+        text-align: left !important;
+        padding: 0;
+    }
+    input[name=overworkDone] {
+        width: 50px;
+        text-align: left !important;
+        padding: 0;
+    }
+    input[name=overworkConfirm] {
+        width: 50px;
+        text-align: left !important;
+        padding: 0;
+    }
+    
+    
+    
+
+
+</style>";
+    $defineTableTag = "<table width=\"100%\" class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"rtl\">
     <tbody>";
 
     if ($mode != "readOnly")
@@ -477,7 +510,7 @@ if(5){
 
 
 
-        $alternative=($mode=='edit' || $mode=='justDelete')?"<td id=\"tdDeleteImg\" style=\"padding: 2px;background - color: #c5e1a5;border: 1px solid #ccc;\"><img onclick=\"FormView.myForm.getItemByName('Field_21').removeRow($radif)\"
+        $alternative=($mode=='edit' || $mode=='justDelete')?"<td id=\"tdDeleteImg\" style=\"padding: 2px;background - color: #c5e1a5;border: 1px solid #ccc;\"><img onclick=\"FormView.myForm.getItemByName('Field_0').removeRow($radif)\"
                                                               src = \"gfx/toolbar/cross.png\" style = \"cursor: pointer;\" />
         </td >":"";
         $alternativeReadOnly=($mode=='edit')?" ":"readonly";
@@ -485,9 +518,9 @@ if(5){
     
     <tr class=\"tableRow_$radif\">
         <td style=\"padding: 2px;border: 1px solid #ccc;\">$radif</td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"> <input  $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" type=\"text\" name=\"firstName\" value=\"$value[0]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" type=\"text\" name=\"lastName\" value=\"$value[1]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_21').unSaved()\" class=\"RavanMask\" data-inputmask-regex=\"([0-9]){10}\" dir=\"ltr\"  type=\"text\" name=\"nationalCode\" value=\"$value[2]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"> <input  $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"text\" name=\"firstName\" value=\"$value[0]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"text\" name=\"lastName\" value=\"$value[1]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" class=\"RavanMask\" data-inputmask-regex=\"([0-9]){10}\" dir=\"ltr\"  type=\"text\" name=\"nationalCode\" value=\"$value[2]\"></td>
         <td style=\"padding: 2px;border: 1px solid #ccc;\">
             <div id=\"birthdayDate_" . $radif . "\"><input type=\"text\" name=\"birthDay\" value=\"$value[3]\"></div>
         </td>
@@ -506,27 +539,17 @@ if (6) {
         $btnTableTag = "
 <tr>
         <td style=\"padding: 2px;padding-top: 7px;
-    padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\"><img onclick=\"FormView.myForm.getItemByName('Field_21').addRow()\"
-                                                              src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/></td>
-         <td style=\"padding: 2px;padding-top: 7px;
     padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\">
-    <style>        #buttoni {
-        transition-duration: 0.4s;
-        border: 2px solid #263238;
-        border-radius: 4px;
-        padding: 8px
-    }
-
-    #buttoni:hover {
-        background-color: #263238;
-        color: white;
-    } </style>
-    <button id=\"buttoni\"
-            onclick=\"FormView.myForm.getItemByName('Field_21').saveGustList()\"
-            tabindex=\"6001\">ذخیره و بررسی
-            <img src=\"gfx / toolbar / out - regletters . png\" style=\"cursor: pointer;\"/>
-    </button>
-   
+    <a style='text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.addRow()\">
+    <img src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/>
+    </a>
+    </td>
+        <td style=\"padding: 2px;padding-top: 7px;
+    padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;cursor: pointer;\">
+    <a style='text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.saveList()\">
+   ذخیره و بررسی
+    <img src=\"gfx/toolbar/out-regletters.png\" />
+                                                              </a>
                                                               </td> ";
     elseif ($mode == 'justDelete')
         $btnTableTag = "
@@ -535,7 +558,7 @@ if (6) {
          <td style=\"padding: 2px;padding-top: 7px;
     padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\">
    
-    <img onclick=\"FormView.myForm.getItemByName('Field_21').saveGustListLevel4()\"
+    <img onclick=\"FormView.myForm.getItemByName('Field_0').saveGustListLevel4()\"
               src=\"gfx/toolbar/out-regletters.png\" style=\"cursor: pointer;\"/>
                                 </td>                                                           
      ";
