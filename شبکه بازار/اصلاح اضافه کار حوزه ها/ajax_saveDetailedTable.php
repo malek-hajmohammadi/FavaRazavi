@@ -1,1 +1,46 @@
 <?php
+
+$detailedTable="";/*آرایه ای که می خواهد در دیتابیس ذخیره شود*/
+$docId="";/*شماره فرم مستر*/
+
+if(1){
+    if (Request::getInstance()->varCleanFromInput('detailedTable') && Request::getInstance()->varCleanFromInput('docId')) {
+        $detailedTable = Request::getInstance()->varCleanFromInput('detailedTable');
+        $detailedTable = json_decode($detailedTable);
+
+        $docId = Request::getInstance()->varCleanFromInput('docId');
+
+        ////for test///
+
+       /* Response::getInstance()->response=$detailedTable;
+        return;*/
+
+    } else {
+
+        $message = RavanResult::raiseError(0, "لطفا پارامترهای آیجکس رو مقدار دهی کنید", "فراخوانی آیجکس");
+        Response::getInstance()->response = $message;
+        return;
+    }
+
+} /*گرفتن ورودی*/
+if(2){
+///
+    $db = PDOAdapter::getInstance();
+    for ($count = 1; $count < count($detailedTable); $count++) {
+
+        $sql = "INSERT INTO dm_datastoretable_59 (MasterID,Field_0,Field_1,Field_2,Field_3,Field_4)
+ VALUES (:docId,:firstName,:lastName,:cardNumber,:overworkDone,:overworkConfirm)";
+        $PDOParams = array(
+            array('name' => 'docId', 'value' => $docId, 'type' => PDO::PARAM_STR),
+            array('name' => 'firstName', 'value' => $detailedTable[$count][0], 'type' => PDO::PARAM_STR),
+            array('name' => 'lastName', 'value' => $detailedTable[$count][1], 'type' => PDO::PARAM_STR),
+            array('name' => 'cardNumber', 'value' => $detailedTable[$count][2], 'type' => PDO::PARAM_STR),
+            array('name' => 'overworkDone', 'value' => $detailedTable[$count][3], 'type' => PDO::PARAM_STR),
+            array('name' => 'overworkConfirm', 'value' => $detailedTable[$count][4], 'type' => PDO::PARAM_STR),
+
+        );
+        $db->executeSelect($sql,$PDOParams);
+    }
+
+
+}/*ذخیره در دیتابیس*/
