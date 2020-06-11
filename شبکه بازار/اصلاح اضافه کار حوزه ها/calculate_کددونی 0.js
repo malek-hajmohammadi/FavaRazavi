@@ -15,7 +15,7 @@ this.jcode = function(self){
         addRow:function(){
             var lengthTable = $jq('.detailedTable > tbody > tr').length;
             var newTr = '<tr class="tableRow_' + (lengthTable - 1) + '">' + '<td style="padding: 2px;border: 1px solid #ccc;">' + (lengthTable - 1) + '</td>' +
-                '<td style="padding: 2px;border: 1px solid #ccc;">' + ' <input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()" type="text" name="firstName" width="30px" value=""></td>' +
+                '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()" type="text" name="firstName" width="30px" value=""></td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()" type="text" name="lastName" value=""></td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()"  dir="ltr" type="number" name="cardNumber" value=""></td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()"  dir="ltr" type="number" name="overworkDone" value=""></td>' +
@@ -100,9 +100,10 @@ this.jcode = function(self){
 
     };
     self.loadForm=function(){
-        let html =self.DetailedTable.showTable();
+        let state=self.getCable();
+        console.log("state="+state);
+        let html =self.DetailedTable.showTable(state);
         $jq('.detailedTableSpan').html(html);
-
 
     };
     self.getCable = function () {
@@ -114,11 +115,11 @@ this.jcode = function(self){
             var nodeName2 = nodeName;
             while (nodeName2 && nodeName2.indexOf(String.fromCharCode(1705)) >= 0) nodeName2 = nodeName2.replace(String.fromCharCode(1705), String.fromCharCode(1603));
             while (nodeName2 && nodeName2.indexOf(String.fromCharCode(1740)) >= 0) nodeName2 = nodeName2.replace(String.fromCharCode(1740), String.fromCharCode(1610));
-            if (nodeName == 'شرکت-متقاضی' || nodeName2 == 'شرکت-متقاضی') stage = 1;
-            if (nodeName == 'رئیس-حسابداری' || nodeName2 == 'رئیس-حسابداری') stage = 2;
-
+            if (nodeName == 'کارشناس-مسئول-منابع-انسانی' || nodeName2 == 'کارشناس-مسئول-منابع-انسانی') stage = "edit";
+            if (nodeName == 'مسئول-پرسنلی-حوزه' || nodeName2 == 'مسئول-پرسنلی-حوزه') stage = "level2"; /*فقط ستون اصلاح اضافه کار رو ویرایش می کند*/
 
         }
+        return stage;
     }
 
 }

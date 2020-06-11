@@ -1,9 +1,13 @@
 <?php
+$state="";/*edit: برای نود اول که همه چیز ویرایشی است*/
+/*level2:برای حوزه که فقط در جدول بتونه ستون اضافه کار تایید شده رو مقدار بده*/
+
+
 if(1){
     $headerBackground="#123456";
 }/*1- ست کردن تنظیمات*/
 
-if(2) {
+if(2){
 
     $mode="edit";
     $docId=0;
@@ -24,7 +28,41 @@ if(2) {
 
 }/*2- گرفتن ورودی*/
 
-if(3) {
+$backgroundCell="";/*رنگ سلول جدول */
+$cursor="";/*اشاره گر موس رو دکمه ها*/
+$pointerEvent="";/*برای این رویداد رو دکمه کار کند یا نه*/
+$readOnlyForInput="";/*input فقط خوندنی باشه یا نه*/
+$inputBackground="";/*رنگ input که اگر فقط خواندنی باشه، خاکستری می شه*/
+
+$readOnlyForInputoverworkConfrim="";/*بابت ستونی که می خواهیم در حال فقط خوندنی فعال باشد*/
+$inputBackgroundoverworkConfirm="";/*بابت ستونی که می خواهیم در حال فقط خوندنی فعال باشد*/
+
+if(1){
+    if($mode=="edit"){
+        $backgroundCell="#c5e1a5";
+        $cursor="pointer";
+        $pointerEvent="auto";
+        $readOnlyForInput="";
+        $readOnlyForInputOverworkConfirm="";
+        $inputBackground="#ffffff";
+        $inputBackgroundOverworkConfirm="#ffffff";
+    }
+    else if($mode=="level2"){
+        $backgroundCell="#bdbdbd";
+        $cursor="none";
+        $pointerEvent="none";
+        $readOnlyForInput="readonly";
+        $readOnlyForInputOverworkConfirm="";
+        $inputBackground="#e0e0e0";
+        $inputBackgroundOverworkConfirm="#ffffff";
+
+    }
+
+
+
+}/*تنظیمات برای نمایش در حالتهای مختلف*/
+
+if(3){
     $style = "<style>
 
     .f-box td {
@@ -466,10 +504,6 @@ input[name=firstName] {
     $defineTableTag = "<table width=\"100%\" class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"rtl\">
     <tbody>";
 
-    if ($mode != "readOnly")
-        $alternative = "<th width=\"3%\" style=\"padding: 2px; \">حذف</th>";
-    else
-        $alternative = "";
 
     $header = "<tr>
         <th width=\"10px\" style=\"padding: 2px; \">ردیف</th>
@@ -478,7 +512,7 @@ input[name=firstName] {
          <th width=\"10px\" style=\"padding: 2px; \">شماره کارت</th>
          <th width=\"20px\" style=\"padding: 2px; \">اضافه کار انجام شده</th>
          <th width=\"20px\" style=\"padding: 2px; \">اضافه کار تایید شده</th>
-        $alternative
+         <th width=\"3%\" style=\"padding: 2px; \">حذف</th>
          </tr>";
 }/*3- تعریف استایل و هیدر جدول*/
 
@@ -507,63 +541,42 @@ if(5){
     /*      1:barrasi 2:mojaz 3:na motaber        */
     foreach ($dataInTable as $value) {
         $radif++;
-
-
-
-        $alternative=($mode=='edit' || $mode=='justDelete')?"<td id=\"tdDeleteImg\" style=\"padding: 2px;background - color: #c5e1a5;border: 1px solid #ccc;\"><img onclick=\"FormView.myForm.getItemByName('Field_0').removeRow($radif)\"
-                                                              src = \"gfx/toolbar/cross.png\" style = \"cursor: pointer;\" />
-        </td >":"";
-        $alternativeReadOnly=($mode=='edit')?" ":"readonly";
         $table .= "
     
     <tr class=\"tableRow_$radif\">
         <td style=\"padding: 2px;border: 1px solid #ccc;\">$radif</td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"> <input  $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"text\" name=\"firstName\" value=\"$value[0]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"text\" name=\"lastName\" value=\"$value[1]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input $alternativeReadOnly onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" class=\"RavanMask\" data-inputmask-regex=\"([0-9]){10}\" dir=\"ltr\"  type=\"text\" name=\"nationalCode\" value=\"$value[2]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\">
-            <div id=\"birthdayDate_" . $radif . "\"><input type=\"text\" name=\"birthDay\" value=\"$value[3]\"></div>
-        </td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"text\" name=\"firstName\" value=\"$value[0]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"text\" name=\"lastName\" value=\"$value[1]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"number\" name=\"cardNumber\" value=\"$value[2]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"number\" name=\"overworkDone\" value=\"$value[3]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackgroundOverworkConfirm\" $readOnlyForInputOverworkConfirm onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"number\" name=\"overworkConfirm\" value=\"$value[4]\"></td>
         
-        $alternative
+        <td id=\"tdDeleteImg\" style=\"padding: 2px;background - color: $backgroundCell;border: 1px solid #ccc;\"><img styel=\"pointer-events:$pointerEvent\" onclick=\"FormView.myForm.getItemByName('Field_0').removeRow($radif)\"
+                                                              src = \"gfx/toolbar/cross.png\" style = \"cursor: $cursor;\" /></td>
     </tr>";
     }
 } /*5-ساخت بدنه جدول*/
 
-if (6) {
-    $alternativeReadOnly = ($mode == 'edit') ? " " : "readonly";
+if(6){
 
 
-
-    if ($mode == 'edit')
-        $btnTableTag = "
+    $btnTableTag = "
 <tr>
         <td style=\"padding: 2px;padding-top: 7px;
-    padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\">
-    <a style='text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.addRow()\">
+    padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCell;\">
+    <a style='pointer-events:$pointerEvent; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.addRow()\">
     <img src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/>
     </a>
     </td>
         <td style=\"padding: 2px;padding-top: 7px;
-    padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;cursor: pointer;\">
-    <a style='text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.saveList()\">
+    padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCell;cursor: $cursor;\">
+    <a style='pointer-events:$pointerEvent; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.saveList()\">
    ذخیره و بررسی
     <img src=\"gfx/toolbar/out-regletters.png\" />
                                                               </a>
                                                               </td> ";
-    elseif ($mode == 'justDelete')
-        $btnTableTag = "
-<tr>
-       
-         <td style=\"padding: 2px;padding-top: 7px;
-    padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\">
-   
-    <img onclick=\"FormView.myForm.getItemByName('Field_0').saveGustListLevel4()\"
-              src=\"gfx/toolbar/out-regletters.png\" style=\"cursor: pointer;\"/>
-                                </td>                                                           
-     ";
-    else
-        $btnTableTag = "";
+
+
     $endTableTag = "                                                             
  </tbody>
 </table>";

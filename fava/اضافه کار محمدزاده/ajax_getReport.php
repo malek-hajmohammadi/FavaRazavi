@@ -1,11 +1,5 @@
 <?php
 
-
-class ajax_getReport
-{
-
-
-
 $db = PDOAdapter::getInstance();
 $acm = AccessControlManager::getInstance();
 $rid = $acm->getRoleID();
@@ -306,4 +300,3 @@ $html = '
 
 Response::getInstance()->response = $html;
 
-}
