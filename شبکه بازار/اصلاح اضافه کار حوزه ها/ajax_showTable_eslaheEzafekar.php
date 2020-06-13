@@ -522,14 +522,14 @@ if(4){
 
     $sql = "
 select *
-FROM dm_datastoretable_1099 
+FROM dm_datastoretable_59 
 where MasterID=$docId ORDER BY RowID";
     $db->executeSelect($sql);
     $count = 0;
     while ($row = $db->fetchAssoc()) {
         $dataInTable[$count] = array(
             $row['Field_0'], $row['Field_1'], $row['Field_2'], $row['Field_3'],
-            $row['Field_4'], $row['Field_5'], $row['Field_6'], $row['Field_7'],
+            $row['Field_4']
         );
         $count++;
     }

@@ -5,10 +5,9 @@ this.jcode = function(self){
         tableArray:[[]],
         showMode: "edit",
         isSaved:false,
-        showTable: function (stage) {
-            this.showMode=stage;
+        showTable: function () {
             var html = Utils.fastAjax('WorkFlowAjaxFunc', 'showTable_eslaheEzafekar', {
-                docId: FormView.docID, mode: "edit"
+                docId: FormView.docID, mode: this.showMode
             });
             return html;
         },
@@ -100,9 +99,9 @@ this.jcode = function(self){
 
     };
     self.loadForm=function(){
-        let state=self.getCable();
-        console.log("state="+state);
-        let html =self.DetailedTable.showTable(state);
+        self.DetailedTable.showMode=self.getCable();
+        console.log("DetailedTable.showMode="+self.DetailedTable.showMode);
+        let html =self.DetailedTable.showTable();
         $jq('.detailedTableSpan').html(html);
 
     };
