@@ -15,3 +15,4 @@ while ($row = $db->fetchAssoc()) {
         $res[] = array($row['RowID'], $row['Name']);
 }
 Response::getInstance()->response = $res;
+/*just for test */
