@@ -1,13 +1,11 @@
 <?php
-$state="";/*edit: برای نود اول که همه چیز ویرایشی است*/
-/*level2:برای حوزه که فقط در جدول بتونه ستون اضافه کار تایید شده رو مقدار بده*/
-
-
+$mode="";
+/*
+       * edit
+       * readOnly
+       * editJustConfirm
+       * */
 if(1){
-    $headerBackground="#123456";
-}/*1- ست کردن تنظیمات*/
-
-if(2){
 
     $mode="edit";
     $docId=0;
@@ -28,33 +26,67 @@ if(2){
 
 }/*2- گرفتن ورودی*/
 
+$backgroundHeader=""; /*رنگ عنوان جدول*/
 $backgroundCell="";/*رنگ سلول جدول */
-$cursor="";/*اشاره گر موس رو دکمه ها*/
+$backgroundCellSave="";/*رنگ دکمه Save که می تونه متفاوت باشد*/
+$cursorCell="";/*حالت کرسور روی دکمه ها*/
+$cursorCellSave="";/*حالت کرسور روی دکمه save*/
 $pointerEvent="";/*برای این رویداد رو دکمه کار کند یا نه*/
+$pointerEventSave="";
 $readOnlyForInput="";/*input فقط خوندنی باشه یا نه*/
 $inputBackground="";/*رنگ input که اگر فقط خواندنی باشه، خاکستری می شه*/
 
 $readOnlyForInputoverworkConfrim="";/*بابت ستونی که می خواهیم در حال فقط خوندنی فعال باشد*/
 $inputBackgroundoverworkConfirm="";/*بابت ستونی که می خواهیم در حال فقط خوندنی فعال باشد*/
 
-if(1){
+
+
+if(2){
+    /*
+       * edit
+       * readOnly
+       * editJustConfirm
+       * */
+
     if($mode=="edit"){
         $backgroundCell="#c5e1a5";
-        $cursor="pointer";
+        $backgroundCellSave="#c5e1a5";
         $pointerEvent="auto";
+        $pointerEventSave="auto";
         $readOnlyForInput="";
         $readOnlyForInputOverworkConfirm="";
         $inputBackground="#ffffff";
         $inputBackgroundOverworkConfirm="#ffffff";
+        $backgroundHeader="#1076a5";
+        $cursorCell="pointer";
+        $cursorCellSave="pointer";
     }
-    else if($mode=="level2"){
+    else if($mode=="editJustConfirm"){
         $backgroundCell="#bdbdbd";
-        $cursor="none";
+        $backgroundCellSave="#c5e1a5";
         $pointerEvent="none";
+        $pointerEventSave="auto";
         $readOnlyForInput="readonly";
         $readOnlyForInputOverworkConfirm="";
         $inputBackground="#e0e0e0";
         $inputBackgroundOverworkConfirm="#ffffff";
+        $backgroundHeader="#1076a5";
+        $cursorCell="auto";
+        $cursorCellSave="pointer";
+
+    }
+    else if($mode=="readOnly"){
+        $backgroundCell="#bdbdbd";
+        $backgroundCellSave="#bdbdbd";
+        $pointerEvent="none";
+        $pointerEventSave="none";
+        $readOnlyForInput="readonly";
+        $readOnlyForInputOverworkConfirm="readonly";
+        $inputBackground="#e0e0e0";
+        $inputBackgroundOverworkConfirm="#e0e0e0";
+        $backgroundHeader="#37474f";
+        $cursorCell="auto";
+        $cursorCellSave="auto";
 
     }
 
@@ -506,13 +538,13 @@ input[name=firstName] {
 
 
     $header = "<tr>
-        <th width=\"10px\" style=\"padding: 2px; \">ردیف</th>
-        <th width=\"100px\" style=\"padding: 2px; \">نام</th>
-        <th width=\"20px\" style=\"padding: 2px; \">نام خانوادگی</th>
-         <th width=\"10px\" style=\"padding: 2px; \">شماره کارت</th>
-         <th width=\"20px\" style=\"padding: 2px; \">اضافه کار انجام شده</th>
-         <th width=\"20px\" style=\"padding: 2px; \">اضافه کار تایید شده</th>
-         <th width=\"3%\" style=\"padding: 2px; \">حذف</th>
+        <th width=\"10px\" style=\"padding: 2px;background-color: $backgroundHeader \">ردیف</th>
+        <th width=\"100px\" style=\"padding: 2px;background-color: $backgroundHeader \">نام</th>
+        <th width=\"20px\" style=\"padding: 2px;background-color: $backgroundHeader \">نام خانوادگی</th>
+         <th width=\"10px\" style=\"padding: 2px;background-color: $backgroundHeader \">شماره کارت</th>
+         <th width=\"20px\" style=\"padding: 2px;background-color: $backgroundHeader \">اضافه کار انجام شده</th>
+         <th width=\"20px\" style=\"padding: 2px;background-color: $backgroundHeader \">اضافه کار تایید شده</th>
+         <th width=\"3%\" style=\"padding: 2px;background-color: $backgroundHeader \">حذف</th>
          </tr>";
 }/*3- تعریف استایل و هیدر جدول*/
 
@@ -551,8 +583,10 @@ if(5){
         <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"number\" name=\"overworkDone\" value=\"$value[3]\"></td>
         <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackgroundOverworkConfirm\" $readOnlyForInputOverworkConfirm onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"number\" name=\"overworkConfirm\" value=\"$value[4]\"></td>
         
-        <td id=\"tdDeleteImg\" style=\"padding: 2px;background - color: $backgroundCell;border: 1px solid #ccc;\"><img styel=\"pointer-events:$pointerEvent\" onclick=\"FormView.myForm.getItemByName('Field_0').removeRow($radif)\"
-                                                              src = \"gfx/toolbar/cross.png\" style = \"cursor: $cursor;\" /></td>
+        <td id=\"tdDeleteImg\" style=\"padding: 2px;background-color: $backgroundCell;cursor:$cursorCell; border: 1px solid #ccc;\"><img style=\"pointer-events:$pointerEvent\" onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.removeRow($radif)\"
+                                                              src = \"gfx/toolbar/cross.png\" />
+                                                              
+                                                              </td>
     </tr>";
     }
 } /*5-ساخت بدنه جدول*/
@@ -564,13 +598,13 @@ if(6){
 <tr>
         <td style=\"padding: 2px;padding-top: 7px;
     padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCell;\">
-    <a style='pointer-events:$pointerEvent; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.addRow()\">
-    <img src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/>
+    <a style='pointer-events:$pointerEvent;cursor:$cursorCell; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.addRow()\">
+    <img src=\"gfx/toolbar/plus.png\" />
     </a>
     </td>
         <td style=\"padding: 2px;padding-top: 7px;
-    padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCell;cursor: $cursor;\">
-    <a style='pointer-events:$pointerEvent; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.saveList()\">
+    padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCellSave;\">
+    <a style='pointer-events:$pointerEventSave;cursor:$cursorCellSave; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.saveList()\">
    ذخیره و بررسی
     <img src=\"gfx/toolbar/out-regletters.png\" />
                                                               </a>

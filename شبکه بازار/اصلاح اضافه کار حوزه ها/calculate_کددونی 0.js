@@ -20,7 +20,7 @@ this.jcode = function(self){
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()"  dir="ltr" type="number" name="overworkDone" value=""></td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()"  dir="ltr" type="number" name="overworkConfirm" value=""></td>' +
 
-                '<td id="tdDeleteImg" style="padding: 2px;background-color: #c5e1a5;border: 1px solid #ccc;">' + '<img onclick="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.removeRow(' + (lengthTable - 1) + ')"' + 'src="gfx/toolbar/cross.png" style="cursor: pointer;"/>' + '</td>' +
+                '<td id="tdDeleteImg" style="padding: 2px;background-color: #c5e1a5; border: 1px solid #ccc;">' + '<img style="cursor: pointer" onclick="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.removeRow(' + (lengthTable - 1) + ')"' + 'src="gfx/toolbar/cross.png" />' + '</td>' +
                 '</tr>';
             $jq('.detailedTable > tbody > tr').eq(lengthTable - 2).after(newTr);
 
@@ -37,7 +37,7 @@ this.jcode = function(self){
             for (var i = 1; i <= lengthTable ; i++) {
                 $jq('.detailedTable >tbody > tr').eq(i).attr('class', 'tableRow_' + i);
                 $jq('.detailedTable>tbody>tr.tableRow_' + i + '>td:first ').html(i);
-                $jq('.detailedTable>tbody>tr.tableRow_' + i + '>td#tdDeleteImg>img').attr('onclick', 'FormView.myForm.getItemByName(\'Field_21\').removeRow(' + i + ')');
+                $jq('.detailedTable>tbody>tr.tableRow_' + i + '>td#tdDeleteImg>img').attr('onclick', 'FormView.myForm.getItemByName(\'Field_0\').DetailedTable.removeRow(' + i + ')');
             }
 
 
@@ -67,6 +67,7 @@ this.jcode = function(self){
                 /*$jq('.tableGuest').html(html);
                 self.setDateObjectAll();*/
                 self.isSaved=true;
+                Utils.showProgress(false);
                /* self.fillGuestList();
                 self.isValid=self.checkValidGuest();*/
 
@@ -108,17 +109,43 @@ this.jcode = function(self){
     self.getCable = function () {
         /*1: نود اول کارشناس مسئول منابع انسانی*/
         /*2: مسئول حوزه*/
-        let stage = 0;
+        /*در نود سوم و*/
+        /*
+        سه حالت داریم در این فرم حالت اول edit که همه چیز قابل ویرایش هست
+          حالت دوم فقط ستون اضافه کار تایید شده قابل ویرایش باشه
+          حالت سوم که read only برای نود سوم که برگشت است و همچنین زمانیکه حالت کاربر و حالت گردشکار یکی نیست یعنی زمانیکه فرم در کارتبال های ارسالی دیده می شود
+         */
+        let workFlowState=""; /*level1 نود اول کارشناس مئسول منابع انسانی,level2 مسئول پرسنلی حوزه,level3 نود اخری برگشت به کارشناس */
+        let userState="";
+
+
         if (FormView.myForm.info.settings.nodeName) {
             var nodeName = FormView.myForm.info.settings.nodeName;
             var nodeName2 = nodeName;
             while (nodeName2 && nodeName2.indexOf(String.fromCharCode(1705)) >= 0) nodeName2 = nodeName2.replace(String.fromCharCode(1705), String.fromCharCode(1603));
             while (nodeName2 && nodeName2.indexOf(String.fromCharCode(1740)) >= 0) nodeName2 = nodeName2.replace(String.fromCharCode(1740), String.fromCharCode(1610));
-            if (nodeName == 'کارشناس-مسئول-منابع-انسانی' || nodeName2 == 'کارشناس-مسئول-منابع-انسانی') stage = "edit";
-            if (nodeName == 'مسئول-پرسنلی-حوزه' || nodeName2 == 'مسئول-پرسنلی-حوزه') stage = "level2"; /*فقط ستون اصلاح اضافه کار رو ویرایش می کند*/
-
+            if (nodeName == 'کارشناس-مسئول-منابع-انسانی' || nodeName2 == 'کارشناس-مسئول-منابع-انسانی') workFlowState = "level1";
+            if (nodeName == 'مسئول-پرسنلی-حوزه' || nodeName2 == 'مسئول-پرسنلی-حوزه') workFlowState = "level2";
+            if (nodeName == 'کارشناس-مسئول-منابع-انسانی-انتهایی' || nodeName2 == 'کارشناس-مسئول-منابع-انسانی-انتهایی') workFlowState = "level3";
         }
-        return stage;
+
+        userState = FormView.myForm.getItemByName('Field_5').getData();
+
+        if(userState != workFlowState)/*طرف در نامه های ارسالی داره فرم رو باز می کنه*/
+            return "readOnly";
+        if(userState=="level1")
+            return "edit";
+        if(userState=="level2")
+            return "editJustConfirm";
+        if(userState=="level3")
+            return "readOnly";
+
+        /*
+        * edit
+        * readOnly
+        * editJustConfirm
+        * */
+
     }
 
 }
