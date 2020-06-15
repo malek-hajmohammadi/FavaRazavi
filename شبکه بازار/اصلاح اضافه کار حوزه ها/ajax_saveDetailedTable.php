@@ -24,6 +24,13 @@ if(1){
 
 } /*گرفتن ورودی*/
 if(2){
+    $db = MySQLAdapter::getInstance();
+    $sql = "DELETE from dm_datastoretable_59
+where MasterID=$docId";
+    $db->execute($sql);
+
+}/*حذف داده های قبلی قبل از ذخیره سازی، در غیر این صورت اطلاعات تکراری می شود*/
+if(2){
 ///
     $db = PDOAdapter::getInstance();
     for ($count = 1; $count < count($detailedTable); $count++) {

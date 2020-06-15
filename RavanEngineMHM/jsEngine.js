@@ -29,3 +29,9 @@ listener = function (event) {
         clearInterval(waitInterval);
     }, 300);
 }
+
+/*کد در رویداد در نود گردشکار*/
+this.actJS = function (self) {
+    return FormView.myForm.getItemByName('Field_21').btnConfirm();
+
+};

@@ -577,11 +577,11 @@ if(5){
     
     <tr class=\"tableRow_$radif\">
         <td style=\"padding: 2px;border: 1px solid #ccc;\">$radif</td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"text\" name=\"firstName\" value=\"$value[0]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"text\" name=\"lastName\" value=\"$value[1]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"number\" name=\"cardNumber\" value=\"$value[2]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"number\" name=\"overworkDone\" value=\"$value[3]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackgroundOverworkConfirm\" $readOnlyForInputOverworkConfirm onInput=\"FormView.myForm.getItemByName('Field_0').unSaved()\" type=\"number\" name=\"overworkConfirm\" value=\"$value[4]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').DetailedTable.unSaved()\" type=\"text\" name=\"firstName\" value=\"$value[0]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').DetailedTable.unSaved()\" type=\"text\" name=\"lastName\" value=\"$value[1]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').DetailedTable.unSaved()\" type=\"number\" name=\"cardNumber\" value=\"$value[2]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackground\" $readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').DetailedTable.unSaved()\" type=\"number\" name=\"overworkDone\" value=\"$value[3]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $inputBackgroundOverworkConfirm\" $readOnlyForInputOverworkConfirm onInput=\"FormView.myForm.getItemByName('Field_0').DetailedTable.unSaved()\" type=\"number\" name=\"overworkConfirm\" value=\"$value[4]\"></td>
         
         <td id=\"tdDeleteImg\" style=\"padding: 2px;background-color: $backgroundCell;cursor:$cursorCell; border: 1px solid #ccc;\"><img style=\"pointer-events:$pointerEvent\" onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.removeRow($radif)\"
                                                               src = \"gfx/toolbar/cross.png\" />

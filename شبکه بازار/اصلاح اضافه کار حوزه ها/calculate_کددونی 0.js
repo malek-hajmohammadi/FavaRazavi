@@ -3,7 +3,7 @@ this.jcode = function(self){
     /*برای اضافه کردن در کد دونی*/
     self.DetailedTable = {
         tableArray:[[]],
-        showMode: "edit",
+        showMode: "edit",/** edit * readOnly*editJustConfirm*/
         isSaved:false,
         showTable: function () {
             var html = Utils.fastAjax('WorkFlowAjaxFunc', 'showTable_eslaheEzafekar', {
@@ -44,12 +44,8 @@ this.jcode = function(self){
         },
         saveList:function(){
             this.fillDetailedTableArray();
-            if(this.checkRightList())
+            if(this.checkBeforeSave())
                 this.saveToDb();
-
-        },
-        checkRightList:function(){
-            return true;
         },
         saveToDb:function(){
             console.log(this.tableArray);
@@ -58,7 +54,6 @@ this.jcode = function(self){
             console.log(tem);
             Utils.showProgress(true);
 
-
             var gotResponse = function (o) {
                 /*var Hadith = eval(o.responseText);*/
 
@@ -66,7 +61,8 @@ this.jcode = function(self){
                 /*html = self.showTable();*/
                 /*$jq('.tableGuest').html(html);
                 self.setDateObjectAll();*/
-                self.isSaved=true;
+                this.isSaved=true;
+                this.this.isSaved=true;
                 Utils.showProgress(false);
                /* self.fillGuestList();
                 self.isValid=self.checkValidGuest();*/
@@ -97,55 +93,121 @@ this.jcode = function(self){
             } /*          t = [             ["ali", "alavi", "4532", "521","534"]          */
 
         },
+        getCable:function(){
+            /*1: نود اول کارشناس مسئول منابع انسانی*/
+            /*2: مسئول حوزه*/
+            /*در نود سوم و*/
+            /*
+            سه حالت داریم در این فرم حالت اول edit که همه چیز قابل ویرایش هست
+              حالت دوم فقط ستون اضافه کار تایید شده قابل ویرایش باشه
+              حالت سوم که read only برای نود سوم که برگشت است و همچنین زمانیکه حالت کاربر و حالت گردشکار یکی نیست یعنی زمانیکه فرم در کارتبال های ارسالی دیده می شود
+             */
+            let workFlowState=""; /*level1 نود اول کارشناس مئسول منابع انسانی,level2 مسئول پرسنلی حوزه,level3 نود اخری برگشت به کارشناس */
+            let userState="";
+
+
+            if (FormView.myForm.info.settings.nodeName) {
+                var nodeName = FormView.myForm.info.settings.nodeName;
+                var nodeName2 = nodeName;
+                while (nodeName2 && nodeName2.indexOf(String.fromCharCode(1705)) >= 0) nodeName2 = nodeName2.replace(String.fromCharCode(1705), String.fromCharCode(1603));
+                while (nodeName2 && nodeName2.indexOf(String.fromCharCode(1740)) >= 0) nodeName2 = nodeName2.replace(String.fromCharCode(1740), String.fromCharCode(1610));
+                if (nodeName == 'کارشناس-مسئول-منابع-انسانی' || nodeName2 == 'کارشناس-مسئول-منابع-انسانی') workFlowState = "level1";
+                if (nodeName == 'مسئول-پرسنلی-حوزه' || nodeName2 == 'مسئول-پرسنلی-حوزه') workFlowState = "level2";
+                if (nodeName == 'کارشناس-مسئول-منابع-انسانی-انتهایی' || nodeName2 == 'کارشناس-مسئول-منابع-انسانی-انتهایی') workFlowState = "level3";
+            }
+
+            userState = FormView.myForm.getItemByName('Field_5').getData();
+
+            if(userState != workFlowState)/*طرف در نامه های ارسالی داره فرم رو باز می کنه*/
+                return "readOnly";
+            if(userState=="level1")
+                return "edit";
+            if(userState=="level2")
+                return "editJustConfirm";
+            if(userState=="level3")
+                return "readOnly";
+
+            /*
+            * edit
+            * readOnly
+            * editJustConfirm
+            * */
+
+        },
+        checkBeforeSave:function(){
+
+            var length = $jq('.detailedTable>tbody>tr[class^=\'tab\']').length;
+            for (var count = 1; count <= length; count++) {
+                if (this.tableArray[count][0].length < 3) {
+                    Utils.showModalMessage('لطفا فيلد نام را در رديف ' + count + ' تصحيح كنيد');
+                    return false;
+                }
+                if (this.tableArray[count][1].length < 3) {
+                    Utils.showModalMessage('لطفا فيلد نام خانوادگی را در رديف ' + count + ' تصحيح كنيد');
+                    return false;
+                }
+                if (this.tableArray[count][2].length < 3) {
+                    Utils.showModalMessage('لطفا فيلد شماره پرسنلی را در رديف ' + count + ' تصحيح كنيد');
+                    return false;
+                }
+                if ((this.tableArray[count][4].length < 1) && (this.showMode == "editJustConfirm")) {
+                    Utils.showModalMessage('لطفا فيلد اضافه کار تایید شده را در رديف ' + count + ' تصحيح كنيد');
+                    return false;
+                }
+            }
+            return true;
+
+
+        },
 
     };
     self.loadForm=function(){
-        self.DetailedTable.showMode=self.getCable();
+        self.DetailedTable.showMode=self.DetailedTable.getCable();
         console.log("DetailedTable.showMode="+self.DetailedTable.showMode);
         let html =self.DetailedTable.showTable();
         $jq('.detailedTableSpan').html(html);
 
     };
-    self.getCable = function () {
-        /*1: نود اول کارشناس مسئول منابع انسانی*/
-        /*2: مسئول حوزه*/
-        /*در نود سوم و*/
-        /*
-        سه حالت داریم در این فرم حالت اول edit که همه چیز قابل ویرایش هست
-          حالت دوم فقط ستون اضافه کار تایید شده قابل ویرایش باشه
-          حالت سوم که read only برای نود سوم که برگشت است و همچنین زمانیکه حالت کاربر و حالت گردشکار یکی نیست یعنی زمانیکه فرم در کارتبال های ارسالی دیده می شود
-         */
-        let workFlowState=""; /*level1 نود اول کارشناس مئسول منابع انسانی,level2 مسئول پرسنلی حوزه,level3 نود اخری برگشت به کارشناس */
-        let userState="";
-
-
-        if (FormView.myForm.info.settings.nodeName) {
-            var nodeName = FormView.myForm.info.settings.nodeName;
-            var nodeName2 = nodeName;
-            while (nodeName2 && nodeName2.indexOf(String.fromCharCode(1705)) >= 0) nodeName2 = nodeName2.replace(String.fromCharCode(1705), String.fromCharCode(1603));
-            while (nodeName2 && nodeName2.indexOf(String.fromCharCode(1740)) >= 0) nodeName2 = nodeName2.replace(String.fromCharCode(1740), String.fromCharCode(1610));
-            if (nodeName == 'کارشناس-مسئول-منابع-انسانی' || nodeName2 == 'کارشناس-مسئول-منابع-انسانی') workFlowState = "level1";
-            if (nodeName == 'مسئول-پرسنلی-حوزه' || nodeName2 == 'مسئول-پرسنلی-حوزه') workFlowState = "level2";
-            if (nodeName == 'کارشناس-مسئول-منابع-انسانی-انتهایی' || nodeName2 == 'کارشناس-مسئول-منابع-انسانی-انتهایی') workFlowState = "level3";
+    self.btnConfirmLevel1=function(){
+        let hozeh=FormView.myForm.getItemByName('Field_4').getData();
+        if(hozeh.length==0){
+            Utils.showModalMessage('حوزه انتخاب نشده است');
+            return false;
         }
 
-        userState = FormView.myForm.getItemByName('Field_5').getData();
+        let year=FormView.myForm.getItemByName('Field_2').getData();
+        if(year=="0"){
+            Utils.showModalMessage('سال انتخاب نشده است');
+            return false;
+        }
 
-        if(userState != workFlowState)/*طرف در نامه های ارسالی داره فرم رو باز می کنه*/
-            return "readOnly";
-        if(userState=="level1")
-            return "edit";
-        if(userState=="level2")
-            return "editJustConfirm";
-        if(userState=="level3")
-            return "readOnly";
+        let month=FormView.myForm.getItemByName('Field_1').getData();
+        if(month=="0"){
+            Utils.showModalMessage('ماه انتخاب نشده است');
+            return false;
+        }
 
-        /*
-        * edit
-        * readOnly
-        * editJustConfirm
-        * */
+        let saghf=FormView.myForm.getItemByName('Field_3').getData();
+        if(saghf.length=="0"){
+            Utils.showModalMessage('سقف مجاز اضافه کار تعیین نشده است');
+            return false;
+        }
 
-    }
+
+        if(self.DetailedTable.isSaved==false){
+            Utils.showModalMessage('لطفا قبل از تایید، دکمه ذخیره و بررسی را کلیک کنید.');
+            return false;
+        }
+        return true;
+    };
+    self.btnConfirmLevel2=function(){
+        if(self.DetailedTable.isSaved==false){
+            Utils.showModalMessage('لطفا قبل از تایید، دکمه ذخیره و بررسی را کلیک کنید.');
+            return false;
+        }
+        return true;
+        return true;
+    };
+
 
 }
