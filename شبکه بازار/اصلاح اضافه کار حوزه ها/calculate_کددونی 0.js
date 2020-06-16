@@ -5,6 +5,7 @@ this.jcode = function(self){
         tableArray:[[]],
         showMode: "edit",/** edit * readOnly*editJustConfirm*/
         isSaved:false,
+        staticRow:1,/*سطری برای جمع داریم یا نه که در اضافه کردن و کم کردن سطرها استفاده کنم*/
         showTable: function () {
             var html = Utils.fastAjax('WorkFlowAjaxFunc', 'showTable_eslaheEzafekar', {
                 docId: FormView.docID, mode: this.showMode
@@ -13,16 +14,16 @@ this.jcode = function(self){
         },
         addRow:function(){
             var lengthTable = $jq('.detailedTable > tbody > tr').length;
-            var newTr = '<tr class="tableRow_' + (lengthTable - 1) + '">' + '<td style="padding: 2px;border: 1px solid #ccc;">' + (lengthTable - 1) + '</td>' +
+            var newTr = '<tr class="tableRow_' + (lengthTable - 1-this.staticRow) + '">' + '<td style="padding: 2px;border: 1px solid #ccc;">' + (lengthTable - 1-this.staticRow) + '</td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()" type="text" name="firstName" width="30px" value=""></td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()" type="text" name="lastName" value=""></td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()"  dir="ltr" type="number" name="cardNumber" value=""></td>' +
-                '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()"  dir="ltr" type="number" name="overworkDone" value=""></td>' +
-                '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()"  dir="ltr" type="number" name="overworkConfirm" value=""></td>' +
+                '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.onInputForOverworkDone()"  dir="ltr" type="number" name="overworkDone" value=""></td>' +
+                '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.onInputForOverworkConfirm()"  dir="ltr" type="number" name="overworkConfirm" value=""></td>' +
 
                 '<td id="tdDeleteImg" style="padding: 2px;background-color: #c5e1a5; border: 1px solid #ccc;">' + '<img style="cursor: pointer" onclick="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.removeRow(' + (lengthTable - 1) + ')"' + 'src="gfx/toolbar/cross.png" />' + '</td>' +
                 '</tr>';
-            $jq('.detailedTable > tbody > tr').eq(lengthTable - 2).after(newTr);
+            $jq('.detailedTable > tbody > tr').eq(lengthTable - 2-this.staticRow).after(newTr);
 
         },
         unSaved:function(){
@@ -52,22 +53,17 @@ this.jcode = function(self){
             console.log("in save:---------- ");
             var tem = JSON.stringify(this.tableArray);
             console.log(tem);
+
+
+
             Utils.showProgress(true);
 
             var gotResponse = function (o) {
-                /*var Hadith = eval(o.responseText);*/
 
-                /*Utils.showProgress(false);*/
-                /*html = self.showTable();*/
-                /*$jq('.tableGuest').html(html);
-                self.setDateObjectAll();*/
+                console.log("in gotResponse:---------- ");
                 this.isSaved=true;
-                this.this.isSaved=true;
+
                 Utils.showProgress(false);
-               /* self.fillGuestList();
-                self.isValid=self.checkValidGuest();*/
-
-
             };
 
             var callback = {
@@ -76,6 +72,7 @@ this.jcode = function(self){
             var url = "../Runtime/process.php";
             var param = 'module=WorkFlowAjaxFunc&action=saveDetailedTable_eslahEzafekar&docId=' + FormView.docID +'&detailedTable='+tem;
             SAMA.util.Connect.asyncRequest('POST', url, callback, param);
+
 
         },
         fillDetailedTableArray:function(){
@@ -156,6 +153,62 @@ this.jcode = function(self){
                 }
             }
             return true;
+
+
+        },
+        updateTotalOverworkDone:function(){
+            var length =  $jq('.detailedTable>tbody>tr[class^=\'tab\']').length;
+            let sum=0;
+
+            for (var count = 1; count <= length; count++) {
+                let value=$jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'overworkDone\'] ').val();
+                if (value=="")
+                    value=0;
+                else
+                    value=parseInt(value);
+
+                sum+=value;
+            }
+            $jq('input[name^=totalOverworkDone]').val(sum)
+        },
+        updateTotalOverworkConfirm:function(){
+
+            var length =  $jq('.detailedTable>tbody>tr[class^=\'tab\']').length;
+            let sum=0;
+
+            for (var count = 1; count <= length; count++) {
+                let value=$jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'overworkConfirm\'] ').val();
+                if (value=="")
+                    value=0;
+                else
+                    value=parseInt(value);
+
+                sum+=value;
+            }
+            $jq('input[name^=totalOverworkConfirm]').val(sum)
+        },
+        onInputForOverworkDone:function(){
+           this.unSaved();
+           this.updateTotalOverworkDone();
+        },
+        onInputForOverworkConfirm:function(){
+            this.unSaved();
+            this.updateTotalOverworkConfirm();
+            this.changeBackgroundTotalConfirm();
+        },
+        changeBackgroundTotalConfirm:function () {
+            let saghf=FormView.myForm.getItemByName('Field_3').getData();
+            if(saghf=="")
+                saghf=0;
+
+            let totaloverworkConfirm=$jq('input[name^=totalOverworkConfirm]').val();
+            if(totaloverworkConfirm=="")
+                totaloverworkConfirm=0;
+
+            if(parseInt(parseInt(saghf)-totaloverworkConfirm)>=0)
+                $jq('input[name^=totalOverworkConfirm]').css("background-color","#c5e1a5");/*green*/
+            else
+                $jq('input[name^=totalOverworkConfirm]').css("background-color","#ffab91");/*red*/
 
 
         },

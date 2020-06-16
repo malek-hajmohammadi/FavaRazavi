@@ -516,16 +516,31 @@ input[name=firstName] {
         width: 80px;
         text-align: left !important;
         padding: 0;
+        padding-left:2px;
     }
     input[name=overworkDone] {
         width: 50px;
         text-align: left !important;
         padding: 0;
+        padding-left:2px;
     }
     input[name=overworkConfirm] {
         width: 50px;
         text-align: left !important;
         padding: 0;
+        padding-left:2px;
+    }
+    input[name=totalOverworkDone] {
+        width: 50px;
+        text-align: left !important;
+        padding: 0;
+        padding-left:2px;
+    }
+    input[name=totalOverworkConfirm] {
+        width: 50px;
+        text-align: left !important;
+        padding: 0;
+        padding-left:2px;
     }
     
     
@@ -596,6 +611,30 @@ if(6){
 
     $btnTableTag = "
 <tr>
+
+        
+        <td style=\"padding: 2px;border: 0px solid #ccc;\">
+        </td>
+        <td style=\"padding: 2px;border: 0px solid #ccc;\">
+        </td>
+        <td style=\"padding: 2px;border: 0px solid #ccc;\">
+        </td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\">
+        <span style='font-weight: bold !important;'>جمع اضافه کار</span>
+        </td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\">
+         <input style=\"background: #e0e0e0\" readonly  type=\"number\" name=\"totalOverworkDone\" dir='ltr' value=\"0\">
+        </td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\">
+        <input style=\"background: #e0e0e0\" readonly  type=\"number\" name=\"totalOverworkConfirm\" dir='ltr' value=\"0\">
+        </td>
+        <td style=\"padding: 2px;border: 0px solid #ccc;\">
+        </td>
+        
+      </tr>
+
+<tr>
+
         <td style=\"padding: 2px;padding-top: 7px;
     padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCell;\">
     <a style='pointer-events:$pointerEvent;cursor:$cursorCell; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.addRow()\">
@@ -608,7 +647,7 @@ if(6){
    ذخیره و بررسی
     <img src=\"gfx/toolbar/out-regletters.png\" />
                                                               </a>
-                                                              </td> ";
+                                                              </td></tr> ";
 
 
     $endTableTag = "                                                             
