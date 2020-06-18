@@ -212,11 +212,15 @@ this.jcode = function(self){
 
 
         },
+        loadListFromLastList:function(arrayList){
+
+        },
 
     };
     self.loadForm=function(){
         self.DetailedTable.showMode=self.DetailedTable.getCable();
         console.log("DetailedTable.showMode="+self.DetailedTable.showMode);
+        self.showOrNotShowBtnFetchingList();
         let html =self.DetailedTable.showTable();
         $jq('.detailedTableSpan').html(html);
 
@@ -260,6 +264,50 @@ this.jcode = function(self){
         }
         return true;
         return true;
+    };
+    self.showOrNotShowBtnFetchingLastList=function(){
+        if(self.DetailedTable.showMode !="edit")
+            $jq(".tdBtnFetchingLastList").css("display","none");
+    };
+    self.onClickBtnFetchingLastList=function(){
+        let hozeh=FormView.myForm.getItemByName('Field_4').getData();
+        if(hozeh.length==0){
+            Utils.showModalMessage('حوزه انتخاب نشده است');
+            return false;
+        }
+
+        let year=FormView.myForm.getItemByName('Field_2').getData();
+        if(year=="0"){
+            Utils.showModalMessage('سال انتخاب نشده است');
+            return false;
+        }
+
+        let month=FormView.myForm.getItemByName('Field_1').getData();
+        if(month=="0"){
+            Utils.showModalMessage('ماه انتخاب نشده است');
+            return false;
+        }
+
+        /*گرفتن لیست حوزه در ماه قبل از دیتابیس*/
+        let lastList=[[]];
+        /*---------------*/
+        Utils.showProgress(true);
+
+        var gotResponse = function (o) {
+            console.log("in gotResponse:---------- ");
+             lastList=JSON.parse(o.responseText);
+
+            Utils.showProgress(false);
+        };
+        var callback = {
+            success: gotResponse
+        };
+        var url = "../Runtime/process.php";
+        var param = 'module=WorkFlowAjaxFunc&action=fetchLastList&month=' + month + '&year=' + year+'&hozeh='+hozeh;
+        SAMA.util.Connect.asyncRequest('POST', url, callback, param);
+        /*---------------*/
+
+
     };
 
 

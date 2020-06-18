@@ -35,3 +35,30 @@ this.actJS = function (self) {
     return FormView.myForm.getItemByName('Field_21').btnConfirm();
 
 };
+/*فراخوانی آیجکس با callback*/
+function template_ajaxWithCallback() {
+
+    Utils.showProgress(true);
+    /*o خروجی هست که میشه ازش استفاده کرد*/
+    var gotResponse = function (o) {
+
+        console.log("in gotResponse:---------- ");
+        /*کدی که می خواهیم بعد از پاسخ اجرا بشه*/
+        /*اگر بخواهیم خروجی بگیریم ازش بصورت زیر هست*/
+
+        let listExcel=JSON.parse(o.responseText);
+        self.output=listExcel;
+        for(let i=0;i<listExcel.length;i++) {
+            item = listExcel[i];
+            let firstName = item['name'];
+        }
+
+        Utils.showProgress(false);
+    };
+    var callback = {
+        success: gotResponse
+    };
+    var url = "../Runtime/process.php";
+    var param = 'module=WorkFlowAjaxFunc&action=saveDetailedTable_eslahEzafekar&docId=' + FormView.docID + '&detailedTable=' + tem;
+    SAMA.util.Connect.asyncRequest('POST', url, callback, param);
+}
