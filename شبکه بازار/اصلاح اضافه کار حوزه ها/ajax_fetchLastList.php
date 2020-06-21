@@ -47,7 +47,7 @@ if(3){
     $db = PDOAdapter::getInstance();
     $sql="SELECT dmSlave.* FROM `dm_datastoretable_58` AS dmMaster
  INNER JOIN `dm_datastoretable_59` AS dmSlave ON(dmMaster.DocID = dmSlave.MasterID)
- WHERE dmMaster.`Field_1`=:month AND dmMaster.`Field_2`=:year AND dmMaster.`Field_4`=:hozeh";
+ WHERE dmMaster.`Field_1`=:month AND dmMaster.`Field_2`=:year AND dmMaster.`Field_4`=:hozeh ORDER BY dmSlave.`RowID`";
     $PDOParams=array(
         array('name'=>'month','value'=>$month,'type'=>PDO::PARAM_INT),
         array('name'=>'year','value'=>$year,'type'=>PDO::PARAM_INT),

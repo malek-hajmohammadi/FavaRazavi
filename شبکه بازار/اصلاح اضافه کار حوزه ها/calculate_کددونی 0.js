@@ -1,6 +1,4 @@
 this.jcode = function(self){
-
-    /*برای اضافه کردن در کد دونی*/
     self.DetailedTable = {
         tableArray:[[]],
         showMode: "edit",/** edit * readOnly*editJustConfirm*/
@@ -15,13 +13,13 @@ this.jcode = function(self){
         addRow:function(){
             var lengthTable = $jq('.detailedTable > tbody > tr').length;
             var newTr = '<tr class="tableRow_' + (lengthTable - 1-this.staticRow) + '">' + '<td style="padding: 2px;border: 1px solid #ccc;">' + (lengthTable - 1-this.staticRow) + '</td>' +
-                '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()" type="text" name="firstName" width="30px" value=""></td>' +
+                '<td style="padding: 2px;border: 1px solid #ccc;"><input  onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()" type="text" name="firstName" width="30px" value=""></td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()" type="text" name="lastName" value=""></td>' +
-                '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()"  dir="ltr" type="number" name="cardNumber" value=""></td>' +
-                '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.onInputForOverworkDone()"  dir="ltr" type="number" name="overworkDone" value=""></td>' +
-                '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.onInputForOverworkConfirm()"  dir="ltr" type="number" name="overworkConfirm" value=""></td>' +
+                '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()"  dir="ltr" type="number" name="cardNumber" min="0" value=""></td>' +
+                '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.onInputForOverworkDone()"  dir="ltr" type="number" min="0" name="overworkDone" value=""></td>' +
+                '<td style="padding: 2px;border: 1px solid #ccc;"><input onkeydown="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.checkTabOnLastCell(event)" onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.onInputForOverworkConfirm()"  dir="ltr" type="number" min="0" name="overworkConfirm" value=""></td>' +
 
-                '<td id="tdDeleteImg" style="padding: 2px;background-color: #c5e1a5; border: 1px solid #ccc;">' + '<img style="cursor: pointer" onclick="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.removeRow(' + (lengthTable - 1) + ')"' + 'src="gfx/toolbar/cross.png" />' + '</td>' +
+                '<td id="tdDeleteImg" style="padding: 2px;background-color: #c5e1a5; border: 1px solid #ccc;">' + '<img style="cursor: pointer" onclick="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.removeRow(' + (lengthTable - 1-this.staticRow) + ')"' + 'src="gfx/toolbar/cross.png" />' + '</td>' +
                 '</tr>';
             $jq('.detailedTable > tbody > tr').eq(lengthTable - 2-this.staticRow).after(newTr);
 
@@ -51,6 +49,8 @@ this.jcode = function(self){
         saveToDb:function(){
             console.log(this.tableArray);
             console.log("in save:---------- ");
+            this.isSaved=true;
+            Utils.showMessage('ذخیره سازی با موفقیت انجام شد');
             var tem = JSON.stringify(this.tableArray);
             console.log(tem);
 
@@ -61,7 +61,7 @@ this.jcode = function(self){
             var gotResponse = function (o) {
 
                 console.log("in gotResponse:---------- ");
-                this.isSaved=true;
+               /* this.isSaved=true;*/ /*this اینجا کار نمی کنه*/
 
                 Utils.showProgress(false);
             };
@@ -215,14 +215,23 @@ this.jcode = function(self){
         loadListFromLastList:function(arrayList){
 
         },
+        checkTabOnLastCell:function(event){
+            /*اگر روی خونه آخر تب رو زد بره یک سطر اضافه کند*/
+            var key = event.keyCode;
+            if(key==9)
+                this.addRow();
+        },
+
 
     };
     self.loadForm=function(){
         self.DetailedTable.showMode=self.DetailedTable.getCable();
         console.log("DetailedTable.showMode="+self.DetailedTable.showMode);
-        self.showOrNotShowBtnFetchingList();
+        self.showOrNotShowBtnFetchingLastList();
         let html =self.DetailedTable.showTable();
         $jq('.detailedTableSpan').html(html);
+        self.DetailedTable.updateTotalOverworkDone();
+        self.DetailedTable.updateTotalOverworkConfirm();
 
     };
     self.btnConfirmLevel1=function(){
@@ -296,6 +305,8 @@ this.jcode = function(self){
         var gotResponse = function (o) {
             console.log("in gotResponse:---------- ");
              lastList=JSON.parse(o.responseText);
+             self.fillLastList(lastList);
+
 
             Utils.showProgress(false);
         };
@@ -306,7 +317,21 @@ this.jcode = function(self){
         var param = 'module=WorkFlowAjaxFunc&action=fetchLastList&month=' + month + '&year=' + year+'&hozeh='+hozeh;
         SAMA.util.Connect.asyncRequest('POST', url, callback, param);
         /*---------------*/
+    };
+    self.fillLastList=function(lastList){
 
+        for (var count = 0; count < lastList.length; count++) {
+            item=lastList[count];
+            let firstName=item[0];
+            let lastName=item[1];
+            let cardNumber=item[2];
+            self.DetailedTable.addRow();
+            var lengthTable = $jq('.detailedTable > tbody > tr').length;
+            let newTrId=lengthTable- 3;
+            $jq('.detailedTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'firstName\'] ').val(firstName);
+            $jq('.detailedTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'lastName\'] ').val(lastName);
+            $jq('.detailedTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'cardNumber\'] ').val(cardNumber);
+        }
 
     };
 

@@ -378,9 +378,6 @@ this.jcode = function (self) {
             for(let i=0;i<listExcel.length;i++){
                 item=listExcel[i];
 
-
-
-
                 let firstName=item['name'];
                 let lastName=item['family'];
                 let birthday=item['birthDate'];
