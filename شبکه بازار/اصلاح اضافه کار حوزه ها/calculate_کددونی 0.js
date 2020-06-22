@@ -30,6 +30,9 @@ this.jcode = function(self){
         removeRow:function(index){
             $jq('.tableRow_' + index).remove();
             this.updateFrontAfterRemove();
+
+            this.updateTotalOverworkDone();
+            this.updateTotalOverworkConfirm();
         },
         updateFrontAfterRemove:function(){
             var lengthTable =  $jq('.detailedTable>tbody>tr[class^=\'tab\']').length;
@@ -152,6 +155,22 @@ this.jcode = function(self){
                     return false;
                 }
             }
+
+            let saghf=FormView.myForm.getItemByName('Field_3').getData();
+            if(saghf=="")
+                saghf=0;
+
+            let totaloverworkConfirm=$jq('input[name^=totalOverworkConfirm]').val();
+            if(totaloverworkConfirm=="")
+                totaloverworkConfirm=0;
+
+            if(parseInt(parseInt(saghf)-totaloverworkConfirm)<0){
+                Utils.showModalMessage("مقدار اضافه کار تایید شده از سقف مجاز اضافه کار بیشتر است");
+                return false;
+            }
+
+
+
             return true;
 
 
