@@ -613,27 +613,38 @@ if(6){
 <tr>
 
         
-        <td style=\"padding: 2px;border: 0px solid #ccc;\">
+        <td style=\"padding: 2px;border: 0px solid #ccc;background: white !important;\">
         </td>
-        <td style=\"padding: 2px;border: 0px solid #ccc;\">
+        <td style=\"padding: 2px;border: 0px solid #ccc;background: white !important;\">
         </td>
-        <td style=\"padding: 2px;border: 0px solid #ccc;\">
+        <td style=\"padding: 2px;border: 0px solid #ccc;background: white !important;\">
         </td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\">
+        <td style=\"padding: 2px;border: 1px solid #ccc;background: white !important;\">
         <span style='font-weight: bold !important;'>جمع اضافه کار</span>
         </td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\">
+        <td style=\"padding: 2px;border: 1px solid #ccc;background: white !important;\">
          <input style=\"background: #e0e0e0\" readonly  type=\"number\" name=\"totalOverworkDone\" dir='ltr' value=\"0\">
         </td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\">
+        <td style=\"padding: 2px;border: 1px solid #ccc;background: white !important;\">
         <input style=\"background: #e0e0e0\" readonly  type=\"number\" name=\"totalOverworkConfirm\" dir='ltr' value=\"0\">
         </td>
-        <td style=\"padding: 2px;border: 0px solid #ccc;\">
+        <td style=\"padding: 2px;border: 0px solid #ccc;background: white !important;\">
         </td>
         
       </tr>
+      </tbody>
+      </table>
+      <table><tbody>
+      <tr>
+      <td colspan='4'  style='border: 0;text-align: right;background: white !important;'>
+      <input type='checkbox' checked /> جدول به عنوان لیست پیش فرض حوزه انتخاب شده ذخیره شود.
+</td>
+</tr>
+      
+
 
 <tr>
+
 
         <td style=\"padding: 2px;padding-top: 7px;
     padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCell;\">
@@ -647,7 +658,22 @@ if(6){
    ذخیره و بررسی
     <img src=\"gfx/toolbar/out-regletters.png\" />
                                                               </a>
-                                                              </td></tr> ";
+                                                              </td>
+                                                              <td style=\"padding: 2px;padding-top: 7px;
+    padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCellSave;\">
+    <a style='pointer-events:$pointerEventSave;cursor:$cursorCellSave; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.saveList()\">
+   ذخیره و بررسی
+    <img src=\"gfx/toolbar/out-regletters.png\" />
+                                                              </a>
+                                                              </td>
+                                                              <td style=\"padding: 2px;padding-top: 7px;
+    padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCellSave;\">
+    <a style='pointer-events:$pointerEventSave;cursor:$cursorCellSave; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.saveList()\">
+   ذخیره و بررسی
+    <img src=\"gfx/toolbar/out-regletters.png\" />
+                                                              </a>
+                                                              </td>
+                                                              </tr> ";
 
 
     $endTableTag = "                                                             

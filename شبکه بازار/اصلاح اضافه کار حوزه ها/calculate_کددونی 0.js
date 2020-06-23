@@ -3,7 +3,7 @@ this.jcode = function(self){
         tableArray:[[]],
         showMode: "edit",/** edit * readOnly*editJustConfirm*/
         isSaved:false,
-        staticRow:1,/*سطری برای جمع داریم یا نه که در اضافه کردن و کم کردن سطرها استفاده کنم*/
+        staticRow:2,/*سطری برای جمع داریم یا نه که در اضافه کردن و کم کردن سطرها استفاده کنم*/
         showTable: function () {
             var html = Utils.fastAjax('WorkFlowAjaxFunc', 'showTable_eslaheEzafekar', {
                 docId: FormView.docID, mode: this.showMode

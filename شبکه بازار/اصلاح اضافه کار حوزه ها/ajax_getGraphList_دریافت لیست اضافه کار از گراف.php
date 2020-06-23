@@ -35,66 +35,10 @@ else if($status == 'BazeZamani'){
 //$dt1 = '1399/02/28';
 //$dt2 = '1399/02/30';
 $GID = $PID;
-/*$s1 = "EXEC [adon].[TimeSheetView] ".$GID.",'".$dt1."','".$dt2."'";*/
-$s1 = "EXEC [adon].[TimeSheetView] '".$dt1."','".$dt2."'";
-
-/*
-try{
-
-    $GID = $PID;
-
-    //--
-
-    $client = new SoapClient('http://46.209.31.219:8050/Timex.asmx?wsdl');
-    $s = "SELECT TOP(1) [CreateDate]
-    FROM [Timex].[adon].[TblIOData]
-    WHERE IOTypeID>0 AND CreateDate>'2018-10-20 0:0:0' ORDER BY [CreateDate] DESC";
-    $param = array(
-        'username' => '3ef1b48067e4f2ac9913141d77e847dd',
-        'password' => '9a3f5b14f1737c15e86680d9cd40b840',
-        'objStr' => $s
-    );
-    $res = $client->RunSelectQuery($param);
-    $res = $res->RunSelectQueryResult->cols;
-    $res = json_decode(json_encode($res), true);
-    $res = urldecode($res['recs']['string']);
-    $res = explode(' ',$res);
-    $date = Date::GregToJalali((new DateTime($res[0]))->format('Y-m-d'));
-    $time = date("H:i", strtotime("$res[1] $res[2]"));
-    $TimexUpdate = $date.' ساعت: '.$time;
-    //Response::getInstance()->response = $TimexUpdate;
-
-    //--
-
-    $GID = '45004';
-    $dt1 = "1398/08/01";
-    $dt2 = "1398/08/30";
-
-    $client = new SoapClient('http://46.209.31.219:8050/Timex.asmx?wsdl');
-    $s1 = "EXEC [adon].[TimeSheetView] ".$GID.",'".$dt1."','".$dt2."'";
-    $param = array(
-        'username' => '3ef1b48067e4f2ac9913141d77e847dd',
-        'password' => '9a3f5b14f1737c15e86680d9cd40b840',
-        'objStr' => $s1
-    );
-    $res = $client->RunSelectQuery($param);
-    $res = $res->RunSelectQueryResult->cols;
-    $res = json_decode(json_encode($res), true);
-    //Response::getInstance()->response = var_export($res,true);
-    //$P = $P.' -*- Q: '.$s1;
-
-    $SoapStatus = 1;
-}
-catch(SoapFaultException $e){
-    $SoapStatus = 0;
-}
-catch(Exception $e){
-    $SoapStatus = 0;
-}
-*/
+$s1 = "EXEC [adon].[TimeSheetView] ".$GID.",'".$dt1."','".$dt2."'";
 
 
-//---
+
 
 $SoapStatus = 1;
 $xml = <<<XML
@@ -394,83 +338,8 @@ $TEzafeKhalesM = strlen($m)==1 ? "0".$m : $m;
 if($TEzafeKhalesH == '00' && $manfi == '-') $TEzafeKhales = $TEzafeKhalesH.':'.$TEzafeKhalesM.$manfi;
 else $TEzafeKhales = $TEzafeKhalesH.':'.$TEzafeKhalesM;
 
-$html = "
-<section>
-    
-    <fieldset><table><tbody>
-    
-    <tr><td style='font-weight: bold !important'>جمع اضافه كار خالص: </td>
-    <td style=''>$TEzafeKhales</td></tr>
-    
-    <tr><td style='font-weight: bold !important'>جمع كسركار: </td>
-    <td style=''>$TKasrH:$TKasrM</td></tr>
 
-    <tr><td style='font-weight: bold !important'>اضافه كار پرداختي: </td>
-    <td style=''>$TNahaee</td></tr>
-
-    <tr><td style='font-weight: bold !important'>جمع تعطيل كار: </td>
-    <td style=''>$TTatilH:$TTatilM</td></tr>
-
-    <tr><td style='font-weight: bold !important'>جمع شب كار: </td>
-    <td style=''>$TShabH:$TShabM</td></tr>
-
-    </tbody></table></fieldset>
-    <fieldset><table><tbody>
-
-    <tr><td style='font-weight: bold !important'>تعداد تردد ناقص: </td>
-    <td style=''>$TedadNaghes</td></tr>
-
-    <tr><td style='font-weight: bold !important'>تعداد غيبت: </td>
-    <td style=''>$TedadGheibat</td></tr>
-
-    <tr><td style='font-weight: bold !important'>تعداد مرخصي روزانه: </td>
-    <td style=''>$RoozMorkhasiT</td></tr>
-
-    <tr><td style='font-weight: bold !important'>جمع مرخصي ساعتي: </td>
-    <td style=''>$TMorkhasiH:$TMorkhasiM</td></tr>
-
-    <tr><td style='font-weight: bold !important'>مرخصي استفاده شده: </td>
-    <td style=''>$TMorkhasiKol روز</td></tr>
-
-    </tbody></table></fieldset>
-    <fieldset><table><tbody>
-
-    <tr><td style='font-weight: bold !important'>آخرين تاريخ انجام محاسبات: </td>
-    <td style=''>$TimexUpdate</td></tr>
-
-    <tr><td style='font-weight: bold !important'>شماره پرسنلي در اتوماسيون: </td>
-    <td style=''>$PID</td></tr>
-
-    <tr><td style='font-weight: bold !important'>شماره پرسنلي در گراف: </td>
-    <td style=''>$GID</td></tr>
-
-    </tbody></table></fieldset>
-
-</section>
-
-<section>
-    <table class='table' cellpadding='0' cellspacing='3' style='width:100%'>
-        <thead>
-        <tr>
-        <th>تاريخ</th>
-        <th>وضعيت</th>
-        <th>ترددها</th>
-        <!--
-        <th>حضور</th>
-        -->
-        <th>كسركار</th>
-        <th>اضافه  كار</th>
-        <!--
-        <th>شب كار</th>
-        <th>تعطيل كار</th>
-        -->
-        </tr></thead>
-        <tbody>$html</tbody>
-    </table>
-</section>
-
-";
 if($SoapStatus == 1)
-    Response::getInstance()->response = $html.$P;
+    Response::getInstance()->response = $TEzafeKhalesH;
 else
-    Response::getInstance()->response = '<section>امكان ارتباط با سامانه گراف مقدور نمي باشد</section>';
+    Response::getInstance()->response = 0;
