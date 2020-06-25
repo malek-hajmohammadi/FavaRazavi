@@ -3,7 +3,6 @@ this.jcode = function(self){
         tableArray:[[]],
         showMode: "edit",/** edit * readOnly*editJustConfirm*/
         isSaved:false,
-        staticRow:2,/*سطری برای جمع داریم یا نه که در اضافه کردن و کم کردن سطرها استفاده کنم*/
         showTable: function () {
             var html = Utils.fastAjax('WorkFlowAjaxFunc', 'showTable_eslaheEzafekar', {
                 docId: FormView.docID, mode: this.showMode
@@ -12,16 +11,16 @@ this.jcode = function(self){
         },
         addRow:function(){
             var lengthTable = $jq('.detailedTable > tbody > tr').length;
-            var newTr = '<tr class="tableRow_' + (lengthTable - 1-this.staticRow) + '">' + '<td style="padding: 2px;border: 1px solid #ccc;">' + (lengthTable - 1-this.staticRow) + '</td>' +
+            var newTr = '<tr class="tableRow_' + (lengthTable - 1) + '">' + '<td style="padding: 2px;border: 1px solid #ccc;">' + (lengthTable - 1) + '</td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input  onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()" type="text" name="firstName" width="30px" value=""></td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()" type="text" name="lastName" value=""></td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.unSaved()"  dir="ltr" type="number" name="cardNumber" min="0" value=""></td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.onInputForOverworkDone()"  dir="ltr" type="number" min="0" name="overworkDone" value=""></td>' +
                 '<td style="padding: 2px;border: 1px solid #ccc;"><input onkeydown="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.checkTabOnLastCell(event)" onInput="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.onInputForOverworkConfirm()"  dir="ltr" type="number" min="0" name="overworkConfirm" value=""></td>' +
 
-                '<td id="tdDeleteImg" style="padding: 2px;background-color: #c5e1a5; border: 1px solid #ccc;">' + '<img style="cursor: pointer" onclick="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.removeRow(' + (lengthTable - 1-this.staticRow) + ')"' + 'src="gfx/toolbar/cross.png" />' + '</td>' +
+                '<td id="tdDeleteImg" style="padding: 2px;background-color: #c5e1a5; border: 1px solid #ccc;">' + '<img style="cursor: pointer" onclick="FormView.myForm.getItemByName(\'Field_0\').DetailedTable.removeRow(' + (lengthTable - 1) + ')"' + 'src="gfx/toolbar/cross.png" />' + '</td>' +
                 '</tr>';
-            $jq('.detailedTable > tbody > tr').eq(lengthTable - 2-this.staticRow).after(newTr);
+            $jq('.detailedTable > tbody > tr').eq(lengthTable - 2).after(newTr);
 
         },
         unSaved:function(){
@@ -73,9 +72,9 @@ this.jcode = function(self){
                 success: gotResponse
             };
             var url = "../Runtime/process.php";
-            var param = 'module=WorkFlowAjaxFunc&action=saveDetailedTable_eslahEzafekar&docId=' + FormView.docID +'&detailedTable='+tem;
+            let hozeh=FormView.myForm.getItemByName('Field_4').getData();
+            var param = 'module=WorkFlowAjaxFunc&action=saveDetailedTable_eslahEzafekar&docId=' + FormView.docID +'&detailedTable='+tem+'&hozeh='+hozeh;
             SAMA.util.Connect.asyncRequest('POST', url, callback, param);
-
 
         },
         fillDetailedTableArray:function(){
@@ -304,17 +303,9 @@ this.jcode = function(self){
             return false;
         }
 
-        let year=FormView.myForm.getItemByName('Field_2').getData();
-        if(year=="0"){
-            Utils.showModalMessage('سال انتخاب نشده است');
-            return false;
-        }
 
-        let month=FormView.myForm.getItemByName('Field_1').getData();
-        if(month=="0"){
-            Utils.showModalMessage('ماه انتخاب نشده است');
-            return false;
-        }
+
+
 
         /*گرفتن لیست حوزه در ماه قبل از دیتابیس*/
         let lastList=[[]];
@@ -333,7 +324,7 @@ this.jcode = function(self){
             success: gotResponse
         };
         var url = "../Runtime/process.php";
-        var param = 'module=WorkFlowAjaxFunc&action=fetchLastList&month=' + month + '&year=' + year+'&hozeh='+hozeh;
+        var param = 'module=WorkFlowAjaxFunc&action=fetchLastList&hozeh='+hozeh;
         SAMA.util.Connect.asyncRequest('POST', url, callback, param);
         /*---------------*/
     };
@@ -344,12 +335,25 @@ this.jcode = function(self){
             let firstName=item[0];
             let lastName=item[1];
             let cardNumber=item[2];
-            self.DetailedTable.addRow();
-            var lengthTable = $jq('.detailedTable > tbody > tr').length;
-            let newTrId=lengthTable- 3;
-            $jq('.detailedTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'firstName\'] ').val(firstName);
-            $jq('.detailedTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'lastName\'] ').val(lastName);
-            $jq('.detailedTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'cardNumber\'] ').val(cardNumber);
+            let repetitive=0;
+
+            var length =  $jq('.detailedTable>tbody>tr[class^=\'tab\']').length;
+
+            for (var innerCount = 1; innerCount <= length; innerCount++) {
+                if(cardNumber == $jq('.detailedTable>tbody>tr.tableRow_' + innerCount + ' input[name=\'cardNumber\'] ').val())
+                    repetitive=1;
+            }
+
+            if(repetitive==0){
+                self.DetailedTable.addRow();
+                var lengthTable = $jq('.detailedTable > tbody > tr').length;
+                let newTrId=lengthTable- 2;
+                $jq('.detailedTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'firstName\'] ').val(firstName);
+                $jq('.detailedTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'lastName\'] ').val(lastName);
+                $jq('.detailedTable>tbody>tr.tableRow_' + newTrId + ' input[name=\'cardNumber\'] ').val(cardNumber);
+
+            }
+
         }
 
     };

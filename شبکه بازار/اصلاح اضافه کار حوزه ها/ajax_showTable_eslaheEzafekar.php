@@ -633,55 +633,11 @@ if(6){
         
       </tr>
       </tbody>
-      </table>
-      <table><tbody>
-      <tr>
-      <td colspan='4'  style='border: 0;text-align: right;background: white !important;'>
-      <input type='checkbox' checked /> جدول به عنوان لیست پیش فرض حوزه انتخاب شده ذخیره شود.
-</td>
-</tr>
-      
+      </table>";
 
-
-<tr>
-
-
-        <td style=\"padding: 2px;padding-top: 7px;
-    padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCell;\">
-    <a style='pointer-events:$pointerEvent;cursor:$cursorCell; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.addRow()\">
-    <img src=\"gfx/toolbar/plus.png\" />
-    </a>
-    </td>
-        <td style=\"padding: 2px;padding-top: 7px;
-    padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCellSave;\">
-    <a style='pointer-events:$pointerEventSave;cursor:$cursorCellSave; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.saveList()\">
-   ذخیره و بررسی
-    <img src=\"gfx/toolbar/out-regletters.png\" />
-                                                              </a>
-                                                              </td>
-                                                              <td style=\"padding: 2px;padding-top: 7px;
-    padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCellSave;\">
-    <a style='pointer-events:$pointerEventSave;cursor:$cursorCellSave; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.saveList()\">
-   ذخیره و بررسی
-    <img src=\"gfx/toolbar/out-regletters.png\" />
-                                                              </a>
-                                                              </td>
-                                                              <td style=\"padding: 2px;padding-top: 7px;
-    padding-bottom: 7px;border: 1px solid #ccc;background-color: $backgroundCellSave;\">
-    <a style='pointer-events:$pointerEventSave;cursor:$cursorCellSave; text-decoration-line: none;color: #0b2e13;' onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.saveList()\">
-   ذخیره و بررسی
-    <img src=\"gfx/toolbar/out-regletters.png\" />
-                                                              </a>
-                                                              </td>
-                                                              </tr> ";
-
-
-    $endTableTag = "                                                             
- </tbody>
-</table>";
 
 }/*6- ساخت دکمه های انتهایی جدول*/
 
-Response::getInstance()->response = $style . $defineTableTag . $header . $table .$btnTableTag. $endTableTag;
+Response::getInstance()->response = $style . $defineTableTag . $header . $table .$btnTableTag;
 
 

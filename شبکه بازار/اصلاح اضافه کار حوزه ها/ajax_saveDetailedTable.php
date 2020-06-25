@@ -2,13 +2,15 @@
 
 $detailedTable="";/*آرایه ای که می خواهد در دیتابیس ذخیره شود*/
 $docId="";/*شماره فرم مستر*/
+$hozeh="";/*کد حوزه*/
 
 if(1){
-    if (Request::getInstance()->varCleanFromInput('detailedTable') && Request::getInstance()->varCleanFromInput('docId')) {
+    if (Request::getInstance()->varCleanFromInput('detailedTable') && Request::getInstance()->varCleanFromInput('docId') && Request::getInstance()->varCleanFromInput('hozeh') ) {
         $detailedTable = Request::getInstance()->varCleanFromInput('detailedTable');
         $detailedTable = json_decode($detailedTable);
 
         $docId = Request::getInstance()->varCleanFromInput('docId');
+        $hozeh=Request::getInstance()->varCleanFromInput('hozeh');
 
         ////for test///
 
@@ -30,6 +32,11 @@ where MasterID=$docId";
     $db->execute($sql);
 
 }/*حذف داده های قبلی قبل از ذخیره سازی، در غیر این صورت اطلاعات تکراری می شود*/
+if(3){
+    $db = MySQLAdapter::getInstance();
+    $sql="UPDATE dm_datastoretable_58 as dm SET `Field_6`=0 WHERE DocID<>$docId AND `Field_4`=$hozeh  ";
+    $db->execute($sql);
+}/*حذف پیش فرض بودن لیست قبلی حوزه انتخاب شد*/
 if(2){
 ///
     $db = PDOAdapter::getInstance();
