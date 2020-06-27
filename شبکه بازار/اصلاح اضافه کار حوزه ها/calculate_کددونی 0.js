@@ -240,12 +240,11 @@ this.jcode = function(self){
                 this.addRow();
         },
 
-
     };
     self.loadForm=function(){
         self.DetailedTable.showMode=self.DetailedTable.getCable();
         console.log("DetailedTable.showMode="+self.DetailedTable.showMode);
-        self.showOrNotShowBtnFetchingLastList();
+        self.showOrNotShowButtons();
         let html =self.DetailedTable.showTable();
         $jq('.detailedTableSpan').html(html);
         self.DetailedTable.updateTotalOverworkDone();
@@ -292,9 +291,20 @@ this.jcode = function(self){
         return true;
         return true;
     };
-    self.showOrNotShowBtnFetchingLastList=function(){
-        if(self.DetailedTable.showMode !="edit")
-            $jq(".tdBtnFetchingLastList").css("display","none");
+    self.showOrNotShowButtons=function(){
+        if(self.DetailedTable.showMode !="edit"){
+            $jq("#btnAdd").css("display","none");
+            $jq("#btnLoadDefault").css("display","none");
+            $jq("#btnGetGraph").css("display","none");
+            $jq("#btnAdd").css("display","none");
+        }
+        if(self.DetailedTable.showMode =="readOnly"){
+            $jq("#btnSave").css("display","none");
+            $jq("#trWillSaved").css("display","none");
+
+        }
+
+
     };
     self.onClickBtnFetchingLastList=function(){
         let hozeh=FormView.myForm.getItemByName('Field_4').getData();
@@ -303,11 +313,13 @@ this.jcode = function(self){
             return false;
         }
 
+        /*گرفتن سقف اضافه کار از آیجکس*/
+        var res = Utils.fastAjax('WorkFlowAjaxFunc', 'fetchSaghfHozeh',{hozeh:hozeh});
+        FormView.myForm.getItemByName('Field_3').setData(res);
+        /*گرفتن سقف اضافه کار از آیجکس*//*پایان*/
 
 
-
-
-        /*گرفتن لیست حوزه در ماه قبل از دیتابیس*/
+        /*گرفتن لیست حوزه رکورد پیش فرض*/
         let lastList=[[]];
         /*---------------*/
         Utils.showProgress(true);
@@ -328,6 +340,44 @@ this.jcode = function(self){
         SAMA.util.Connect.asyncRequest('POST', url, callback, param);
         /*---------------*/
     };
+    self.onClickBtnGetFromGragh=function(){
+
+
+        let cardNumberArray=[];
+        var length =  $jq('.detailedTable>tbody>tr[class^=\'tab\']').length;
+        let index=0;
+        let month=FormView.myForm.getItemByName('Field_1').getData();
+        if(month==0){
+            Utils.showModalMessage('ماه انتخاب نشده است');
+            return ;
+        }
+        if(month.length==1)
+            month="0"+month;
+        let year=FormView.myForm.getItemByName('Field_2').getData();
+        if(year==0){
+            Utils.showModalMessage('سال انتخاب نشده است');
+            return ;
+        }
+        if (year==1)
+            year='1399';
+
+
+        for (var count = 1; count <= length; count++) {
+            let temp=$jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'cardNumber\'] ').val();
+            if ((Number(temp)>= 1)) {
+                cardNumberArray[index] = temp;
+
+                var res = Utils.fastAjax('WorkFlowAjaxFunc', 'getGraphListBazar',{mm:month,yy:year,PID:temp,status:'DoreZamani'});
+                $jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'overworkDone\'] ').val(res);
+
+                index++;
+            }
+        }
+        this.DetailedTable.updateTotalOverworkDone();
+        console.log(cardNumberArray);
+
+
+    },
     self.fillLastList=function(lastList){
 
         for (var count = 0; count < lastList.length; count++) {
@@ -357,6 +407,5 @@ this.jcode = function(self){
         }
 
     };
-
 
 }
