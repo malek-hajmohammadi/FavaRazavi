@@ -295,7 +295,7 @@ this.jcode = function (self) {
 
     };
     self.changeSaghf = function () {
-        let saghfZemanatnameh = (70 / 10000 * FormView.myForm.getItemByName('Field_10').getData() * FormView.myForm.getItemByName('Field_25').getData()) - FormView.myForm.getItemByName('Field_11').getData();
+        let saghfZemanatnameh = (70 / 10000 * FormView.myForm.getItemByName('Field_10').getData() * FormView.myForm.getItemByName('Field_25').getData()) ;
 
         /*
                 let st=saghfZemanatnameh.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
