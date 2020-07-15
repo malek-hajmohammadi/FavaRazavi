@@ -258,7 +258,7 @@ this.jcode = function(self){
             return false;
         }
 
-        let year=FormView.myForm.getItemByName('Field_2').getData();
+       /* let year=FormView.myForm.getItemByName('Field_2').getData();
         if(year=="0"){
             Utils.showModalMessage('سال انتخاب نشده است');
             return false;
@@ -268,7 +268,23 @@ this.jcode = function(self){
         if(month=="0"){
             Utils.showModalMessage('ماه انتخاب نشده است');
             return false;
+        }*/
+
+        let startDate=FormView.myForm.getItemByName('Field_8').getData();
+        if(startDate.length<8){
+            Utils.showModalMessage('تاریخ ابتدای دوره انتخاب نشده است');
+            return false ;
         }
+
+        let endDate=FormView.myForm.getItemByName('Field_9').getData();
+        if(endDate.length<8){
+            Utils.showModalMessage('تاریخ انتهای دوره انتخاب نشده است');
+            return false ;
+        }
+
+
+
+
 
         let saghf=FormView.myForm.getItemByName('Field_3').getData();
         if(saghf.length=="0"){
@@ -317,6 +333,13 @@ this.jcode = function(self){
         var res = Utils.fastAjax('WorkFlowAjaxFunc', 'fetchSaghfHozeh',{hozeh:hozeh});
         FormView.myForm.getItemByName('Field_3').setData(res);
         /*گرفتن سقف اضافه کار از آیجکس*//*پایان*/
+
+        /*گرفتن مسئول حوزه از آیجکس*/
+        var res = Utils.fastAjax('WorkFlowAjaxFunc', 'fetchResponsibleForHozeh',{hozeh:hozeh});
+        FormView.myForm.getItemByName('Field_7').setData([{uid: res['uid'],rid:res['rid']}]);
+        /*گرفتن مسئول حوزه از آیجکس*//*پایان*/
+
+
 
 
         /*گرفتن لیست حوزه رکورد پیش فرض*/
@@ -378,6 +401,62 @@ this.jcode = function(self){
 
 
     },
+    self.onClickBtnGetFromGraghV2=function(){
+
+
+        let cardNumberArray=[];
+        var length =  $jq('.detailedTable>tbody>tr[class^=\'tab\']').length;
+        let index=0;
+        let startDate=FormView.myForm.getItemByName('Field_8').getData();
+        if(startDate.length<8){
+            Utils.showModalMessage('تاریخ ابتدای دوره انتخاب نشده است');
+            return ;
+        }
+
+        let endDate=FormView.myForm.getItemByName('Field_9').getData();
+        if(endDate.length<8){
+            Utils.showModalMessage('تاریخ انتهای دوره انتخاب نشده است');
+            return ;
+        }
+        startDate=startDate.split('/');
+        endDate=endDate.split('/');
+        let aztd = startDate[2];
+        if(aztd.length==1)
+            aztd="0"+aztd;
+
+        let aztm = startDate[1];
+        if(aztm.length==1)
+            aztm="0"+aztm;
+
+        let azty = startDate[0];
+
+        let tatd =endDate[2];
+        if(tatd.length==1)
+            tatd="0"+tatd;
+
+        let tatm = endDate[1] ;
+        if(tatm.length==1)
+            tatm="0"+tatm;
+        let taty = endDate[0] ;
+
+
+
+        for (var count = 1; count <= length; count++) {
+            let temp=$jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'cardNumber\'] ').val();
+            if ((Number(temp)>= 1)) {
+                cardNumberArray[index] = temp;
+                var res = Utils.fastAjax('WorkFlowAjaxFunc', 'getGraphListBazar',{aztd:aztd,aztm:aztm,azty:azty,tatd:tatd,tatm:tatm,taty:taty,PID:temp,status:'BazeZamani'});
+                $jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'overworkDone\'] ').val(res);
+
+                index++;
+            }
+        }
+        this.DetailedTable.updateTotalOverworkDone();
+        console.log(cardNumberArray);
+
+
+    },
+
     self.fillLastList=function(lastList){
 
         for (var count = 0; count < lastList.length; count++) {

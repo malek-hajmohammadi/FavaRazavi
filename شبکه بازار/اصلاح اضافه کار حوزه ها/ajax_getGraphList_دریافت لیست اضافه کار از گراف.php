@@ -337,9 +337,15 @@ $TEzafeKhalesM = strlen($m)==1 ? "0".$m : $m;
 
 if($TEzafeKhalesH == '00' && $manfi == '-') $TEzafeKhales = $TEzafeKhalesH.':'.$TEzafeKhalesM.$manfi;
 else $TEzafeKhales = $TEzafeKhalesH.':'.$TEzafeKhalesM;
+//I wrote
+$finalEzafehKar=$TEzafeKhalesH-$TKasrH;
+if(($TEzafeKhalesM-$TKasrM)>=30)
+    $finalEzafehKar+=1;
 
 
+
+//
 if($SoapStatus == 1)
-    Response::getInstance()->response = $TEzafeKhalesH;
+    Response::getInstance()->response = $finalEzafehKar;
 else
     Response::getInstance()->response = 0;

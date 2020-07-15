@@ -38,7 +38,6 @@ class calssName
         $receivers[0]['rid'] = 2374;
         $newRefer = DocRefer::ReferDocRefer($referID, $receivers, 'احتراما جهت استحضار');
 */
-
 //        /*رونوشت برای خانم قمصریان مسئول کارگزینی
         $receivers[0]['uid'] = 18;
         $receivers[0]['rid'] = 96;
@@ -48,8 +47,6 @@ class calssName
         $receivers[0]['uid'] = 130;
         $receivers[0]['rid'] = 95;
         $newRefer = DocRefer::ReferDocRefer($referID, $receivers, 'احتراما جهت استحضار');
-
-
 
 
 

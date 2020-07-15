@@ -3,6 +3,8 @@ this.jcode = function(self){
        let bankName=FormView.myForm.getItemByName('Field_2').getData();
        let shobeh=FormView.myForm.getItemByName('Field_3').getData();
        let moteghazi=FormView.myForm.getItemByName('Field_1').getData();
+       let zamenFor=FormView.myForm.getItemByName('Field_6').getData();
+
        let price=FormView.myForm.getItemByName('Field_4').getData();
        let priceWithCOmma= price = Number(price)
            .toFixed(0)
@@ -10,31 +12,26 @@ this.jcode = function(self){
        let header1="<span style=\"line-height: 40px;font-weight: bold !important; font-family: &quot;B Titr&quot; !important;\">" +
            "ریاست محترم "+bankName+" "+"شعبه "+shobeh+
            "</span>";
-       let header2="<span style='font-size: 14pt !important;'> موضوع : معرفی جهت دریافت وام</span>";
+       let header2="<span style='font-size: 14pt !important;'> موضوع : معرفی جهت ضمانت وام</span>";
        let salam="<span style='font-size: 14pt !important;'>سلام علیکم</span>";
 
-       let body="<span style='text-align: justify !important;font-size: 14pt !important;'>" +"احتراما بدینوسیله ؛ "+moteghazi+" "+
-           "از پرسنل این سازمان جهت استفاده از تسهیلات به مبلغ "+priceWithCOmma+" ریال "+
-           "معرفی میگردد. "+
-           "این سازمان تعهدی در خصوص تضمین تسهیلات اعطایی نخواهد داشت، اما چنانچه نامبرده اقساط وام دریافتی را به آن بانک پرداخت ننماید بمحض وصول اخطار کتبی از طرف آن بانک، اقساط معوق وام را طبق مقررات از حقوق و مزایای وام گیرنده کسر و پرداخت می نماید، مشروط بر اینکه در زمان اعلام کتبی آن بانک، نامبرده جزو پرسنل این سازمان بوده و مانده حقوق و مزایای ایشان پاسخگوی مطالبات درخواستی باشد."+
+       let body="<span style='text-align: justify !important;font-size: 14pt !important;'>" +"احتراما؛ گواهی میشود "+moteghazi+" "+
+           "در حال حاضر جزو پرسنل این سازمان میباشد. این گواهی بنا به درخواست ایشان جهت ضمانت وام "+zamenFor+" به مبلغ "+priceWithCOmma+" ریال "+
+           "صادر گردیده است. "+
+           "لذا این سازمان متعهد می گردد در صورت تأخیر در پرداخت اقساط وام گیرنده به محض اولین اخطار کتبی آن بانک، اقساط معوق را ( از بابت اصل و کارمزد وام ) از حقوق و مزایای ضامن وی کسر و تأدیه نماید. مشروط بر اینکه در زمان اعلام کتبی آن بانک، نامبرده جزو پرسنل این سازمان بوده و مانده حقوق ایشان پاسخگوی مطالبات درخواستی باشد."+
            "<br/>"+
-           "شایسته است دستور فرمائید همکاری لازم با نامبرده صورت پذیرد."+
+           "این گواهی فاقد ارزش قانونی دیگری است."+
            "<br/><br/><br/>"+
            "</span>";
         let allText=header1+"<br/>"+header2+"<br/>"+salam+"<br/>"+body;
-        FormView.myForm.getItemByName('Field_6').setData(allText);
+        FormView.myForm.getItemByName('Field_7').setData(allText);
 
-        /*رونوشت ها*/
-        let ronevesht="رونوشت:"+"<br/>"+
-            "- جناب آقای رضائی رئیس محترم حسابداری جهت اطلاع و اقدام لازم."+"<br/>"+
-            "- جناب آقای برادران رحیمی سرپرست محترم واحد طرح و برنامه و منابع انسانی جهت اطلاع و اقدام لازم."+"<br/>"+
-            "-  "+moteghazi+" عطف به درخواست جهت اطلاع.";
-        FormView.myForm.getItemByName('Field_8').setData(ronevesht);
+
 
 
     };
     self.showOrNotShow=function(){
-        userState = FormView.myForm.getItemByName('Field_7').getData();
+        userState = FormView.myForm.getItemByName('Field_8').getData();
 
         if(userState=="moteghazi"){
             $jq(".mali").css("display","none");
@@ -68,10 +65,11 @@ this.jcode = function(self){
         let bankLength=FormView.myForm.getItemByName('Field_2').getData().length;
         let shobehLength=FormView.myForm.getItemByName('Field_3').getData().length;
         let mablaghTashilatLength=FormView.myForm.getItemByName('Field_4').getData().length;
+        let vamGirandehLength=FormView.myForm.getItemByName('Field_6').getData().length;
 
         if(bankLength<5){
             Utils.showModalMessage('نام بانک معتبر نمی باشد');
-            return false ;
+            return false;
         }
         if(shobehLength<5){
             Utils.showModalMessage('نام شعبه معتبر نمی باشد');
@@ -79,9 +77,17 @@ this.jcode = function(self){
         }
         if(mablaghTashilatLength<5){
             Utils.showModalMessage('مبلغ تسهیلات معتبر نمی باشد');
-            return false;
+            return false ;
         }
-        return true;
+        if(mablaghTashilatLength<5){
+            Utils.showModalMessage('مبلغ تسهیلات معتبر نمی باشد');
+            return false ;
+        }
+        if(vamGirandehLength<5){
+            Utils.showModalMessage('نام وام گیرنده معتبر نمی باشد');
+            return false ;
+        }
+        return  true;
 
     };
     self.loadForm=function(){

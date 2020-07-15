@@ -513,31 +513,31 @@ input[name=firstName] {
         padding: 0;
     }
     input[name=cardNumber] {
-        width: 80px;
+        width: 90px;
         text-align: left !important;
         padding: 0;
         padding-left:2px;
     }
     input[name=overworkDone] {
-        width: 50px;
+        width: 60px;
         text-align: left !important;
         padding: 0;
         padding-left:2px;
     }
     input[name=overworkConfirm] {
-        width: 50px;
+        width: 60px;
         text-align: left !important;
         padding: 0;
         padding-left:2px;
     }
     input[name=totalOverworkDone] {
-        width: 50px;
+        width: 60px;
         text-align: left !important;
         padding: 0;
         padding-left:2px;
     }
     input[name=totalOverworkConfirm] {
-        width: 50px;
+        width: 60px;
         text-align: left !important;
         padding: 0;
         padding-left:2px;
