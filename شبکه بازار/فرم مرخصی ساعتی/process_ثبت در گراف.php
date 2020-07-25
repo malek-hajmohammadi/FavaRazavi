@@ -49,5 +49,6 @@ class calssName
         $empId = $execution->workflow->myForm->getFieldValueByName('Field_1');
         $type = 1; //for morakhasi saati
         $res = "EXEC [adon].[IOData_ins]" . $empId . ",'" . $date . "','" . $timeMorakhasi . "'," . $type;
+        
     }
 }
