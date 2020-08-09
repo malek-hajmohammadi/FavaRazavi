@@ -8,6 +8,11 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
+                  {{--  @include('layouts.flash');--}}
+                    <x-alert>
+                        <p> it can be a parameter to component</p>
+                    </x-alert>
+
                    <form action="/upload" method="POST" enctype="multipart/form-data">
                        @csrf
                        <input type="file" name="image"/>

@@ -12,22 +12,18 @@ class UserController extends Controller
     public function uploadAvatar(Request $request){
        // $request->image->store('images','public');
         if($request->hasFile('image')){
-            $fileName=$request->image->getClientOriginalName();
 
-            $this->deleteOldImage();
+            User::uploadAvatar($request->image);
 
 
-            $request->image->storeAs('images',$fileName,'public');
-            auth()->user()->update(['avatar'=>$fileName]);
+            return redirect()->back()->with('message','Image uploaded.');
+
         }
 
-        return redirect()->back();
+
+        return redirect()->back()->with('error','Image not uploaded.');
     }
-    protected function deleteOldImage(){
-        if(auth()->user()->avatar){
-            Storage::delete('/public/images/'.auth()->user()->avatar);
-        }
-    }
+
     public function index(){
        // DB::insert('insert into users(name,email,password) values (?,?,?)',[
        //     'Malek','malek.hajmohammadi@gmail.com','password'

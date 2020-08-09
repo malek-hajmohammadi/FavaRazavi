@@ -36,6 +36,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public static function uploadAvatar($image){
+
+        $fileName=$image->getClientOriginalName();
+
+        (new self())->deleteOldImage();
+
+
+        $image->storeAs('images',$fileName,'public');
+        auth()->user()->update(['avatar'=>$fileName]);
+    }
+    protected function deleteOldImage(){
+        if($this->avatar){
+            Storage::delete('/public/images/'.auth()->user()->avatar);
+        }
+    }
 
 //    public function setPasswordAttribute($password){
 //        $this->attributes['password']=bcrypt($password);
@@ -44,4 +59,5 @@ class User extends Authenticatable
 //    public function getNameAttribute($name){
 //        return ucfirst($name);
 //    }
+
 }
