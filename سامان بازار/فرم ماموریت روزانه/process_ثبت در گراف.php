@@ -23,24 +23,11 @@ class calssName
         $empId=$execution->workflow->myForm->getFieldValueByName('Field_1');
        // $empId="123";
         /*تاریخ مرخصی*/
-        $date=$execution->workflow->myForm->getFieldValueByName('Field_4');
+        $startDate=$execution->workflow->myForm->getFieldValueByName('Field_4');
+        $endDate=$execution->workflow->myForm->getFieldValueByName('Field_5');
 
         /*تایم می خواهیم یکی شروع و دیگری پایان*/
-        $timeFirstForm=$execution->workflow->myForm->getFieldValueByName('Field_5');//format like this: 18:30 or 9:20
-        $timeSecondForm=$execution->workflow->myForm->getFieldValueByName('Field_6');
-
-        $timeFirstForm = $timeFirstForm == "" ? "00:00" : $timeFirstForm;
-        $timeFirstFormAr = explode(':',$timeFirstForm);
-        $timeHourFirst = strlen(intval($timeFirstFormAr[0]))==1 ? "0".intval($timeFirstFormAr[0]) : intval($timeFirstFormAr[0]);
-        $timeMinFirst = strlen(intval($timeFirstFormAr[1]))==1 ? "0".intval($timeFirstFormAr[1]) : intval($timeFirstFormAr[1]);
-
-        $timeSecondForm = $timeSecondForm == "" ? "00:00" :  $timeSecondForm;
-        $timeSecondFormAr = explode(':',$timeSecondForm);
-        $timeHourSec = strlen(intval($timeSecondFormAr[0]))==1 ? "0".intval($timeSecondFormAr[0]) : intval($timeSecondFormAr[0]);
-        $timeMinSec = strlen(intval($timeSecondFormAr[1]))==1 ? "0".intval($timeSecondFormAr[1]) : intval($timeSecondFormAr[1]);
-
-        $timeFirst=$timeHourFirst*60+$timeMinFirst;
-        $timeSecond=$timeHourSec*60+$timeMinSec;
+       /*در روزانه، نمی خواهیم*/
 
 
         /*شماره فرم*/
@@ -69,7 +56,7 @@ class calssName
 
         /*Field2:نوع سند است*/
         /*مرخصی ساعتی:15 مرخصی روزانه:10  ماموریت ساعتی:25  ماموریت روزانه:20*/
-        $formType='15';
+        $formType='20';
 
         /*Field3:شماره پرسنلی هست*/
        // $emp='123';
@@ -80,7 +67,7 @@ class calssName
 
         /*Field5:نوع تردد است که مرخصی ساعتی:1  ماموریت ساعتی:2 ماموریت روزانه :150  و برای مرخصی روزانه بر اساس یک جدول می گذاریم که برای هر شرکت متغییر است*/
         /*مثلا مرخصی استحقاقی می تونه 104 باشه*/
-        $tradodType='1';
+        $tradodType='150';
 
         /*Field6:طول مدت هست که من خالی می زارم ولی خود سیستم قرار محاسبه کند*/
         $reqVal='';
@@ -88,18 +75,18 @@ class calssName
         /*تاریخ شروع و پایان داریم که برای ساعتی ها یک عدد هست و برای روزانه ها تاریخ شروع و پایان هست*/
         /*Field7:تاریخ شروع*/
        // $startDate='1396/05/15';
-        $startDate=$date;
+       // $startDate=$date;
         /*Field8:تاریخ پایان*/
-        $endDate=$startDate;
+       // $endDate=$startDate;
 
         /*ساعت شروع و پایان رو داریم که برای روزانه ها صفر می دم و برای ساعتی ها یک عدد می دهم که ساعت در 60 ضرب بعلاوه دقیقه*/
         /*Field9:ساعت شروع*/
         //$startTime=540;
-        $startTime=$timeFirst;
+        $startTime=0;
 
         /*Field10: ساعت خاتمه*/
         //$endTime=600;
-        $endTime=$timeSecond;
+        $endTime=0;
 
         /*Field11:شهر هست که این رو صفر بدم*/
         $city=0;

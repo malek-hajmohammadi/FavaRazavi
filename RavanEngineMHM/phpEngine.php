@@ -12,7 +12,33 @@ class calssName
     {
         /*Insert Code Here*/
     }
+
+
 }
+
+/*داشتن تابع در نود پردازش یا کد نویسی کارتابل*/
+class calssName
+{
+    public function __construct()
+    {
+    }
+
+    public function execute(ezcWorkflowExecution $execution)
+    {
+        $docID="123";
+        $res=self::template($docID);
+    }
+
+    protected function template($docID)
+    {
+        $sql = "Malek";
+
+        return $sql;
+    }
+
+
+}
+
 
 /*درست کردن فیلد تکمیل شوند برای حوزه*/
 function template_completion()

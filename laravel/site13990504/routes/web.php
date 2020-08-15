@@ -14,11 +14,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/todos','TodoController@index')->name('todo.index');
-Route::get('/todos/create','TodoController@create');
-Route::post('/todos/create','TodoController@store');
-Route::get('/todos/{todo}/edit','TodoController@edit');
-Route::patch('/todos/{todo}/update','TodoController@update')->name('todo.update');
+
+
+
+    Route::resource('/todo','TodoController');
+
+    Route::put('/todos/{todo}/complete','TodoController@complete')->name('todo.complete');
+    Route::delete('/todos/{todo}/inComplete','TodoController@inComplete')->name('todo.inComplete');
+
+
+
+
+
 
 
 

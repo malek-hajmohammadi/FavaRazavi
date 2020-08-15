@@ -9,9 +9,14 @@ use Illuminate\Support\Facades\Validator;
 
 class TodoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index');
+    }
+
     public function index()
     {
-       $todos=todo::all();
+       $todos=todo::orderBy('completed')->get();
 
 
        // return view('todos.index')->with(['todos'=>$todos]);
@@ -48,6 +53,22 @@ class TodoController extends Controller
     public function update(TodoCreateRequest $request,todo $todo){
         $todo->update(['title'=> $request->title]);
         return redirect(route('todo.index'))->with('message','لیست به روز شد');
+
+    }
+    public function complete(todo $todo){
+        $todo->update(['completed'=> true]);
+        return redirect()->back()->with('message','آیتم انجام شد');
+
+    }
+    public function inComplete(todo $todo){
+        $todo->update(['completed'=> false]);
+        return redirect()->back()->with('message','آیتم دوباره به چک لیست برگشت');
+
+    }
+
+  public function destroy(todo $todo){
+        $todo->delete();
+        return redirect()->back()->with('message','آیتم حذف شد');
 
     }
 
