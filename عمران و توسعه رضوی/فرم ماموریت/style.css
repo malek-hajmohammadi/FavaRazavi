@@ -1,0 +1,18 @@
+.thisForm .borderLeft{
+     border-left: 2px solid #263238 !important;
+ }
+.thisForm .borderAll{
+    border: 2px solid #263238 !important;
+}
+.thisForm .borderThinAll{
+    border: 1px solid #263238 !important;
+}
+.thisForm .borderThinLeft{
+    border-left: 1px solid #263238 !important;
+}
+.thisForm .borderThinBottom td{
+    border-bottom: 1px solid #263238 !important;
+}
+.thisForm td{
+    font-weight: bold !important;
+}

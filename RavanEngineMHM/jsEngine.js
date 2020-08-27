@@ -62,3 +62,5 @@ function template_ajaxWithCallback() {
     var param = 'module=WorkFlowAjaxFunc&action=saveDetailedTable_eslahEzafekar&docId=' + FormView.docID + '&detailedTable=' + tem;
     SAMA.util.Connect.asyncRequest('POST', url, callback, param);
 }
+
+module=NForms&action=RemoveItem&fieldid=3347&demo_token=false

@@ -1,0 +1,798 @@
+div[mosname="bg"] {
+    background-color: transparent !important;
+}
+
+#FORMVIEW-FIELDS-CONTAINER, #FORMONLY-FIELDS-CONTAINER { /*     background: radial-gradient(rgba(255, 255, 255, 1) 0, rgb(255, 255, 255) 15%, rgba(0, 0, 0, 0) 16%, rgba(0, 0, 0, 0) 100%), radial-gradient(rgba(102, 102, 102, 1) 0, rgb(255, 255, 255) 15%, rgba(0, 0, 0, 0) 16%, rgba(0, 0, 0, 0) 100%), #efefef;     background-size: 20px 20px;     */ /*     background: repeating-linear-gradient(45deg, #bbb 0, #fff 5%, #fff 0, #eee 50%) 0 / 10px 10px;     background-color: #efefef !important;     */
+    background: linear-gradient(-45deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 75%, rgb(250, 250, 250) 75%, rgb(250, 250, 250) 100%), linear-gradient(45deg, rgb(250, 250, 250) 0, rgb(250, 250, 250) 25%, rgba(140, 140, 140, 0) 25%, rgba(238, 238, 238, 0) 100%), linear-gradient(-45deg, rgb(250, 250, 250) 0, rgb(250, 250, 250) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 100%), linear-gradient(45deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 75%, rgb(250, 250, 250) 75%, rgb(250, 250, 250) 100%), rgb(238, 238, 238);
+    background-position: 47% 48%;
+    background-size: 30px 30px;
+    background-color: rgb(240, 240, 240) !important;
+    background-attachment: fixed;
+}
+
+.f-box {
+    border: 5px solid #eee;
+    padding: 8px;
+    background-color: #fff !important;
+    box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.5);
+    margin: 15px 0;
+}
+
+.f-box b, .f-box strong, .f-box i, .f-box span, .f-NObox b, .f-NObox strong, .f-NObox i, .f-NObox span {
+    font-size: 12pt !important;
+    font-family: 'B Nazanin' !important;
+}
+
+.f-box td, .f-NObox td {
+    padding: 2px;
+    font: normal 12pt/normal 'B Nazanin' !important;
+    text-overflow: clip;
+}
+
+.f-box a, .f-NObox a {
+    text-decoration: none !important;
+}
+
+.f-header-title {
+    text-align: center;
+    vertical-align: middle;
+    font: normal 25pt/normal 'B Titr';
+    cursor: help;
+    color: rgba(0, 0, 0, .8);
+    text-shadow: 0 1px 0 rgb(250, 250, 250), 0 2px 0 rgb(201, 201, 201), 0 3px 0 rgb(187, 187, 187), 0 4px 0 rgb(185, 185, 185), 0 5px 0 rgb(170, 170, 170), 0 6px 1px rgba(0, 0, 0, 0.0980392), 0 0 5px rgba(0, 0, 0, 0.0980392), 0 1px 3px rgba(0, 0, 0, 0.298039), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.247059), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.14902);
+}
+
+.f-header-title-2 {
+    text-align: center;
+    vertical-align: middle;
+    font: normal 25pt/normal 'B Titr';
+    cursor: help;
+    color: rgba(0, 0, 0, .8);
+    text-shadow: none;
+    background: linear-gradient(135deg, #43CBFF 10%, #9708CC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+img.f-header-logo {
+    transition: all .3s ease-in-out;
+}
+
+img.f-header-logo:hover {
+    filter: grayscale(100%) blur(2px);
+}
+
+.f-box fieldset, .f-NObox fieldset {
+    border: 1px solid rgb(16, 118, 165);
+    border-radius: 5px !important; /*margin: 7px 0;*/
+    text-align: right;
+    padding: 5px;
+}
+
+.f-box legend, .f-NObox legend {
+    font: normal 900 12pt/normal 'B Nazanin' !important;
+    border: 1px solid rgb(16, 118, 165);
+    border-radius: 5px;
+    padding: 0 5px;
+    background-color: rgba(16, 118, 165, .1);
+    color: rgb(16, 118, 165);
+}
+
+.f-box-title {
+    padding-left: 5px !important;
+    text-align: left;
+}
+
+tr[mosmenu^=MosFormFields] div {
+    padding: 0 !important;
+}
+
+.f-input, input[id^=MosFormFields], input[id^=mosFieldTxt], .f-inputdate input, .f-inputtime input {
+    border: 1px solid #888;
+    box-shadow: 0 0px 5px #ddd inset;
+    border-radius: 3px;
+    font: normal 12pt/normal 'B Nazanin';
+    padding: 2px 5px 0 0;
+    transition: all .3s ease-in-out;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    height: 30px;
+}
+
+input[id^=MosFormFields] {
+    width: 50px;
+    text-align: right !important;
+    padding: 0;
+}
+
+input[id^=mosFieldTxt] {
+    padding: 0 2px 0 0;
+    text-align: right !important;
+}
+
+textarea.f-input {
+    height: 80px;
+}
+
+.f-inputdate input, .f-inputtime input {
+    text-align: center !important;
+    padding: 0;
+}
+
+.f-inputdate input[id$=_cal-DAY], .f-inputdate input[id$=_cal-MONTH] {
+    width: 25px !important;
+    height: 30px !important;
+}
+
+.f-inputdate input[id$=_cal-YEAR] {
+    width: 40px !important;
+    height: 30px !important;
+}
+
+.f-inputtime input {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.f-inputtime td {
+    padding: 0 !important;
+}
+
+input[type="file"] { /*display: none;*/
+    visibility: hidden !important;
+    width: 0 !important;
+}
+
+.f-box button, .f-NObox button, .f-file {
+    border: 1px solid #aaa;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
+    background-color: rgba(255, 255, 255, .8);
+    cursor: pointer;
+    padding: 1px 15px;
+    border-radius: 5px;
+    font: normal 12pt/normal 'B Nazanin' !important;
+    transition: all .2s ease-in-out;
+    color: rgba(0, 0, 0, .8);
+    text-decoration: none;
+}
+
+.f-box button:hover, .f-NObox button:hover, .f-file:hover {
+    background-color: rgba(16, 118, 165, .8);
+    color: rgba(255, 255, 255, 1);
+}
+
+td[moslabelstype="sign"] div {
+    z-index: 10 !important; /*margin: 0 60px;*/
+}
+
+td[moslabelstype="sign"] div img {
+    width: 150px !important;
+    height: 150px !important;
+}
+
+table.f-table {
+    width: 100%;
+}
+
+table.f-table tr {
+    background-color: #f8f8f8;
+    transition: background-color .15s ease-in-out;
+}
+
+table.f-table tr:hover {
+    background-color: #f3f3f3;
+}
+
+table.f-table tr td, table.f-table tr th, table.f-table div, table.f-table span {
+    padding: 5px;
+    font: normal 12pt/normal 'B Nazanin';
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    min-width: 50px;
+}
+
+table.f-table tr td { /*position: relative;*/
+}
+
+table.f-table span {
+    border: 0;
+}
+
+/*table.f-table span{     font-weight: bold; } */
+table.f-table tr th {
+    background-color: #888;
+    color: #fff;
+    cursor: default;
+}
+
+#dvQuery, .f-notification { /*margin-top: 15px;     font: normal 12pt/normal 'B Nazanin';     font-weight: bold;     padding: 5px;*/
+    text-align: center;
+}
+
+#dvQueryTrue, .f-notification-true {
+    font: normal 12pt/normal 'B Nazanin';
+    background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(139, 255, 106) 51%, rgba(0, 0, 0, 0) 100%);
+    padding: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#dvQueryFalse, .f-notification-false {
+    font: normal 12pt/normal 'B Nazanin';
+    background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(255, 144, 144) 51%, rgba(0, 0, 0, 0) 100%);
+    padding: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.f-button-0, .f-button-1, .f-button-2 {
+    border: 0;
+    cursor: pointer;
+    padding: 2px 10px;
+    border-radius: 5px;
+    font: normal 12pt/normal 'B Nazanin';
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+    color: #fff !important;
+}
+
+.f-button-1 {
+    background: #6610f2;
+}
+
+.f-button-1:hover {
+    background: #430c9c;
+}
+
+.f-button-1:disabled {
+    background: #c5c5c5;
+}
+
+.f-button-2 {
+    background: #28a745;
+}
+
+.f-button-2:hover {
+    background: #1a682c;
+}
+
+.f-button-3 {
+    background: #2db5a2;
+    color: #fff !important;
+}
+
+.f-button-3:hover {
+    background: #117365;
+}
+
+.f-button-float-1 {
+    float: left;
+    margin: 5px 0 0 5px;
+    color: #000;
+    background: #ccc;
+    cursor: pointer !important;
+    padding: 5px;
+    border-radius: 5px;
+    border: 0;
+    font: normal 12pt/normal 'B Nazanin' !important;
+    transition: all .2s ease-in-out;
+}
+
+.f-button-float-1:hover {
+    background: #ddd;
+}
+
+.f-button-float-2 {
+    float: left;
+    margin-right: 5px;
+    color: #000;
+    background: #efefef;
+    cursor: pointer !important;
+    padding: 0px !important;
+    border-radius: 0 !important;
+    font: normal 10pt/normal 'B Nazanin' !important;
+    transition: all .2s ease-in-out;
+}
+
+.f-button-float-2:hover {
+    background: #ddd;
+}
+
+.f-table-Adi {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    color: #000 !important;
+    width: 60px;
+}
+
+.f-table-Mor {
+    background-color: #28a745 !important;
+    color: #fff !important;
+    width: 60px;
+}
+
+.f-table-Mor-N {
+    background-color: #28a745 !important;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, .3) 5px, rgba(255, 255, 255, .3) 10px);
+    color: #fff !important;
+    width: 60px;
+}
+
+.f-table-Mam {
+    background-color: #007bff !important;
+    color: #fff !important;
+    width: 60px;
+}
+
+.f-table-Mam-N {
+    background-color: #007bff !important;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, .3) 5px, rgba(255, 255, 255, .3) 10px);
+    color: #fff !important;
+    width: 60px;
+}
+
+.f-table-Tat {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+    width: 60px;
+}
+
+.f-table-Tat-N {
+    background-color: #dc3545 !important;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, .3) 5px, rgba(255, 255, 255, .3) 10px);
+    color: #fff !important;
+    width: 60px;
+}
+
+.f-table-Nagh {
+    background-color: #6c757d !important;
+    color: #fff !important;
+}
+
+.f-table-Nagh-N {
+    background-color: #6c757d !important;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, .3) 5px, rgba(255, 255, 255, .3) 10px);
+    color: #fff !important;
+    width: 60px;
+}
+
+.f-table-Shift {
+    background-color: #ddd !important;
+    color: #000 !important;
+}
+
+.f-table-Afz {
+    background-color: #ffc107 !important;
+    color: #fff !important;
+}
+
+.f-table-Adi:hover, .f-table-Mor:hover, .f-table-Mam:hover {
+    cursor: pointer;
+    border: 1px rgba(0, 0, 0, .3) solid;
+}
+
+.f-tooltip {
+    position: relative;
+    cursor: pointer;
+}
+
+.f-tooltip:hover {
+    border: 1px dashed #888;
+}
+
+.f-tooltip .f-tooltiptext, .f-tooltip .f-tooltiptext-2 {
+    background-color: black;
+    color: #fff;
+    font: normal 12pt/normal 'B Nazanin';
+    text-align: center;
+    bottom: 100%;
+    display: block;
+    margin-bottom: 15px;
+    opacity: 0;
+    left: 0px; /*left: -25px;*/ /*padding: 20px;*/
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    transform: translateY(10px);
+    transition: all .25s ease-out;
+}
+
+.f-tooltip .f-tooltiptext:before {
+    bottom: -20px;
+    content: " ";
+    display: block;
+    height: 20px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.f-tooltip .f-tooltiptext:after {
+    border-left: solid transparent 10px;
+    border-right: solid transparent 10px;
+    border-top: solid #000 10px;
+    bottom: -10px;
+    content: " ";
+    height: 0;
+    left: 50%;
+    margin-left: -13px;
+    position: absolute;
+    width: 0;
+}
+
+.f-tooltip:hover .f-tooltiptext {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0px);
+}
+
+div#tat_table td {
+    font: inherit !important;
+}
+
+.f-modal-modalDialog {
+    position: absolute;
+    font: normal 12pt/normal 'B Nazanin';
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99999;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+    pointer-events: none;
+    border: 0 !important;
+}
+
+.f-modal-modalDialog:target {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.f-modal-modalDialog > div {
+    width: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, .5);
+    color: #000;
+}
+
+.f-modal-close {
+    background: rgb(255, 0, 0);
+    color: #FFFFFF;
+    position: absolute;
+    text-align: center;
+    top: -10px;
+    left: -10px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+    transition: all .1s ease-in-out;
+    padding: 1px 6px;
+}
+
+.f-modal-close:hover {
+    background: rgb(123, 8, 8);
+}
+
+.f-modal-modalDialog-2 {
+    position: fixed;
+    font: normal 12pt/normal 'B Nazanin';
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+    pointer-events: none;
+}
+
+.f-modal-modalDialog-2:target {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.f-modal-modalDialog-2 > div {
+    font: normal 12pt/normal 'B Nazanin';
+    width: 400px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    border-radius: 10px;
+    background: #FFD3A5;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    box-shadow: 0px 20px 70px rgba(0, 0, 0, .5);
+}
+
+.f-modal-close-2 {
+    background: rgb(255, 0, 0);
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 12px;
+    box-shadow: 1px 1px 3px #000;
+    transition: all .1s ease-in-out;
+}
+
+.f-modal-close-2:hover {
+    background: rgb(123, 8, 8);
+}
+
+:root {
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: #007bff;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+}
+
+.f-bgcolor-teal {
+    background-color: #20c997 !important;
+}
+
+.f-bgcolor-white {
+    background-color: #ffffff !important;
+}
+
+#f-print {
+    display: none;
+}
+
+.f-print-button {
+    width: 70px;
+    background: url(gfx/toolbar/print.gif) no-repeat 45px center;
+    padding-right: 30px !important;
+}
+
+.f-inputdate-show div[id $="_cal-calContainer"] {
+    margin-top: 7px;
+}
+
+.f-inputdate-show div.calcontainer {
+    display: list-item !important
+}
+
+.f-inputdate-show div.calcontainer div.title {
+    display: none;
+}
+
+.f-inputdate-show div.calcontainer div.cal2up {
+    margin-top: 0 !important;
+}
+
+.f-inputdate-show img.calnavleft, img.calnavright {
+    top: 2 !important;
+}
+
+/* accordion styles */
+.accordion {
+    position: relative;
+    margin-bottom: 10px;
+    width: 100%;
+    color: #fff;
+    overflow: hidden;
+}
+
+.accordion-input {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+}
+
+.accordion-label {
+    position: relative;
+    display: block;
+    padding: 3px;
+    background: #17a2b8;
+    cursor: pointer;
+    font: bold 12pt/normal 'B Nazanin';
+    border-radius: 5px;
+    transition: all .35s;
+}
+
+.accordion-label:hover {
+    background: #148a9c;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    background: #f5f5f5;
+    transition: max-height .35s;
+    border-radius: 0 0 10px 10px;
+}
+
+.accordion-input:checked ~ .accordion-content {
+    max-height: 30em;
+    border: 1px solid #17a2b8;
+}
+
+.accordion-input:checked ~ .accordion-label {
+    border-radius: 5px 5px 0 0;
+}
+
+.accordion-label::after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    width: 3em;
+    height: 3em;
+    line-height: 2.2;
+    text-align: center;
+    transition: all .35s;
+}
+
+.accordion-input[type=checkbox] + .accordion-label::after { /*content: "+";*/
+    content: "\25BC";
+}
+
+.accordion-input[type=radio] + .accordion-label::after {
+    content: "\25BC";
+}
+
+.accordion-input[type=checkbox]:checked + .accordion-label::after { /*transform: rotate(315deg);*/
+    transform: rotateX(180deg);
+    line-height: 4;
+}
+
+.accordion-input[type=radio]:checked + .accordion-label::after {
+    transform: rotateX(180deg);
+    line-height: 4;
+}
+
+HEAD .f-file-continer input[type="file"] { /*display: none;*/
+    visibility: hidden !important;
+    width: 0 !important;
+}
+
+f98523dffe17ced77af39061b65ebb19342a227 .f-notification2 > div {
+    position: relative;
+}
+
+.f-notification2 {
+    display: none;
+    font: normal 12pt/normal 'B Nazanin';
+    min-width: 350px;
+    background-color: #dc3545;
+    color: #fff;
+    text-align: center;
+    border-radius: 0 0 10px 10px;
+    padding: 15px;
+    position: absolute;
+    z-index: 1;
+    left: 20px;
+    top: 0;
+    box-shadow: 0 5px 5px 2px rgba(0, 0, 0, 0.2), 0 5px 15px 2px rgba(0, 0, 0, 0.2) inset;
+}
+
+.f-switch {
+    position: relative;
+    display: inline-block;
+    width: 35px;
+    height: 21px;
+}
+
+.f-switch input {
+    display: none;
+}
+
+.f-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.f-slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .f-slider {
+    background-color: #17a2b8;
+}
+
+input:focus + .f-slider {
+    box-shadow: 0 0 1px #17a2b8;
+}
+
+input:checked + .f-slider:before {
+    transform: translateX(13px);
+}
+
+.f-slider.f-round {
+    border-radius: 34px;
+}
+
+.f-slider.f-round:before {
+    border-radius: 50%;
+}
+
+.f-note {
+    background: linear-gradient(#ccc, #eee);
+    height: 60px;
+    position: relative;
+    font: normal 12pt/normal 'B Nazanin';
+    padding: 10px;
+    border-radius: 5px;
+    text-align: justify;
+}
+
+.f-note::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat;
+    height: 10px;
+    background-size: 20px 20px;
+    background-image: radial-gradient(circle at 10px -5px, transparent 12px, white 13px);
+}
+
+.f-note-2 {
+    background: linear-gradient(#ccc, #fff);
+    height: 60px;
+    position: relative;
+    font: normal 12pt/normal 'B Nazanin';
+    padding: 10px;
+    border-radius: 5px;
+    text-align: justify;
+}
+
+.f-note-3 {
+    background: linear-gradient(#ccc, #fff);
+    height: 60px;
+    position: relative;
+    font: normal 12pt/normal 'B Nazanin';
+    padding: 10px;
+    border-radius: 0;
+    text-align: justify;
+}
+
+.f-history {
+    cursor: pointer;
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+}
