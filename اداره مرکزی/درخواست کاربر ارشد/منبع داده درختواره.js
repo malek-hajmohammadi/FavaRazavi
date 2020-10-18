@@ -6,7 +6,7 @@ Class.create({
                                  {"id":"21","text":"شماره تلفن داخلي / مستقیم","icon":"gfx/mainmenu/phone.png"},
                                  {"id":"22","text":"اصلاح شماره همراه","icon":"gfx/toolbar/change-password.png"},
                                  {"id":"23","text":"تصوير امضا","icon":"gfx/toolbar/sign.png"},
-                                 {"id":"24","text":"عکس پرسنلي","icon":"gfx/toolbar/sign.png"}
+                                 {"id":"24","text":"عکس پرسنلي","icon":"gfx/toolbar/online-users.png"}
                                   ]},
         {"id":"3","text":"ایجاد دسترسی","icon":"gfx/mainmenu/paraph.png","children":[
                                 {"id":"31","text":"چاپ","icon":"gfx/mainmenu/print-define.png"},

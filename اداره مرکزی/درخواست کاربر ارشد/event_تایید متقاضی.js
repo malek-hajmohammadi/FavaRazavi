@@ -22,7 +22,10 @@ this.actJS = function (self) {
     if (selected.includes("4") || selected.includes("41")|| selected.includes("42")
         || selected.includes("43")|| selected.includes("44")|| selected.includes("45")) {
 
-        Utils.showMessage('فقط خصوص اصلاحات نگارشي نامه و قبل از مشاهده توسط گيرندگان نامه صورت مي پذيرد.');
+        Utils.confirmMsg("فقط خصوص اصلاحات نگارشي نامه و قبل از مشاهده توسط گيرندگان نامه صورت مي پذيرد.",'FormView.dogetCommandInfo(0)');
+        return false;
+
+
     }
 
 

@@ -32,6 +32,7 @@ if (2)/*مقداردهی اول متغیرها*/ {
     } else if ($status == 'BazeZamani') {
         $dt1 = $azty . "/" . $aztm . "/" . $aztd;
         $dt2 = $taty . "/" . $tatm . "/" . $tatd;
+
     }
 
 //$GID = '128';
@@ -59,7 +60,7 @@ if (3)/*دریافت آرایه اطلاعات از سرویس*/ {
         $SoapStatus = 0;
     }
 
-      /*Response::getInstance()->response=$res;
+     /* Response::getInstance()->response=$res;
       return;*/
 
 

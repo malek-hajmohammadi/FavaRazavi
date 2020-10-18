@@ -386,8 +386,8 @@ class calssName
             } else {
                 //3
                 if ($KaraArrayTmp == $Times[$ti][0]) {
-                    $tt = explode(':', $Times[$ti][0]);
-                    $tt = ($tt[0] * 60) + $tt[1];
+                $tt = explode(':', $Times[$ti][0]);
+                $tt = ($tt[0] * 60) + $tt[1];
                     $sql .= "EXEC [adon].[IOData_up] " . $emp . ", '" . $date . "', " . $tt . ", " . $tt . ", " . $Times[$ti][1] . ",'WB$docID';";
                 } else {
                     $tt = explode(':', $Times[$ti][0]);

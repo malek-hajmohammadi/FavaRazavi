@@ -23,24 +23,9 @@ class calssName
         $empId=$execution->workflow->myForm->getFieldValueByName('Field_1');
        // $empId="123";
         /*تاریخ مرخصی*/
-        $date=$execution->workflow->myForm->getFieldValueByName('Field_4');
+       // $date=$execution->workflow->myForm->getFieldValueByName('Field_4');
 
-        /*تایم می خواهیم یکی شروع و دیگری پایان*/
-        $timeFirstForm=$execution->workflow->myForm->getFieldValueByName('Field_5');//format like this: 18:30 or 9:20
-        $timeSecondForm=$execution->workflow->myForm->getFieldValueByName('Field_6');
 
-        $timeFirstForm = $timeFirstForm == "" ? "00:00" : $timeFirstForm;
-        $timeFirstFormAr = explode(':',$timeFirstForm);
-        $timeHourFirst = strlen(intval($timeFirstFormAr[0]))==1 ? "0".intval($timeFirstFormAr[0]) : intval($timeFirstFormAr[0]);
-        $timeMinFirst = strlen(intval($timeFirstFormAr[1]))==1 ? "0".intval($timeFirstFormAr[1]) : intval($timeFirstFormAr[1]);
-
-        $timeSecondForm = $timeSecondForm == "" ? "00:00" :  $timeSecondForm;
-        $timeSecondFormAr = explode(':',$timeSecondForm);
-        $timeHourSec = strlen(intval($timeSecondFormAr[0]))==1 ? "0".intval($timeSecondFormAr[0]) : intval($timeSecondFormAr[0]);
-        $timeMinSec = strlen(intval($timeSecondFormAr[1]))==1 ? "0".intval($timeSecondFormAr[1]) : intval($timeSecondFormAr[1]);
-
-        $timeFirst=$timeHourFirst*60+$timeMinFirst;
-        $timeSecond=$timeHourSec*60+$timeMinSec;
 
 
         /*شماره فرم*/
@@ -89,17 +74,18 @@ class calssName
         /*Field7:تاریخ شروع*/
        // $startDate='1396/05/15';
         $startDate=$date;
+        $startDate=$execution->workflow->myForm->getFieldValueByName('Field_4');
         /*Field8:تاریخ پایان*/
-        $endDate=$startDate;
+        $endDate=$execution->workflow->myForm->getFieldValueByName('Field_5');
 
         /*ساعت شروع و پایان رو داریم که برای روزانه ها صفر می دم و برای ساعتی ها یک عدد می دهم که ساعت در 60 ضرب بعلاوه دقیقه*/
         /*Field9:ساعت شروع*/
         //$startTime=540;
-        $startTime=$timeFirst;
+        $startTime=0;
 
         /*Field10: ساعت خاتمه*/
         //$endTime=600;
-        $endTime=$timeSecond;
+        $endTime=0;
 
         /*Field11:شهر هست که این رو صفر بدم*/
         $city=0;

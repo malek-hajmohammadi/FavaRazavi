@@ -74,6 +74,7 @@ if(2)/*دریافت آرایه از وب سرویس*/
         $res = $client->RunSelectQuery($param);
         $res = $res->RunSelectQueryResult->cols->recs->string;
         $GID = (int)$res[0];
+        $GPersonalID=(int)$res[1];
         $a3 = urldecode($res[3]);
         $a4 = urldecode($res[4]);
         $a5 = urldecode($res[5]);
@@ -129,6 +130,7 @@ if(3)/*ساخت یک سطر برای یک روز*/ {
         if (1)/*خونه تاریخ*/ {
             $date = urldecode($row[2]);
             $date1 = explode('/', $date);
+            $date2=$date1;
             $date1 = Date::jalali_to_gregorian(("13" . $date1[0]), $date1[1], $date1[2]);
             $date1 = implode('-', $date1);
             $rooz = $date1[0] . $date1[1] . $date1[2];
@@ -233,7 +235,7 @@ if(3)/*ساخت یک سطر برای یک روز*/ {
 
 
             $creat = '';
-            $html .= "<td align='right' style='width:100%; position: relative;'><table cellpadding='0' cellspacing='3'><tr>$creat $taradodha</tr></table>";
+            $html .= "<td align='right' style='width:100%; position: relative;'><table cellpadding='0' cellspacing='3' style='float: right'><tr>$creat $taradodha</tr></table>";
         }
         if (false)/*مرخصي و ماموريت*/ {
             $s19 = urldecode($row[19]) == NULL ? "00:00" : urldecode($row[19]);
@@ -246,17 +248,30 @@ if(3)/*ساخت یک سطر برای یک روز*/ {
         if (3)/*خونه دکمه ای ایجاد فرم*/ {
             //   $html .= "<td bgcolor='#81D4FA' class='f-tooltip'></td>";
 
+            $db = MySQLAdapter::getInstance();
+            $wfidMorkhasiS = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 962");//962
+            $wfidMorkhasiR = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 931");//931
+            $wfidMamoriatS = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 963");//963
+            $wfidMamoriatR = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 960");//960
+            $wfidEslah = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 895");
+            $date="13".$date;
 
-            $creat = "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[10].CreateFormMamoriatR($wfidMamoriatR,$date2[0],$date2[1],$date2[2],$PID)'>ماموريت<br>روزانه</div>";
-            $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[10].CreateFormMorkhasiR($wfidMorkhasiR,$date2[0],$date2[1],$date2[2],$PID)'>مرخصي<br>روزانه</div>";
-            $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[10].CreateFormTaradodH($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$PID)'>حذف<br>تردد</div>";
-            $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[10].CreateFormTaradodA($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$PID)'>افزودن<br>تردد</div>";
-            $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[10].CreateFormMamoriatS($wfidMamoriatS,$date2[0],$date2[1],$date2[2],$PID)'>ماموريت<br>ساعتي</div>";
-            $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[10].CreateFormMorkhasiS($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$PID)'>مرخصي<br>ساعتي</div>";
+
+             $creat = '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].MamoriatR('.$wfidMamoriatR.',\''.$date.'\')">ماموريت<br>روزانه</div>';
+            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].MorkhasiR('.$wfidMorkhasiR.',\''.$date.'\')">مرخصي<br>روزانه</div>';
+            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].eslah('.$wfidEslah.',\''.$date.'\')">اصلاح<br>تردد</div>';
+         //   $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].CreateFormTaradodH($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$CodeM)'>حذف<br>تردد</div>";
+         //   $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].CreateFormTaradodA($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$CodeM)'>افزودن<br>تردد</div>";
+
+          //  $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].MorkhasiS($wfidMorkhasiS,'$date')'>مرخصي<br>ساعتی</div>";
+            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].MorkhasiS('.$wfidMorkhasiS.',\''.$date.'\')">مرخصی<br>ساعتی</div>';
+
+
             $creat = "
         <a class='f-button-float-1' href='#Modal$ModalID'>ايجاد فرم</a>
         <div id='Modal$ModalID' class='f-modal-modalDialog'>
-            <div><a href='#close' class='f-modal-close'>✖</a>
+            <div style='width: 250px'>
+            <a href='#close' class='f-modal-close'>✖</a>
             $creat
             </div>
         </div>";
@@ -467,6 +482,52 @@ if(4)/*محاسبات آماری*/ {
     if ($TEzafeKhalesH == '00' && $manfi == '-') $TEzafeKhales = $TEzafeKhalesH . ':' . $TEzafeKhalesM . $manfi;
     else $TEzafeKhales = $TEzafeKhalesH . ':' . $TEzafeKhalesM;
 }
+if(5)/*محاسبه مانده مرخصی*/{
+
+    $remainMorakhasi="";
+    $dateEnd = '1399/12/30';
+//$client = new SoapClient('http://10.10.10.25:9091/Timex.asmx?wsdl');
+    $client = new SoapClient('http://10.10.100.15/WSTuralInOut/TuralInOut.asmx?wsdl');
+    $GID='882866';
+    $s1 = "    SELECT * FROM [Timex_TaminPoshtibani].adon.Kardex('".$GID."', '".$dateEnd."')";
+//[Timex_TaminPoshtibani].dbo
+    $param = array(
+        'username' => '3ef1b48067e4f2ac9913141d77e847dd',
+        'password' => '9a3f5b14f1737c15e86680d9cd40b840',
+        'objStr' => $s1
+    );
+    $res = $client->RunSelectQuery($param);
+    $res = $res->RunSelectQueryResult->cols;
+    $res = json_decode(json_encode($res), true);
+    $MandeMorkhasiString = urldecode($res['recs']['string'][30]);
+
+    $MandeMorkhasiAr=explode(':',$MandeMorkhasiString);
+    $MandeMorkhasiShow=$MandeMorkhasiAr[0].' روز و '.$MandeMorkhasiAr[1].' ساعت ';
+
+
+
+}
+if (6)/*محاسبه تعداد فرم اصلاح تردد*/ {
+    //-----------------------------------
+
+    $tedad = 0;
+    $d1 = $yy . "/" . $mm . "/01";
+    if ($mm >= 1 && $mm <= 6) $d2 = $yy . "/" . $mm . "/31";
+    else if ($mm >= 7 && $mm <= 11) $d2 = $yy . "/" . $mm . "/30";
+    else if ($mm == 12) $d2 = $yy . "/" . $mm . "/29";
+    $dd1 = Date::JalaliToGreg($d1);
+    $dd2 = Date::JalaliToGreg($d2);
+
+    $sql = "SELECT count(docid) FROM `dm_datastoretable_895` 
+LEFT JOIN oa_document on (oa_document.rowid = dm_datastoretable_895.docid) 
+WHERE  oa_document.isenable = 1 
+/*AND oa_document.DocStatus = 0 */
+AND (`Field_7` = '1' OR `Field_7` = 'در تورال ثبت شد') 
+AND `Field_8` = '$CodeM' 
+AND `Field_2` between '$dd1' AND '$dd2' 
+";
+    $tedad = $db->executeScalar($sql);
+}
 if(3)/*ساخت نهایی خروجی*/ {
     $html = "
 <section>
@@ -474,10 +535,10 @@ if(3)/*ساخت نهایی خروجی*/ {
     <fieldset><table><tbody>
 
     <tr><td style='font-weight: bold !important'>نام و نام‌خانوادگي: </td>
-    <td style=''>$a3</td></tr>
+    <td id='f-Name' >$a3</td></tr>
 
     <tr><td style='font-weight: bold !important'>واحد محل كار: </td>
-    <td style=''>$a5</td></tr>
+    <td id='f-Location' style=''>$a5</td></tr>
 
     <tr><td style='font-weight: bold !important'></td>
     <td style=''>$a4</td></tr>
@@ -485,8 +546,11 @@ if(3)/*ساخت نهایی خروجی*/ {
     <tr><td style='font-weight: bold !important'></td>
     <td style=''>$a6</td></tr>
 
+    <tr><td style='font-weight: bold !important'>شماره کارت در گراف: </td>
+    <td id='f-CodeTural' style=''>$GID</td></tr>
+    
     <tr><td style='font-weight: bold !important'>شماره پرسنلي در گراف: </td>
-    <td style=''>$GID</td></tr>
+    <td id='f-GpersonalID' style=''>$GPersonalID</td></tr>
 
     </tbody></table></fieldset>
     <fieldset><table><tbody>
@@ -525,6 +589,28 @@ if(3)/*ساخت نهایی خروجی*/ {
     <td style=''>$TMorkhasiKol روز</td></tr>
 
     </tbody></table></fieldset>
+    <fieldset style='margin-top: 6px'><table><tbody>
+
+    <tr><td style='font-weight: bold !important'>کل مانده مرخصی از ابتدا تا تاریخ جاری: </td>
+    <td id='f-MandeMorkhasi' style=''> $MandeMorkhasiShow</td>
+    <td style='display: none' id='f-MandeMorkhasiMerg' style=''> $MandeMorkhasiString</td>
+    
+    </tr>
+
+   
+
+    </tbody></table></fieldset>
+    <fieldset style='margin-top: 6px'><table><tbody>
+
+    <tr><td style='font-weight: bold !important'>تعداد فرم اصلاح تردد در اين ماه: </td>
+    <td id='f-MandeMorkhasi' style=''> $tedad</td>
+    
+    
+    </tr>
+
+   
+
+    </tbody></table></fieldset>
 
 </section>
 
@@ -538,7 +624,7 @@ if(3)/*ساخت نهایی خروجی*/ {
         <!--
         <th>حضور</th>
         -->
-        <th></th>
+        
         <th>كسركار</th>
         <th>اضافه  كار</th>
         <!--

@@ -495,6 +495,13 @@ $wfidMorkhasiS = $db->executeScalar("SELECT `workflow_id` FROM `wf_workflow` WHE
 $wfidMamoriatR = $db->executeScalar("SELECT `workflow_id` FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 960");
 $wfidMamoriatS = $db->executeScalar("SELECT `workflow_id` FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 963");
 
+$wfidE=5618;//3766;
+$wfidMorkhasiR = 4906;
+$wfidMorkhasiS =5605;//4751;
+$wfidMamoriatR =4907;
+//$wfidMamoriatS =
+
+
 $client = new SoapClient('http://10.10.100.15/WSTuralInOut/TuralInOut.asmx?wsdl');
 
 $s1 = "SELECT * FROM InOutData.dbo.[fnGetMonthTaradodList_Tamin]('".$codem."','".$yy."','".$mm."')";
@@ -530,7 +537,7 @@ $html2 = '<tr>
 <td class="f-bgcolor-white">كد تورال: <span id="f-CodeTural">'.ltrim(urldecode($resp2[0]),'0').'</span></td>
 <td class="f-bgcolor-white">نام و نام خانوادگي: <span id="f-Name">'.urldecode($resp2[1]).'</span></td>
 </tr><tr>
-<td class="f-bgcolor-white" colspan="2"><span id="f-LocationCoding">'.$LocationCoding.'</span> محل خدمت: <span id="f-Location">'.urldecode($resp2[2]).'، '.urldecode($resp2[3]).'، '.urldecode($resp2[4]).'</span><span id="f-LocationCoding">'.urldecode($resp3[3]).'</span></td>
+<td class="f-bgcolor-white" colspan="2"><span id="f-LocationCoding">'.$LocationCoding.'</span> محل خدمت: <span id="f-Location">'.urldecode($resp2[2]).'، '.urldecode($resp2[3]).'، '.urldecode($resp2[4]).'</span><span id="f-LocationCoding">'.urldecode($resp2[3]).'</span></td>
 </tr>';
 
 $html = '';

@@ -1,5 +1,23 @@
 <?php
 
+/*کد نوشتن و تعریف کلاس در آیجکس جدید*/
+class MainAjax
+{
+    public function b()
+    {
+
+    }
+
+    private function a()
+    {
+
+    }
+}
+$mainAjax = new MainAjax();
+Response::getInstance()->response = $mainAjax->b();
+return $mainAjax;
+
+
 /*کد خالی برای نود پردازش و همچنین کد نویسی کارتابل در گردشکار*/
 
 class calssName

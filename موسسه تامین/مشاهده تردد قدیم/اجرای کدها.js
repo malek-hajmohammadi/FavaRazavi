@@ -16,7 +16,8 @@ this.jcode = function (self) {
         });
         Utils.showProgress(false);
         Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
-    }, self.MorkhasiR = function (wfid, date) {
+    },
+    self.MorkhasiR = function (wfid, date) {
         Utils.showProgress(true);
         var codem = FormOnly.allFieldsContianer[9].getData();
         var Name = $jq('#f-Name').text();
@@ -34,7 +35,8 @@ this.jcode = function (self) {
         });
         Utils.showProgress(false);
         Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
-    }, self.MorkhasiS = function (wfid, date) {
+    },
+    self.MorkhasiS = function (wfid, date) {
         Utils.showProgress(true);
         var codem = FormOnly.allFieldsContianer[9].getData();
         var Name = $jq('#f-Name').text();
@@ -52,7 +54,8 @@ this.jcode = function (self) {
         });
         Utils.showProgress(false);
         Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
-    }, self.MamoriatR = function (wfid, date) {
+    },
+    self.MamoriatR = function (wfid, date) {
         Utils.showProgress(true);
         var codem = FormOnly.allFieldsContianer[9].getData();
         var Name = $jq('#f-Name').text();
@@ -68,7 +71,8 @@ this.jcode = function (self) {
         });
         Utils.showProgress(false);
         Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
-    }, self.MamoriatS = function (wfid, date) {
+    },
+    self.MamoriatS = function (wfid, date) {
         Utils.showProgress(true);
         var codem = FormOnly.allFieldsContianer[9].getData();
         var Name = $jq('#f-Name').text();

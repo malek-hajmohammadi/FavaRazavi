@@ -158,7 +158,7 @@ if(5)/*استخراج ترددهای ناقص*/
         $passCounter = 0;
         $TimexArray = $recs3['recs']['string'];
         $day = urldecode($TimexArray[$timexCounter - 1]);
-        if (date_diff(date_create($dateEN), date_create(Date::JalaliToGreg($day)))->format('%d') > 1) {
+        if (date_diff(date_create($updateDateEn), date_create(Date::JalaliToGreg($day)))->format('%d') > 1) {
             while ($timexCounter < 92) {
 
                 $passStatus = urldecode($TimexArray[$timexCounter + 1]);
@@ -196,7 +196,7 @@ if(5)/*استخراج ترددهای ناقص*/
 
             $day = urldecode($TimexArray[$timexCounter - 1]);
 
-            if (date_diff(date_create($dateEN), date_create(Date::JalaliToGreg($day)))->format('%d') > 1) {
+            if (date_diff(date_create($updateDateEn), date_create(Date::JalaliToGreg($day)))->format('%d') > 1) {
                 //--اگردو روز قبل از به روز رساني سيري بود --
                 while ($timexCounter < 92) //it's ok (counter)
                 {
@@ -265,42 +265,45 @@ AND field_9='$time[2]'
 
 // فرم ندارد
                 $counterNadard++;
-                $shortLogArray[] = 'nadarad =>' . $time[0] . '-' . $time[1] . '-' . $time[2] . '-' . $time[3];
+
+                if(false) {
+                    $shortLogArray[] = 'nadarad =>' . $time[0] . '-' . $time[1] . '-' . $time[2] . '-' . $time[3];
 //"ndarad =>1398/08/21 2019-11-12  09:53   9"
 
 ///////////////////////////////////////////////////////
 
 
-                $formID = 34;
-                $db = MySQLAdapter::getInstance();
-                $workFlowID = $db->executeScalar("SELECT `workflow_id` FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` =  $formID");
-                $resp = WorkFlowManager::stratNewWorkFlow($workFlowID);
-                $referID = $resp['referID']; //آي دي ارجاع است
-                $docID = $resp['docID'];
+                    $formID = 34;
+                    $db = MySQLAdapter::getInstance();
+                    $workFlowID = $db->executeScalar("SELECT `workflow_id` FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` =  $formID");
+                    $resp = WorkFlowManager::stratNewWorkFlow($workFlowID);
+                    $referID = $resp['referID']; //آي دي ارجاع است
+                    $docID = $resp['docID'];
 
 //////////////////////////////////////////////////////////
-                $sql_title = "update oa_document set Subject='" . "فرم تردد سيستمي" . "' where RowID=" . $docID . "   limit 1";
-                $db->execute($sql_title);
+                    $sql_title = "update oa_document set Subject='" . "فرم تردد سيستمي" . "' where RowID=" . $docID . "   limit 1";
+                    $db->execute($sql_title);
 //////////////////////////
-                $fdata = array(
-                    "335" => $time[0], //تاريخ شمسي
-                    "337" => $time[3],//نوع تردد
-                    "328" => $time[2],//تايم
-                    "955" => 1 //خودكار ساخته شده
-                );
-                $myForm = new DMSNFC_form(array('fieldid' => $formID, 'docid' => $docID, 'referid' => null));
+                    $fdata = array(
+                        "335" => $time[0], //تاريخ شمسي
+                        "337" => $time[3],//نوع تردد
+                        "328" => $time[2],//تايم
+                        "955" => 1 //خودكار ساخته شده
+                    );
+                    $myForm = new DMSNFC_form(array('fieldid' => $formID, 'docid' => $docID, 'referid' => null));
 
-                $myForm->setData($fdata);
+                    $myForm->setData($fdata);
 
 
 //////////////////////////
-                $request = Request::getInstance();
-                $request->setParameter('referID', $referID);
-                $request->setParameter('structID', $formID);
-                $request->setParameter('docID', $docID);
-                $request->setParameter('commandKey', '1_3');
-                $request->setParameter('referNote', 'جهت بررسي');
-                ModWorkFlowManager::workflowAction();
+                    $request = Request::getInstance();
+                    $request->setParameter('referID', $referID);
+                    $request->setParameter('structID', $formID);
+                    $request->setParameter('docID', $docID);
+                    $request->setParameter('commandKey', '1_3');
+                    $request->setParameter('referNote', 'جهت بررسي');
+                    ModWorkFlowManager::workflowAction();
+                }
 /// /////////////////
 // //////////////////////////////////////////////////////////
             }
@@ -333,37 +336,42 @@ AND field_9='$instance[1]'
         $db = MySQLAdapter::getInstance();
         $count = $db->executeScalar($sql);
         if ($count == 0) {
-            $counterPartly++;
-            $formID = 34;
-            $db = MySQLAdapter::getInstance();
-            $workFlowID = $db->executeScalar("SELECT `workflow_id` FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` =  $formID");
-            $resp = WorkFlowManager::stratNewWorkFlow($workFlowID); //يك فرم از آخرين گردش كار جاري ايجاد كند و در پيش نويس مي گذار
-            $referID = $resp['referID']; //آي دي ارجاع است
-            $docID = $resp['docID'];
+
+                 $counterPartly++;
+                 if(false) {
+                     $formID = 34;
+                     $db = MySQLAdapter::getInstance();
+                     $workFlowID = $db->executeScalar("SELECT `workflow_id` FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` =  $formID");
+                     $resp = WorkFlowManager::stratNewWorkFlow($workFlowID); //يك فرم از آخرين گردش كار جاري ايجاد كند و در پيش نويس مي گذار
+                     $referID = $resp['referID']; //آي دي ارجاع است
+                     $docID = $resp['docID'];
 //////////////////////////////////////
-            $sql_title = "update oa_document set Subject='فرم تردد سيستمي' where RowID=" . $docID . "   limit 1";
-            $db->execute($sql_title);
+                     $sql_title = "update oa_document set Subject='فرم تردد سيستمي' where RowID=" . $docID . "   limit 1";
+                     $db->execute($sql_title);
 //////////////////////////////////////////////////////
 
 
-            $fdata = array(
-                "335" => $instance[0], //تاريخ شمسي
+                     $fdata = array(
+                         "335" => $instance[0], //تاريخ شمسي
 //"328" => $instance[1], //تاريخ ميلادي
-                "955" => 1,
-                "337" => 200 //افزودن تردد
-            );
-            $myForm = new DMSNFC_form(array('fieldid' => $formID, 'docid' => $docID, 'referid' => null)); //با اين خط داده ها رو در فرم مي گذارد
-            $myForm->setData($fdata);
+                         "955" => 1,
+                         "337" => 200 //افزودن تردد
+                     );
+                     $myForm = new DMSNFC_form(array('fieldid' => $formID, 'docid' => $docID, 'referid' => null)); //با اين خط داده ها رو در فرم مي گذارد
+                     $myForm->setData($fdata);
 //////////////////////////////////////////////////////////
 
 //////////////////////////
-            $request = Request::getInstance();
-            $request->setParameter('referID', $referID);
-            $request->setParameter('structID', $formID);
-            $request->setParameter('docID', $docID);
-            $request->setParameter('commandKey', '1_3');
-            $request->setParameter('referNote', 'لطفاً تردد ناقص خود را اصلاح فرماييد');
-            ModWorkFlowManager::workflowAction();
+                     $request = Request::getInstance();
+                     $request->setParameter('referID', $referID);
+                     $request->setParameter('structID', $formID);
+                     $request->setParameter('docID', $docID);
+                     $request->setParameter('commandKey', '1_3');
+                     $request->setParameter('referNote', 'لطفاً تردد ناقص خود را اصلاح فرماييد');
+                     ModWorkFlowManager::workflowAction();
+                 }
+
+
         }
 /// /////////////////
 
@@ -371,6 +379,7 @@ AND field_9='$instance[1]'
 }
 ////////////////////////////////////////////////////////////////////
 
-Response::getInstance()->response ="تردد ناقص هاي اضافه شده ".$counterPartly . " \n فرم هاي ماموريت اضافه شده " . $counterNadard;
+Response::getInstance()->response =$counterPartly+$counterNadard;
+
 
 

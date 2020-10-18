@@ -456,7 +456,8 @@ for($i = 0; $i < $count; $i++)
     $creat = "
         <a class='f-button-float-1' href='#Modal$ModalID'>ايجاد فرم</a>
         <div id='Modal$ModalID' class='f-modal-modalDialog'>
-            <div><a href='#close' class='f-modal-close'>✖</a>
+            <div>
+            <a href='#close' class='f-modal-close'>✖</a>
             $creat
             </div>
         </div>

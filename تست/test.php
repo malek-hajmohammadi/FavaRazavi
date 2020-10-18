@@ -1,1 +1,35 @@
-MonAug1713:36:54.3712552020 :error pid25991 client172.16.28.102:54352 PHP Fatal error:     Uncaught Error: Call to undefined method calssName5f3a48ae5a8aa::execute() in /var/www/html/OfficeAS7.2.3.2-990522/Runtime/modules/Application/Objects/DMSNFieldsControler.php:807\nStack trace:\n#0 /var/www/html/OfficeAS7.2.3.2-990522/Runtime/modules/NForms/ModNForms.php(152): DMSNFC_base->phpcode()\n#1 /var/www/html/OfficeAS7.2.3.2-990522/Runtime/kernel/ModuleManagement/ModuleManager.php(53): ModNForms->phpcode()\n#2 /var/www/html/OfficeAS7.2.3.2-990522/Runtime/kernel/FrameworkManagement/FrameworkController.php(278): ModuleManager->runModuleAction('NForms', 'phpcode')\n#3 /var/www/html/OfficeAS7.2.3.2-990522/Runtime/kernel/FrameworkManagement/FrameworkController.php(125): FrameworkController->performRequestAction()\n#4 /var/www/html/OfficeAS7.2.3.2-990522/Runtime/kernel/FrameworkManagement/FrameworkController.php(66): FrameworkController->performRequest()\n#5 /var/www/html/OfficeAS7.2.3.2-990522/Runtime/kernel/FrameworkManagement/FrameworkController.php(38): FrameworkController->performSingleRequest()\n#6 /var/www/ht in /var/www/html/OfficeAS7.2.3.2-990522/Runtime/modules/Application/Objects/DMSNFieldsControler.php on line 807, referer: https://ravan.favarazavi.ir/RAVAN/UI/index.php
+<?php
+
+/*getting return value from compute field (php part)*/
+class calssName
+{
+    public function execute($self)
+    {
+
+        $res = "
+<button id='SearchButton' onclick='FormOnly.allFieldsContianer[7].search($uid)' onmousedown=''>جستجو
+</button>";
+        return array("res" => $res);
+    }
+}
+
+
+
+/*seting global variable in workflow, process node*/
+class calssName
+{
+    public function __construct()
+    {
+    }
+
+    public function execute(ezcWorkflowExecution $execution)
+    {
+
+        $execution->setVariable('statuslevel', 90);
+    }
+
+
+
+
+}
+

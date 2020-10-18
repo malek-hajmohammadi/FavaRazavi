@@ -1,0 +1,21 @@
+<?php
+$dateEnd = '1399/12/30';
+//$client = new SoapClient('http://10.10.10.25:9091/Timex.asmx?wsdl');
+$client = new SoapClient('http://10.10.100.15/WSTuralInOut/TuralInOut.asmx?wsdl');
+$GID='882866';
+$s1 = "    SELECT * FROM [Timex_TaminPoshtibani].adon.Kardex('".$GID."', '".$dateEnd."')";
+//[Timex_TaminPoshtibani].dbo
+$param = array(
+    'username' => '3ef1b48067e4f2ac9913141d77e847dd',
+    'password' => '9a3f5b14f1737c15e86680d9cd40b840',
+    'objStr' => $s1
+);
+$res = $client->RunSelectQuery($param);
+$res = $res->RunSelectQueryResult->cols;
+$res = json_decode(json_encode($res), true);
+$MandeMorkhasi = urldecode($res['recs']['string'][30]);
+Response::getInstance()->response = $MandeMorkhasi;
+//$P = $P.' -*- Q: '.$res['recs']['string'][30];
+
+
+
