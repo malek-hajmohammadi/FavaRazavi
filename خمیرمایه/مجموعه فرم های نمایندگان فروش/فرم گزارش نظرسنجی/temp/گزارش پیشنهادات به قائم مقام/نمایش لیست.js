@@ -3,12 +3,7 @@ this.jcode = function (self) {
         var searchFields = self.getSearchFields();
         res = Utils.fastAjax('WorkFlowAjaxFunc', 'getOffersToDeputy', searchFields);
         $jq('#listContainer').html(res);
-        if (!self.offerUser)
-
-
-            self.offerUser = new Per_Role('FormOnly.allFieldsContianer[0].offerUser', 'offerUser', Main.getActiveCurrentSectriateUser());
-
-        
+        if (!self.offerUser) self.offerUser = new Per_Role('FormOnly.allFieldsContianer[0].offerUser', 'offerUser', Main.getActiveCurrentSectriateUser());
         $jq('#offerUser input').addClass('f-input');
         self.createChart();
     };

@@ -1,8 +1,6 @@
 <?php
 
 
-
-
 class calssName
 {
     public function __construct()
@@ -15,11 +13,13 @@ class calssName
 
     }
 
-    protected function setStage($execution){
-        $execution->workflow->myForm->setFieldValueByName('Field_5', "raiesFroosh");
+    protected function setStage($execution)
+    {
+        $execution->workflow->myForm->setFieldValueByName('Field_5', "modirBazargani");
 
     }
 
 }
+
 
 

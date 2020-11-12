@@ -33,13 +33,17 @@ class calssName
 
         $name=$sex.' '.$person['fname'].' '.$person['lname'];
         $naturalId = $person['NationalCode'] != NULL ? $person['NationalCode'] : '-';
-        $phone = $person['tel'] != NULL ? $person['tel'] : '';
+        $phone = $person['mobile'] != NULL ? $person['mobile'] : '';
         $address = $person['address'] != NULL ? $person['address'] : '';
 
         $execution->workflow->myForm->setFieldValueByName('Field_1', $name);
         $execution->workflow->myForm->setFieldValueByName('Field_2', $naturalId);
         $execution->workflow->myForm->setFieldValueByName('Field_3', $phone);
         $execution->workflow->myForm->setFieldValueByName('Field_4', $address);
+
+        /*برای استفاده در sms*/
+        $execution->setVariable('repMobile', $phone);
+
     }
 
     protected function setStage($execution){

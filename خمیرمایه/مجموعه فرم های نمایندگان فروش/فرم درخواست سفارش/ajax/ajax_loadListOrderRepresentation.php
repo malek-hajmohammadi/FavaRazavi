@@ -4,17 +4,31 @@ class MainAjax2
 {
     private $showMode; //value can be edit or readOnly
     private $docId;
+    private $totalPrice=0;
 
     private function getDataFromDatabase()
     {
-        $list = [];
-        $list[0][0] = "خمیرمایه نوع یک";
-        $list[0][1] = "کیلو";
-        $list[0][2] = "120000";
-        $list[0][3]="200";
-        $list[0][3]="70000";
 
-        return $list;
+
+        $dataInTable = array();
+        $db = PDOAdapter::getInstance();
+
+        $sql = "select * FROM dm_datastoretable_24 where MasterID=:docId ORDER BY RowID";
+        $PDOParams = array(
+            array('name' => 'docId', 'value' => $this->docId, 'type' => PDO::PARAM_INT)
+        );
+        $db->executeSelect($sql,$PDOParams);
+
+        $count = 0;
+        while ($row = $db->fetchAssoc()) {
+            $dataInTable[$count] = array(
+                $row['Field_0'], $row['Field_1'], $row['Field_2'], $row['Field_3'],
+                $row['Field_4']
+            );
+            $count++;
+        }
+
+        return $dataInTable;
     }
     private function getInputArguments(){
 
@@ -40,8 +54,11 @@ class MainAjax2
     public function makeHtml()
     {
         $this->getInputArguments();
+
+        $dataFromDatabase="";
         if($this->showMode=="readOnly")
-        $dataFromDatabase = $this->getDataFromDatabase();
+           $dataFromDatabase = $this->getDataFromDatabase();
+
         $endHtml = $this->style(). $this->header() . $this->body($dataFromDatabase) .$this->endedButton(). $this->footer();
 
         return $endHtml;
@@ -505,19 +522,23 @@ input[name=productName] {
     {
         $header = "";
 
+        $background="";
+        if($this->showMode=="readOnly")
+           $background="background: #37474f;";
+
         $defineTableTag = "<table width=\"100%\" class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"rtl\">
     <tbody>";
 
 
         $header = "<tr>
-        <th width='10px' style=\"padding: 2px; \">ردیف</th>
-        <th width='100px' style=\"padding: 2px; \">عنوان محصول</th>
-        <th width='20px' style=\"padding: 2px; \">نوع بسته بندی/واحد</th>
-         <th width='10px' style=\"padding: 2px; \">قیمت واحد(ریال)</th>
-         <th width='10px' style=\"padding: 2px; \">تعداد سفارش</th>
-         <th width='10px' style=\"padding: 2px; \">جمع</th>
+        <th width='10px' style=\"padding: 2px;$background \">ردیف</th>
+        <th width='100px' style=\"padding: 2px;width: 255px; $background \">عنوان محصول</th>
+        <th width='20px' style=\"padding: 2px;width: 82px;$background \">نوع بسته بندی/واحد</th>
+         <th width='10px' style=\"padding: 2px;width: 100px;$background \">قیمت واحد(ریال)</th>
+         <th width='10px' style=\"padding: 2px;width: 64px;$background \">تعداد سفارش</th>
+         <th width='10px' style=\"padding: 2px;width: 90px;$background \">جمع</th>
          
-         <th width='3%' style=\"padding: 2px; \">حذف</th>
+         <th width='3%' style=\"padding: 2px;$background \">حذف</th>
          </tr>";
 
         return $defineTableTag . $header;
@@ -532,16 +553,21 @@ input[name=productName] {
         /*      1:barrasi 2:mojaz 3:na motaber        */
         foreach ($dataFromDatabase as $value) {
             $radif++;
+            $this->totalPrice+=$value[4];
+
+
             $value[2] = number_format($value[2]);
+            $value[3] = number_format($value[3]);
+            $value[4] = number_format($value[4]);
             $body .= "
     <tr class=\"tableRow_$radif\">
         <td style=\"padding: 2px;border: 1px solid #ccc;\">$radif</td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style='' onInput=\"window.codeSet.DetailedTable.unSaved()\" type=\"text\" name=\"productName\" value=\"$value[0]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style='' onInput=\"window.codeSet.DetailedTable.unSaved()\" type='text' name='productType' value=\"$value[1]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style='' onInput=\"window.codeSet.DetailedTable.unSaved()\" class='RavanMask' onkeyup='' type='text' min=\"0\" name=\"productPrice\" value=\"$value[2]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style='' onInput=\"window.codeSet.DetailedTable.unSaved()\" class='RavanMask' onkeyup='' type='text' min=\"0\" name=\"productNum\" value=\"$value[3]\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style='' onInput=\"window.codeSet.DetailedTable.unSaved()\" class='RavanMask' onkeyup='' type='text' min=\"0\" name=\"productTotalRow\" value=\"$value[3]\"></td>
-        <td style='background-color:#c5e1a5' id=\"tdDeleteImg\" style=\"padding: 2px;border: 1px solid #ccc;\"><img style='' onclick=\"window.codeSet.DetailedTable.removeRow($radif)\" src = \"gfx/toolbar/cross.png\" />  </td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input readonly style='background: #e0e0e0'  type=\"text\" name=\"productName\" value=\"$value[0]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input readonly style='background: #e0e0e0'  type='text' name='productType' value=\"$value[1]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input readonly style='background: #e0e0e0'  class='RavanMask' onkeyup='' type='text' min=\"0\" name=\"productPrice\" value=\"$value[2]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input readonly style='background: #e0e0e0'  class='RavanMask' onkeyup='' type='text' min=\"0\" name=\"productNum\" value=\"$value[3]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style='background: #e0e0e0'  class='RavanMask' onkeyup='' type='text' min=\"0\" name=\"productTotalRow\" value=\"$value[4]\"></td>
+        <td style='background-color:#e0e0e0'  style=\"padding: 2px;border: 1px solid #ccc;\"><img style=''  src = \"gfx/toolbar/cross.png\" />  </td>
     </tr>";
         }
 
@@ -550,18 +576,23 @@ input[name=productName] {
     }
 
     private function endedButton(){
-        $addBtn = "
-    <tr>
-         <td style=\"padding: 2px;padding-top: 7px;padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\"><img onclick=\"window.codeSet.DetailedTable.addRow()\"  src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/></td>
-         <td style=\"padding: 2px;border: 0px solid #ccc;background: white !important;\"></td>
-         <td style=\"padding: 2px;border: 0px solid #ccc;background: white !important;\"></td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;background: white !important;\"> <span style='font-weight: bold !important;'>جمع کل</span> </td>
-        <td colspan='2' style=\"padding: 2px;border: 1px solid #ccc;background: white !important;\"> <input style=\"background: #e0e0e0\" readonly  type=\"text\" name=\"totalPrice\" dir='ltr' value=\"0\"> </td>
-         <td style=\"padding: 2px;border: 1px solid #ccc;background: white !important;\">ریال</td>
-         
-            </tr>";
+        $this->totalPrice = number_format($this->totalPrice);
 
-        return $addBtn;
+        if($this->showMode=="edit")
+           $addBtn = "<td style=\"padding: 2px;padding-top: 7px;padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5;\"><img onclick=\"window.codeSet.addRow()\"  src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/></td>";
+        else
+            $addBtn = "<td style=\"padding: 2px;border: 0px solid #ccc;background: white !important;\"></td>";
+
+
+        $spaceCell="<td style=\"padding: 2px;border: 0px solid #ccc;background: white !important;\"></td>
+         <td style=\"padding: 2px;border: 0px solid #ccc;background: white !important;\"></td>";
+
+        $totalCell=" <td style=\"padding: 2px;border: 1px solid #ccc;background: white !important;\"> <span style='font-weight: bold !important;'>جمع کل</span> </td>
+        <td colspan='2' style=\"padding: 2px;border: 1px solid #ccc;background: white !important;\"> <input style=\"background: #e0e0e0\" readonly  type=\"text\" name=\"totalPrice\" dir='ltr' value=\"$this->totalPrice\"></td>
+         <td style=\"padding: 2px;border: 1px solid #ccc;background: white !important;\">ریال</td>";
+
+
+        return "<tr>".$addBtn.$spaceCell.$totalCell."</tr>";
 
 
     }
