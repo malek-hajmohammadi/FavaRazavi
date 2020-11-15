@@ -38,8 +38,8 @@ listener = function (event) {
             console.log("getReport()");
             this.getSearchFields();
             console.log("searchFields");
-            console.log("searchFields"+this.searchFields);
-            /*this.runAjaxSearch();*/
+            console.log("searchFields",this.searchFields);
+            this.runAjaxSearch();
 
 
         }
@@ -65,7 +65,7 @@ listener = function (event) {
             }
         }
         runAjaxSearch(){
-            res = Utils.fastAjax('WorkFlowAjaxFunc', 'getTotalOrders',{searchFields:this.searchFields});
+            res = Utils.fastAjax('WorkFlowAjaxFunc', 'getConfirmOrders',{searchFields:this.searchFields});
             console.log("res".res);
             $jq('#listContainer').html(res);
         }
@@ -89,6 +89,8 @@ listener = function (event) {
             this.searchFields.userId=this.getUserId();
 
             this.searchFields.cableState=this.getCableState();
+
+            this.searchFields.confirmState=this.getConfirmState();
 
             /*گرفتن نماینده*/
         }
@@ -160,11 +162,14 @@ listener = function (event) {
         }
 
         getCableState(){
+
             let state=FormOnly.allFieldsContianer[4].getData();
             if(state=="" || state==1)
                 return -1;
             return state;
         }
+
+
         changeFront(){
 
             $jq(".productUnit input").prop('disabled', true);
@@ -200,6 +205,16 @@ listener = function (event) {
                     return this.definedProducts[i]['productType']
             }
             return "---";
+        }
+
+        getConfirmState(){
+            var checkBox = document.getElementById("confrimProducts");
+            if (checkBox.checked == true){
+                return "confirm";
+            }
+
+            return -1;
+
         }
 
         /*کلیک رو چک باکس تمام نمایندگان*/

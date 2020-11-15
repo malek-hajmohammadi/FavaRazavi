@@ -44,6 +44,10 @@ class calssName
         /*برای استفاده در sms*/
         $execution->setVariable('repMobile', $phone);
 
+        /*فلگی که  بعدا چک می کنم که ایا سفارش تایید شده هنوز یا نه*/
+        $execution->workflow->myForm->setFieldValueByName('Field_16', 0);
+
+
     }
 
     protected function setStage($execution){

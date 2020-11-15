@@ -15,10 +15,10 @@ class MainAjax
         $this->getInputArguments();
 
 
-        $dataFromDatabase = $this->getDataFromDatabase();
+        $dataFromDatabase = $this->getDataFromDatabaseV2();
 
 
-        $endHtml = $this->pagingPart() . $this->header() . $this->body($dataFromDatabase) . $this->footer();
+        $endHtml = $this->header() . $this->body($dataFromDatabase) . $this->footer();
 
         return $endHtml;
 
@@ -71,9 +71,10 @@ class MainAjax
         $cableState = $this->getCableState();
         $userIdSt = $this->getUserIdString();
         $productNameSt = $this->getProductNameString();
+        $confirmState=$this->getConfirmState();
 
         $whereClause = $whereClause . $formNumberSt . $firstDate . $endDate . $cableState .
-            $userIdSt . $productNameSt;
+            $confirmState. $userIdSt . $productNameSt;
         $whereClause .= "1 ";
 
         return $whereClause;
@@ -85,7 +86,7 @@ class MainAjax
         $formNumber = $this->searchFields->formNumber;
         $formNumber = trim($formNumber);
         if ($formNumber != -1 && is_numeric($formNumber))
-            return "DocID=$formNumber and ";
+            return "dm.DocID=$formNumber and ";
         return "";
     }
 
@@ -171,6 +172,15 @@ class MainAjax
 
     }
 
+    private function getConfirmState(){
+        $confirmState = $this->searchFields->confirmState;
+        if ($confirmState == "-1")
+            return "";
+        $confirmStateString = "Field_16=1 and ";
+        return $confirmStateString;
+
+    }
+
     private function getUserIdString()
     {
         $userId = $this->searchFields->userId;
@@ -195,10 +205,41 @@ class MainAjax
     private function getDataFromDatabaseV2()
     {
         $dataInTable = array();
-        if ($this->searchFields->productName=="-1"){
 
+        $db = PDOAdapter::getInstance();
+
+        $stForHavingProductName = "";
+        $whereOut="";
+        if ($this->searchFields->productName != "-1") {
+            $productName = $this->searchFields->productName;
+            $stForHavingProductName = "INNER JOIN dm_datastoretable_24 as dmDetail on (dmDetail.MasterID=dm.docid) ";
+            $whereOut="and Field_0='$productName'";
         }
+
+
+        $sqlIn = "select dm.DocID FROM dm_datastoretable_25 as dm " .
+            "INNER JOIN oa_document on (oa_document.rowid = dm.docId) " . $stForHavingProductName;
+
+        $sqlWhereClause = $this->whereClause();
+        $sqlIn = $sqlIn . $sqlWhereClause;
+
+
+        $sqlOut="SELECT SUM(Field_4) as sm,Field_0,Field_1 FROM `dm_datastoretable_24` WHERE MasterID in ($sqlIn) $whereOut GROUP BY Field_0,Field_1";
+
+       // die($sqlOut);
+
+        $db->executeSelect($sqlOut);
+
+        $count = 0;
+        while ($row = $db->fetchAssoc()) {
+            $dataInTable[$count] = array(
+                $row['sm'], $row['Field_0'], $row['Field_1']
+            );
+            $count++;
+        }
+
         return $dataInTable;
+
 
     }
     private function getDataFromDatabase()
@@ -260,24 +301,7 @@ INNER JOIN oa_document on (oa_document.rowid = dm.docid) " . $stForHavingProduct
     }
 
 
-    private function pagingPart()
-    {
 
-
-        $html = '
-<div style="text-align: center;padding: 2px;">
-    <span style="float: right;padding: 5px;font-weight: bold;">' . $this->searchFields->sumCount . ' مورد يافت شد</span>
-    <button onclick="window.codeSet.prevPage()" id="prevPage">صفحه قبل </button>
-    صفحه
-    <input id="pageNumber" class="f-input" tabindex="6001" style="width: 50px;" value="' . $this->searchFields->pageNumber . '">
-    از ' . $this->searchFields->pages . '
-    <input type="hidden" value="' . $this->searchFields->pages . '" id="maxPage" >
-    <button onclick="window.codeSet.getReport()" id="showPage" style="background-color:#b7f7ab">نمايش صفحه وارد  شده  </button>
-    <button tabindex="6001" onclick="window.codeSet.nextPage()" onkeydown="return FormBuilder.designFormModal.setLFocus(event)" id="textPage">صفحه بعد </button> </td></div>';
-        return $html;
-
-
-    }
 
     private function header()
     {
@@ -287,11 +311,9 @@ INNER JOIN oa_document on (oa_document.rowid = dm.docid) " . $stForHavingProduct
                     <tbody>
                         <tr>
                             <th width="3%" style="padding: 2px; ">رديف</th>
-                            <th width="30%" style="padding: 2px; ">نماینده</th>
-                            <th width="10%" style="padding: 2px; ">شماره فرم</th>
-                            <th width="10%" style="padding: 2px; ">وضعیت فرم</th>
-                            <th width="10%" style="padding: 2px; ">تاریخ ایجاد فرم</th>
-                            
+                            <th width="30%" style="padding: 2px; ">نام محصول</th>
+                            <th width="10%" style="padding: 2px; ">واحد</th>
+                            <th width="10%" style="padding: 2px; ">جمع سفارش</th>
                         </tr>';
 
         return $html;
@@ -306,17 +328,16 @@ INNER JOIN oa_document on (oa_document.rowid = dm.docid) " . $stForHavingProduct
         /*      1:barrasi 2:mojaz 3:na motaber        */
         foreach ($dataFromDatabase as $value) {
             $radif++;
-            $name = $value[0] . " " . $value[1];
-            $docId = $value[6];
-            $formState = $this->getFormState($value[5]);
-            $createDate = $value[7];
-            $createDate = Date::GregToJalali((new DateTime($createDate))->format('Y-m-d'));
+            $productName = $value[1];
+            $productUnit = $value[2];
+            $sum=number_format($value[0]);
+
             $bodyPart .= '<tr id="accessRow_' . ($radif) . '" >
                         <td style="padding: 2px;border: 1px solid #ccc;" >' . $radif . '</td>
-                        <td style="padding: 2px;border: 1px solid #ccc;" >' . $name . '</td>
-                        <td style="padding: 2px;border: 1px solid #ccc;" >' . $docId . '</td>
-                        <td style="padding: 2px;border: 1px solid #ccc;direction: ltr" >' . $formState . '</td>
-                        <td style="padding: 2px;border: 1px solid #ccc;direction: ltr" >' . $createDate . '</td>
+                        <td style="padding: 2px;border: 1px solid #ccc;text-align: right;padding-right: 10px" >' . $productName . '</td>
+                        <td style="padding: 2px;border: 1px solid #ccc;" >' . $productUnit . '</td>
+                        <td style="padding: 2px;border: 1px solid #ccc;direction: ltr;text-align: left;padding-left: 10px" >' . $sum . '</td>
+                      
                        
                          </tr>';
         }

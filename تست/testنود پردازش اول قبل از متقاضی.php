@@ -49,6 +49,7 @@ class calssName
             } else {
                 $error = 'کاربر متقاضی نامشخص است';
                 $execution->workflow->myForm->setFieldValueByName($error_field, $error);
+
 //return 0;
             }
         } else {
