@@ -108,6 +108,31 @@ if(2)/*دریافت آرایه از وب سرویس*/
         $SoapStatus = 0;
     }
 }
+if(6)/*محاسبه تعداد اصلاح تردد در ماه نمایش و تصمیم گیری در مورد اینکه فرم اصلاح تردد بتواند بزند یا نه*/{
+    //-----------------------------------
+
+    $tedadEslah = 0;
+    $d1 = $yy . "/" . $mm . "/01";
+    if ($mm >= 1 && $mm <= 6) $d2 = $yy . "/" . $mm . "/31";
+    else if ($mm >= 7 && $mm <= 11) $d2 = $yy . "/" . $mm . "/30";
+    else if ($mm == 12) $d2 = $yy . "/" . $mm . "/29";
+    $dd1 = Date::JalaliToGreg($d1);
+    $dd2 = Date::JalaliToGreg($d2);
+
+    $sql = "SELECT count(docid) FROM `dm_datastoretable_895` 
+LEFT JOIN oa_document on (oa_document.rowid = dm_datastoretable_895.docid) 
+WHERE  oa_document.isenable = 1 
+/*AND oa_document.DocStatus = 0 */
+AND (`Field_7` = '1' OR `Field_7` = 'در تورال ثبت شد') 
+AND `Field_8` = '$CodeM' 
+AND `Field_2` between '$dd1' AND '$dd2' 
+";
+    $tedadEslah = $db->executeScalar($sql);
+
+
+}
+
+
 if(3)/*ساخت یک سطر برای یک روز*/ {
     $count = count($res);
     $RoozMorkhasiT = 0;
@@ -259,7 +284,9 @@ if(3)/*ساخت یک سطر برای یک روز*/ {
 
              $creat = '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].MamoriatR('.$wfidMamoriatR.',\''.$date.'\')">ماموريت<br>روزانه</div>';
             $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].MorkhasiR('.$wfidMorkhasiR.',\''.$date.'\')">مرخصي<br>روزانه</div>';
-            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].eslah('.$wfidEslah.',\''.$date.'\')">اصلاح<br>تردد</div>';
+
+            if($tedadEslah<5)
+               $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].eslah('.$wfidEslah.',\''.$date.'\')">اصلاح<br>تردد</div>';
          //   $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].CreateFormTaradodH($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$CodeM)'>حذف<br>تردد</div>";
          //   $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].CreateFormTaradodA($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$CodeM)'>افزودن<br>تردد</div>";
 
@@ -508,25 +535,7 @@ if(5)/*محاسبه مانده مرخصی*/{
 
 }
 if (6)/*محاسبه تعداد فرم اصلاح تردد*/ {
-    //-----------------------------------
 
-    $tedad = 0;
-    $d1 = $yy . "/" . $mm . "/01";
-    if ($mm >= 1 && $mm <= 6) $d2 = $yy . "/" . $mm . "/31";
-    else if ($mm >= 7 && $mm <= 11) $d2 = $yy . "/" . $mm . "/30";
-    else if ($mm == 12) $d2 = $yy . "/" . $mm . "/29";
-    $dd1 = Date::JalaliToGreg($d1);
-    $dd2 = Date::JalaliToGreg($d2);
-
-    $sql = "SELECT count(docid) FROM `dm_datastoretable_895` 
-LEFT JOIN oa_document on (oa_document.rowid = dm_datastoretable_895.docid) 
-WHERE  oa_document.isenable = 1 
-/*AND oa_document.DocStatus = 0 */
-AND (`Field_7` = '1' OR `Field_7` = 'در تورال ثبت شد') 
-AND `Field_8` = '$CodeM' 
-AND `Field_2` between '$dd1' AND '$dd2' 
-";
-    $tedad = $db->executeScalar($sql);
 }
 if(3)/*ساخت نهایی خروجی*/ {
     $html = "
@@ -603,7 +612,7 @@ if(3)/*ساخت نهایی خروجی*/ {
     <fieldset style='margin-top: 6px'><table><tbody>
 
     <tr><td style='font-weight: bold !important'>تعداد فرم اصلاح تردد در اين ماه: </td>
-    <td id='f-MandeMorkhasi' style=''> $tedad</td>
+    <td id='f-MandeMorkhasiNumber' style=''> $tedadEslah</td>
     
     
     </tr>

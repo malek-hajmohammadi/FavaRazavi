@@ -2,8 +2,8 @@ this.jcode = function (self) {
     try {
         self.LoadJS = function (time, id) {
             var PID = Main['UserInfo']['employeeID'];
-            FormOnly.allFieldsContianer[6].setData(PID);
-            $jq('.BazarPID').text(PID);
+            FormOnly.allFieldsContianer[7].setData(PID);
+            $jq('.BazrPID').text(PID);
             var today = Main["FirstPageParameters"]["datetime"]["todayDate"];
             aa = today.split('/');
             yy = aa[0];
@@ -13,35 +13,23 @@ this.jcode = function (self) {
             tat = yy + '/' + mm + '/' + dd;
             FormOnly.allFieldsContianer[0].setData(azt);
             FormOnly.allFieldsContianer[1].setData(tat);
-            switch (yy) {
-                case '1398':
-                    yy = 0;
-                    break;
-                case '1399':
-                    yy = 1;
-                    break;
-                case '1400':
-                    yy = 2;
-                    break;
-                default:
-                    yy = 0;
-            }
-            mm--;
-            FormOnly.allFieldsContianer[2].setData(parseInt(mm));
-            FormOnly.allFieldsContianer[3].setData(yy);
+            if (yy == '1398') yy = 1; else if (yy == '1398') yy = 2; else yy = 0;
+            mm = mm.replace(/^0+/, '');
+            parseInt(mm);
+            FormOnly.allFieldsContianer[3].setData(mm);
+            FormOnly.allFieldsContianer[4].setData(yy);
         };
         self.DoreZamaniJS = function (fw) {
             Utils.showProgress(true);
             var PID = '';
             var mm = '';
             var yy = '';
-            PID = FormOnly.allFieldsContianer[6].getData();
-            mm = FormOnly.allFieldsContianer[2].getData();
-            mm++;
+            PID = FormOnly.allFieldsContianer[7].getData();
+            mm = FormOnly.allFieldsContianer[3].getData();
             if (mm.toString().length == 1) mm = '0' + parseInt(mm);
-            yy = FormOnly.allFieldsContianer[3].getData();
+            yy = FormOnly.allFieldsContianer[4].getData();
             yy = parseInt(yy) + 1398;
-            var res = Utils.fastAjax('WorkFlowAjaxFunc', 'KasboKarTimexList', {
+            var res = Utils.fastAjax('WorkFlowAjaxFunc', 'BazrTimexList', {
                 mm: mm,
                 yy: yy,
                 PID: PID,
@@ -56,7 +44,7 @@ this.jcode = function (self) {
             var PID = '';
             var azt = '';
             var tat = '';
-            PID = FormOnly.allFieldsContianer[6].getData();
+            PID = FormOnly.allFieldsContianer[5].getData();
             azt = FormOnly.allFieldsContianer[0].getData();
             tat = FormOnly.allFieldsContianer[1].getData();
             if (azt == "") {
@@ -87,7 +75,7 @@ this.jcode = function (self) {
                     document.getElementById('dvQuery').innerHTML = '<div id="dvQueryFalse">تاريخ انتها از تاريخ ابتدا بايد بزرگتر باشد</div>';
                     Utils.showProgress(false);
                 } else {
-                    var res = Utils.fastAjax('WorkFlowAjaxFunc', 'KasboKarTimexList', {
+                    var res = Utils.fastAjax('WorkFlowAjaxFunc', 'BazrTimexList', {
                         aztd: aztd,
                         aztm: aztm,
                         azty: azty,
@@ -110,19 +98,13 @@ this.jcode = function (self) {
             if (FormType == 'Eslah') {
                 FormDate_ID = 13339;
                 FormCodeM_ID = 13341;
-            }
-            else if (FormType == 'MorkhasiR')
-            {
+            } else if (FormType == 'MorkhasiR') {
                 FormDate_ID = 13381;
                 FormCodeM_ID = 13383;
-            }
-            else if (FormType == 'MorkhasiS')
-            {
+            } else if (FormType == 'MorkhasiS') {
                 FormDate_ID = 13399;
                 FormCodeM_ID = 13398;
-            }
-            else if (FormType == 'MamoriatS')
-            {
+            } else if (FormType == 'MamoriatS') {
                 FormDate_ID = 13417;
                 FormCodeM_ID = 13415;
             }
@@ -140,5 +122,4 @@ this.jcode = function (self) {
     } catch (cc) {
         console.log(cc);
     }
-};
-
+}

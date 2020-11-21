@@ -92,12 +92,16 @@ if(2)/*output*/
    /* Response::getInstance()->response=$count;
     return;*/
     $output="";
+
+    $modalID=0;/*برای خانه ایجاد فرم هر سطر*/
     for ($i = 0; $i < $count; $i++)
     {
-        $rowHtml="malek";
-        $html .= "<tr><td class='class f-tooltip'>". $res[$i]->Date ."</td><td>";
+        $modalID++;
+
+        $rowHtml="";
+        $html .= "<tr><td class='class f-tooltip'>". $res[$i]->Date ."</td><td align='right' style='width:100%; position: relative;'>";
         $date=$res[$i]->Date;
-        $taradodha="<table cellpadding='0' cellspacing='3'><tr>";
+        $taradodha="<table cellpadding='0' cellspacing='3'><tbody><tr>";
         $j=$i;
         do{
 
@@ -122,20 +126,60 @@ if(2)/*output*/
             }
 
 
-                $taradodha .= "<td class='$class f-tooltip'>" . $res[$j]->Time . "<span class='f-tooltip-text f-tooltip-top'>$tooltip</span></td>";
+                $taradodha .= "<td class='$class f-tooltip'  >" . $res[$j]->Time . "<span class='f-tooltip-text f-tooltip-top'>$tooltip</span></td>";
             ///
-
-
-
 
 
 
            $j++;
         }while($j<$count && $res[$i]->Date==$res[$j]->Date);
         $i=$j-1;
-        $taradodha.="</tr></table></td>";
+        $taradodha.="</tr></tbody></table>";
 
-        $html.=$taradodha."</tr>";
+        if (3)/*خونه دکمه ای ایجاد فرم*/ {
+            //   $html .= "<td bgcolor='#81D4FA' class='f-tooltip'></td>";
+
+            $db = MySQLAdapter::getInstance();
+            $wfidMorkhasiS = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 45");
+            $wfidMorkhasiR = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 44");
+            $wfidMamoriatS = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 46");
+            $wfidMamoriatR = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 48");
+            $wfidEslah = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 895");
+            $date="13".$date;
+
+
+            $creat = '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].MamoriatR('.$wfidMamoriatR.',\''.$date.'\')">ماموريت<br>روزانه</div>';
+            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].MorkhasiR('.$wfidMorkhasiR.',\''.$date.'\')">مرخصي<br>روزانه</div>';
+
+
+            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].eslah('.$wfidEslah.',\''.$date.'\')">اصلاح<br>تردد</div>';
+            //   $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].CreateFormTaradodH($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$CodeM)'>حذف<br>تردد</div>";
+            //   $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].CreateFormTaradodA($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$CodeM)'>افزودن<br>تردد</div>";
+
+            //  $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].MorkhasiS($wfidMorkhasiS,'$date')'>مرخصي<br>ساعتی</div>";
+            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].MorkhasiS('.$wfidMorkhasiS.',\''.$date.'\')">مرخصی<br>ساعتی</div>';
+
+
+            $creat = "
+        <a class='f-button-float-1' href='#Modal$modalID'>ايجاد فرم</a>
+        <div id='Modal$modalID' class='f-modal-modalDialog'>
+            <div style='width: 250px'>
+            <a href='#close' class='f-modal-close'>✖</a>
+            $creat
+            </div>
+        </div> ";
+
+            $html .= $creat;
+
+        }
+
+
+
+
+
+
+
+        $html.=$taradodha."</td></tr>";
 
 
 
@@ -177,6 +221,7 @@ if(4){
 
 }
 Response::getInstance()->response=$html;
+
 return;
 
 
