@@ -144,20 +144,21 @@ if(2)/*output*/
             $wfidMorkhasiR = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 44");
             $wfidMamoriatS = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 46");
             $wfidMamoriatR = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 48");
-            $wfidEslah = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 895");
-            $date="13".$date;
+            $wfidEslah = $db->executeScalar("SELECT max(`workflow_id`) FROM `wf_workflow` WHERE `workflow_enable` = 1 AND `workflow_formtypeid` = 121");
+           // $date="13".$date;
 
 
-            $creat = '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].MamoriatR('.$wfidMamoriatR.',\''.$date.'\')">ماموريت<br>روزانه</div>';
-            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].MorkhasiR('.$wfidMorkhasiR.',\''.$date.'\')">مرخصي<br>روزانه</div>';
+            $creat = '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[5].MamoriatR('.$wfidMamoriatR.',\''.$date.'\')">ماموريت<br>روزانه</div>';
+            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[5].MamoriatS('.$wfidMamoriatS.',\''.$date.'\')">ماموریت<br>ساعتی</div>';
+            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[5].MorkhasiR('.$wfidMorkhasiR.',\''.$date.'\')">مرخصي<br>روزانه</div>';
 
 
-            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].eslah('.$wfidEslah.',\''.$date.'\')">اصلاح<br>تردد</div>';
+            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[5].eslah('.$wfidEslah.',\''.$date.'\')">اصلاح<br>تردد</div>';
             //   $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].CreateFormTaradodH($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$CodeM)'>حذف<br>تردد</div>";
             //   $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].CreateFormTaradodA($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$CodeM)'>افزودن<br>تردد</div>";
 
             //  $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].MorkhasiS($wfidMorkhasiS,'$date')'>مرخصي<br>ساعتی</div>";
-            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[3].MorkhasiS('.$wfidMorkhasiS.',\''.$date.'\')">مرخصی<br>ساعتی</div>';
+            $creat .= '<div class="f-button-1" onmousedown="FormOnly.allFieldsContianer[5].MorkhasiS('.$wfidMorkhasiS.',\''.$date.'\')">مرخصی<br>ساعتی</div>';
 
 
             $creat = "

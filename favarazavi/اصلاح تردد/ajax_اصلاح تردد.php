@@ -1,6 +1,9 @@
 <?php
 
 
+
+
+
 if (1)/*دریافت شماره پرسنلی*/
 {
     if (Request::getInstance()->varCleanFromInput('emp')) {
@@ -12,7 +15,7 @@ if (1)/*دریافت شماره پرسنلی*/
             return;*/
 
         $SQL = "SELECT * FROM oa_users WHERE UserID=" . $UID;
-        $db = MySQLAdapter::getInstance();
+        $db = WFPDOAdapter::getInstance();
         $db->executeSelect($SQL);
         $res = $db->fetchAssoc();
         $emp = $res['employeeID'];

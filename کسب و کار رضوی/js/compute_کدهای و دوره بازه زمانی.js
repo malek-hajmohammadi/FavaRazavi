@@ -1,5 +1,5 @@
 this.jcode = function (self) {
-    try {
+
         self.LoadJS = function (time, id) {
 
             /*var PID = Main['UserInfo']['employeeID'];*/
@@ -113,42 +113,84 @@ this.jcode = function (self) {
                 }
             }
         };
-        self.CreateForm = function (FormWFID, FormType, FormDate, FormCodeM) {
-            res = WFInfo.startWorkflow(FormWFID);
-            var FormDate_ID = '';
-            var FormCodeM_ID = '';
-            if (FormType == 'Eslah') {
-                FormDate_ID = 13339;
-                FormCodeM_ID = 13341;
-            }
-            else if (FormType == 'MorkhasiR')
-            {
-                FormDate_ID = 13381;
-                FormCodeM_ID = 13383;
-            }
-            else if (FormType == 'MorkhasiS')
-            {
-                FormDate_ID = 13399;
-                FormCodeM_ID = 13398;
-            }
-            else if (FormType == 'MamoriatS')
-            {
-                FormDate_ID = 13417;
-                FormCodeM_ID = 13415;
-            }
+
+        self.MorkhasiS = function (wfid, date) {
+        Utils.showProgress(true);
+
+        var res = WFInfo.startWorkflow(wfid);
+        Utils.fastAjax('NForms', 'setData', {
+            data: '{"519":"' + date + '"}',
+            docid: res.docID,
+            fieldid: res.formID,
+            referid: res.referID,
+            ttype: 'form'
+        });
+        Utils.showProgress(false);
+        Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
+    },
+
+        self.MorkhasiR = function (wfid, date) {
+            Utils.showProgress(true);
+
+            var res = WFInfo.startWorkflow(wfid);
             Utils.fastAjax('NForms', 'setData', {
-                data: '{"' + FormDate_ID + '":"' + FormDate + '", "' + FormCodeM_ID + '":"' + FormCodeM + '"}',
+                data: '{"507":"' + date + '"}',
                 docid: res.docID,
                 fieldid: res.formID,
                 referid: res.referID,
                 ttype: 'form'
             });
-            Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, 'newTab');
-        };
-        self.RunJS = function (fw) {
-        };
-    } catch (cc) {
-        console.log(cc);
-    }
+            Utils.showProgress(false);
+            Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
+        },
+        self.eslah = function (wfid, date) {
+            Utils.showProgress(true);
+            var codem = FormOnly.allFieldsContianer[0].getData();
+            var EslahNum = $jq('#f-EslahNum').text();
+            var Name = $jq('#f-Name').text();
+
+            var CodeGPersonal = $jq('#f-GpersonalID').text();
+            var FLocation = $jq('#f-Location').text();
+            var res = WFInfo.startWorkflow(wfid);
+            Utils.fastAjax('NForms', 'setData', {
+                data: '{"11082":"' + date + '","11086":"' + date + '","11143":"0","11173":"' + codem + '","11408":"' + Name + '","11409":"' + CodeGPersonal + '","11410":"' + FLocation + '","11174":"' + EslahNum + '"}',
+                docid: res.docID,
+                fieldid: res.formID,
+                referid: res.referID,
+                ttype: 'form'
+            });
+            Utils.showProgress(false);
+            Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
+        },
+        self.MamoriatR = function (wfid, date) {
+            Utils.showProgress(true);
+
+            var res = WFInfo.startWorkflow(wfid);
+            Utils.fastAjax('NForms', 'setData', {
+                data: '{"547":"' + date + '"}',
+                docid: res.docID,
+                fieldid: res.formID,
+                referid: res.referID,
+                ttype: 'form'
+            });
+            Utils.showProgress(false);
+            Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
+        },
+        self.MamoriatS = function (wfid, date) {
+            Utils.showProgress(true);
+
+            var res = WFInfo.startWorkflow(wfid);
+            Utils.fastAjax('NForms', 'setData', {
+                data: '{"524":"' + date + '"}',
+                docid: res.docID,
+                fieldid: res.formID,
+                referid: res.referID,
+                ttype: 'form'
+            });
+            Utils.showProgress(false);
+            Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
+        }
+
+
 };
 
