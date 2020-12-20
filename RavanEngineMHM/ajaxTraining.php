@@ -1,5 +1,5 @@
 <?php
-///////////////////////حالت جدید که با کلاس هست
+
 class MainAjax
 {
 
@@ -9,6 +9,7 @@ class MainAjax
         $output="";
         return $output;
     }
+
 
 
 

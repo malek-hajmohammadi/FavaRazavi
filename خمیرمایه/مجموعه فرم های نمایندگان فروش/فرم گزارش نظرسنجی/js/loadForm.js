@@ -9,6 +9,7 @@ listener = function (event) {
 
         createChart(){
 
+            /*دیتا یک آرایه هست که سایز آن به اندازه label هست */
             var config = {
                 type: 'horizontalBar',
                 data: {

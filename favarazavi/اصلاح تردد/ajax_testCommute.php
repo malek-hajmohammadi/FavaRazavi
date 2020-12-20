@@ -33,6 +33,8 @@ class MainAjax
 
 
 
+
+
         $isNeeded = 0;
         /*if ($existCommutingFormForIncompleteCommute == 0)
             $isNeeded = 1;
@@ -49,6 +51,7 @@ class MainAjax
         return $returnObject;*/
 
         return $existCommutingFormForIncompleteCommute;
+
 
     }
 

@@ -4,7 +4,7 @@ class MainAjax
 {
 
     public $docId = "";/*شماره فرم مستر*/
-    public $answers = [];/*آرایه پاسخ به نظرسنجی*/
+    public $answers = [];/*آرايه پاسخ به نظرسنجي*/
 
     public function save()
     {
@@ -14,9 +14,9 @@ class MainAjax
 
             $this->saveAnswersToDb();
 
-            Response::getInstance()->response = "ذخیره سازی با موفقیت انجام شد";
+            Response::getInstance()->response = "ذخيره سازي با موفقيت انجام شد";
         } else {
-            Response::getInstance()->response = "ذخیره اطلاعات با مشکل مواجه شد!";
+            Response::getInstance()->response = "ذخيره اطلاعات با مشكل مواجه شد!";
 
         }
 
@@ -44,13 +44,11 @@ class MainAjax
     }
 
 
-
     private function considerValidation()
     {
         return true;
 
     }
-
 
 
     private function saveAnswersToDb()
