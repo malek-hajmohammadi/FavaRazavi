@@ -11,7 +11,7 @@ listener = function (event) {
 
 
         createUsersField() {
-            var tempArr = Utils.fastAjax('Chart', 'getRolesByGroop', {groupID: 16});
+            var tempArr = Utils.fastAjax('Chart', 'getRolesByGroop', {groupID: 5});
             FormOnly.repList = new PRCopyElement("FormOnly.repList", "representationList", "representationList", tempArr);
             $jq("td#representationList img").css("display", "none");
 
@@ -75,8 +75,8 @@ listener = function (event) {
             this.listOfQuestions.push("نظر شما درباره سهولت ملاقات حضوري مديريت واحد؟");
             this.listOfQuestions.push("نظر شما درباره نحوه برخورد مديريت واحد؟");
             this.listOfQuestions.push("نظر شما درباره نحوه پيگيري و رسيدگي به مشكل شما توسط مديريت واحد؟");
-            this.listOfQuestions.push("نظر شما درباره نحوه برخورد كارگزيني؟");
-            this.listOfQuestions.push("نظر شما درباره نحوه پيگيري و رسيدگي به مشكل شما توسط كارگزيني؟");
+            this.listOfQuestions.push("نظر شما درباره نحوه برخورد مسئولین واحد اداری؟");
+            this.listOfQuestions.push("نظر شما درباره نحوه پيگيري و رسيدگي به مشكل شما توسط مسئولین واحد اداری؟");
             this.listOfQuestions.push("نظر شما درباره نحوه ارتباط و پاسخگويي مدير واحد؟");
             this.listOfQuestions.push("نظر شما درباره نحوه پيگيري و رسيدگي به مشكلات شيفت توسط مسئول مربوطه؟");
             this.listOfQuestions.push("نظر شما درباره برخوردار بودن از آزادي كافي براي بيان نظرات يا ابراز خطاهايتان؟");
@@ -262,12 +262,16 @@ listener = function (event) {
                 let question = "q" + i;
                 data[counter] = 0;
 
+             /*   console.log(this.userId);*/
                 let sum = 0;
                 for (let j = 0; j < this.answers.length; j++) {
                     let item = this.answers[j];
 /*                    console.log(item.question == question && item.answer == optionValue &&(this.userId==-1 || item.userId==this.userId));*/
 
-                    if (item.question == question && item.answer == optionValue &&(this.userId==-1 || item.userId==this.userId)) {
+
+
+
+                    if (item.question == question && item.answer == optionValue && (this.userId == -1 || item.userId == this.userId)) {
                        /* console.log('item.question:' + item.question + '  item.answer:' + item.answer);*/
                         /*console.log('into if');*/
                         sum++;
@@ -287,6 +291,7 @@ listener = function (event) {
             if (checkBox.checked == true) {
                 return -1;
             }
+            user = user.split(',');
             return user[0];
         }
 
@@ -339,10 +344,10 @@ listener = function (event) {
         }
 
 
-    };
+    }
 
     var waitInterval = setInterval(function () {
-        if (FormOnly) {
+        if (FormOnly && FormOnly.allFieldsContianer[0]) {
 
             let instance = new mainClass();
             window.codeSet = instance;

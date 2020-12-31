@@ -8,12 +8,12 @@ class calssName
 
     public function execute(ezcWorkflowExecution $execution)
     {
-        $res = WorkFlowAjaxFunc::getCreatorLevel();
-        Response::getInstance()->response = $res;
+        $ACM = AccessControlManager::getInstance();
+        $RID = $ACM->getRoleID();
+        $execution->setVariable('applicantRoleId', $RID);
 
     }
 
-
-
-
 }
+
+

@@ -54,8 +54,8 @@ listener = function (event) {
             this.listOfQuestions.push("نظر شما درباره سهولت ملاقات حضوري مديريت واحد؟");
             this.listOfQuestions.push("نظر شما درباره نحوه برخورد مديريت واحد؟");
             this.listOfQuestions.push("نظر شما درباره نحوه پيگيري و رسيدگي به مشكل شما توسط مديريت واحد؟");
-            this.listOfQuestions.push("نظر شما درباره نحوه برخورد كارگزيني؟");
-            this.listOfQuestions.push("نظر شما درباره نحوه پيگيري و رسيدگي به مشكل شما توسط كارگزيني؟");
+            this.listOfQuestions.push("نظر شما درباره نحوه برخورد مسئولین واحد اداری؟");
+            this.listOfQuestions.push("نظر شما درباره نحوه پيگيري و رسيدگي به مشكل شما توسط مسئولین واحد اداری؟");
             this.listOfQuestions.push("نظر شما درباره نحوه ارتباط و پاسخگويي مدير واحد؟");
             this.listOfQuestions.push("نظر شما درباره نحوه پيگيري و رسيدگي به مشكلات شيفت توسط مسئول مربوطه؟");
             this.listOfQuestions.push("نظر شما درباره برخوردار بودن از آزادي كافي براي بيان نظرات يا ابراز خطاهايتان؟");

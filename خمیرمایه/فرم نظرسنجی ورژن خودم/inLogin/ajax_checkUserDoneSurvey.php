@@ -10,6 +10,20 @@ class MainAjax
     public function main()
     {
         $personalId = $this->getPersonalId();
+
+        if($personalId==1511){
+            return 0;
+            /*آقای حسین آبای مدیر حراست*/
+        }
+
+        $isValidUnit=$this->isPersonInValidUnit($personalId);
+        if($isValidUnit==0){
+            return 0;
+            /*
+             * کاربر در واحد نمایندگان فروش هست
+             * */
+        }
+
         $existUserIdInSurvey=$this->isExistInTable($personalId);
 
 
@@ -20,6 +34,21 @@ class MainAjax
             $isNeeded = 0;
 
         return $isNeeded;
+
+
+    }
+
+    private function isPersonInValidUnit($personalId)
+    {
+        $RID = AccessControlManager::getInstance()->getRoleID();
+        $path = PDOAdapter::getInstance()->executeScalar("SELECT path FROM oa_depts_roles WHERE RowID = $RID");
+
+        if (strpos($path, '/2222/'))/*مسیر برای نمایندگان فروش در چارت*/
+        {
+            return 0;
+        } else {
+            return 1;
+        }
 
 
     }
@@ -51,5 +80,26 @@ class MainAjax
 $mainAjax = new MainAjax();
 Response::getInstance()->response = $mainAjax->main();
 return $mainAjax;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

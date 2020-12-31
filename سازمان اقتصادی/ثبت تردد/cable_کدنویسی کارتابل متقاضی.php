@@ -19,7 +19,7 @@ class calssName
         $db->executeSelect($sql2);
         $person = $db->fetchAssoc();
         $PID = $person['employeeID'];
-        $PID='257';
+       // $PID='257';
 
 
         $execution->workflow->myForm->setFieldValueByName('Field_2', $PID);

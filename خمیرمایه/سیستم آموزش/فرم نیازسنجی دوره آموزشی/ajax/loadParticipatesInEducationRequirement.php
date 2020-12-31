@@ -25,11 +25,21 @@ class MainAjax
 
 
 
-
-
     public function main()
     {
-        $output=$this->style.$this->header.$this->tableBody().$this->endBtnTAble();
+        /*$output=$this->style.$this->header.$this->tableBody().$this->endBtnTAble();*/
+
+        $this->getInputParameters();
+
+        $this->configureDisplayMode();
+
+        $this->defineStyleAndHeader();
+
+        $this->getDataTableFromDatabase();
+
+        $this->endTableTag();
+
+        $output=$this->style.$this->header.$this->tableBody().$this->btnEndList().$this->endTableTag();
         return $output;
     }
 
@@ -49,7 +59,7 @@ class MainAjax
         }
     }
 
-    private function configDisplayMode()
+    private function configureDisplayMode()
     {
         /*
     * edit
@@ -506,13 +516,13 @@ class MainAjax
     }
 
 </style>";
-        $defineTableTag = "<table width=\"100%\" class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"rtl\">
+        $defineTableTag = "<table style='width: 530px !important;'  class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"rtl\">
     <tbody>";
 
 
         $this->header =$defineTableTag. "<tr>
         <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">ردیف</th>
-        <th width=\"100px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">متقاضی شرکت در دوره</th>
+        <th width=\"100px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">متقاضیان  شرکت در دوره</th>
          <th width=\"3%\" style=\"padding: 2px;background-color: $this->backgroundHeader \">حذف</th>
          </tr>";
     }
@@ -557,7 +567,15 @@ class MainAjax
 
         return $table;
     }
-    private function endBtnTAble(){
+    private function btnEndList(){
+        $html=" <tr>
+            <td style=\"padding: 2px;padding-top: 7px;
+        padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5; width: 10%\"><img onclick=\"window.codeSet.addRow()\"
+                                                                  src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/></td>
+             </tr>";
+        return $html;
+    }
+    private function endTableTag(){
 
         $html = "
       </tbody>
