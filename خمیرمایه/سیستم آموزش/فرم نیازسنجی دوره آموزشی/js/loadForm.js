@@ -6,7 +6,7 @@ listener = function (event) {
         answers=[];
         showMode="";
         userRoleObject=[];
-
+        tableArray=[[]];
 
 
         loadForm() {
@@ -18,23 +18,51 @@ listener = function (event) {
            let html=this.showTable();
             $jq('.detailedTableSpan').html(html);
 
-           /* setDataObjectAll();*/
+            this.checkTableMode();
+
+           this.setDataObjectAll();
+
+           this.setTableMode();
 
 
         }
 
+        checkTableMode(){
+            if($jq('.detailedTableSpan input').is('[readonly]')){
+                this.showMode="readOnly";
+            }
+            else{
+                this.showMode="edit";
+            }
+        }
 
-       /* setDataObjectAll(){
+        setTableMode(){
+            if(this.showMode=="readOnly") {
+                $jq('.detailedTableSpan input').prop('disabled', true);
+                $jq('.detailedTableSpan input').css("background-color", "#e0e0e0");
+            }
+        }
 
-            let a="empty";
 
-        }*/
 
-       /* setDataObjectOne(index){
-            var user = $jq('#userTD_' + index).attr('data-id').split(',');
+
+        setDataObjectAll() {
+
+            var lengthTable = $jq('.detailedTable > tbody > tr').length;
+            lengthTable=lengthTable-2; /*base 0*/
+
+            for (var i = 0; i < lengthTable; i++) {
+                this.setDataObjectOne(i);
+
+            }
+        }
+
+        setDataObjectOne(index){
+            index++; /*سطرها از یک شروع می شود*/
+            var user = $jq('.tableRow_'+index+ ' input' ).attr('data-id').split(',');
             this.userRoleObject[index] = new Per_Role('window.codeSet.userRoleObject[' + index + ']', 'userTD_' + index, Main.getActiveCurrentSectriateUser());
             this.userRoleObject[index].setData(user[0], user[1]);
-        }*/
+        }
 
         setDataObjectOneForAdd(index){
 
@@ -75,17 +103,58 @@ listener = function (event) {
             let d;
         }*/
 
-       /* saveList(){
-            let e;
-        }*/
+        saveList(){
+            this.fillDetailedTableArray();
+            console.log(this.tableArray);
 
-        /*saveToDb(){
-            let f;
-        }*/
+            if(this.considerSafety()){
+                this.saveToDatabase();
+                return true;
+            }
+            else{
+                return false;
+            }
 
-       /* fillDetailedTableArray(){
-            let g;
-        }*/
+
+        }
+        considerSafety(){
+            var length =  $jq('.detailedTable>tbody>tr[class^=\'tab\']').length;
+            if (length==0){
+                Utils.showModalMessage("لیست افراد برای شرکت در دوره وارد نشده است");
+                return false;
+            }
+
+            for (var count = 0; count < length; count++) {
+                let userTemp = this.userRoleObject[count].getData();
+                if(userTemp[0]==0){
+                    Utils.showModalMessage("ردیف "+(count+1)+" فاقد اطلاعات است ");
+                    return false;
+                }
+
+
+            }
+
+
+            return true;
+        }
+
+        saveToDatabase(){
+            let ajaxParam={tableArray:this.tableArray,docId:FormView.docID};
+            var result = Utils.fastAjax('WorkFlowAjaxFunc', 'savePeopleCourse',ajaxParam);
+
+            console.log("ajaxParam:",ajaxParam);
+        }
+
+        fillDetailedTableArray(){
+            var length =  $jq('.detailedTable>tbody>tr[class^=\'tab\']').length;
+
+            for (var count = 0; count < length; count++) {
+                this.tableArray[count] = this.userRoleObject[count].getData();
+
+            }
+
+
+        }
 
         getCable(){
             /*1: نود اول مدیر واحد*/
@@ -103,18 +172,47 @@ listener = function (event) {
                 while (nodeName2 && nodeName2.indexOf(String.fromCharCode(1740)) >= 0) nodeName2 = nodeName2.replace(String.fromCharCode(1740), String.fromCharCode(1610));
                 if (nodeName == 'مدیر-واحد' || nodeName2 == 'مدیر-واحد') workFlowState = "level1";
                 if (nodeName == 'تضمین-کیفیت' || nodeName2 == 'تضمین-کیفیت') workFlowState = "level2";
+                if (nodeName == 'مدیرعامل' || nodeName2 == 'مدیرعامل') workFlowState = "level3";
+                if (nodeName == 'مدیرآموزش' || nodeName2 == 'مدیرآموزش') workFlowState = "level4";
             }
 
             userState = FormView.myForm.getItemByName('Field_9').getData();
 
             if(userState != workFlowState)/*طرف در نامه های ارسالی داره فرم رو باز می کنه*/
+            {
                 return "readOnly";
-            if(userState=="level1")
-                return "edit";
-            if(userState=="level2")
-                return "readOnly";
+            }
+
+            switch (userState) {
+                case "level1":
+                    return "edit";
+                case "level2":
+                    return "readOnly";
+                case "level3":
+                    return "readOnly";
+                case "level4":
+                    return "editAmoozesh";
+
+            }
+            return "readOnly";
 
         }
+
+        confirm_1_modirVahed(){
+            let flag=this.saveList();
+
+            return flag;
+        }
+        confirm_2_tazminKeifiat(){
+            return true;
+        }
+        confirm_3_modirAmel(){
+            return true;
+        }
+        confirm_4_modirAmoozesh(){
+            return true;
+        }
+
 
       /*  checkBeforeSave(){
             let i;
@@ -126,12 +224,6 @@ listener = function (event) {
                 this.addRow();
         }*/
 
-
-
-
-
-
-
     };
 
 
@@ -140,7 +232,7 @@ listener = function (event) {
 
             let instance = new mainClass();
             window.codeSet = instance;
-            /*window.codeSet=instance;*/
+
             window.codeSet.loadForm();
         }
 

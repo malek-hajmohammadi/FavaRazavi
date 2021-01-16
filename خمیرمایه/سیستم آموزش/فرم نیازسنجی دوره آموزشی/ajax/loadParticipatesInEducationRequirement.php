@@ -64,10 +64,24 @@ class MainAjax
         /*
     * edit
     * readOnly
+    * editAmoozesh
 
     * */
 
         if($this->mode=="edit"){
+            $this->backgroundCell="#c5e1a5";
+            $this->backgroundCellSave="#c5e1a5";
+            $this->pointerEvent="auto";
+            $this->pointerEventSave="auto";
+            $this->readOnlyForInput="";
+            $this->readOnlyForInputOverworkConfirm="";
+            $this->inputBackground="#ffffff";
+            $this->inputBackgroundOverworkConfirm="#ffffff";
+            $this->backgroundHeader="#1076a5";
+            $this->cursorCell="pointer";
+            $this->cursorCellSave="pointer";
+        }
+        elseif ($this->mode=="editAmoozesh"){
             $this->backgroundCell="#c5e1a5";
             $this->backgroundCellSave="#c5e1a5";
             $this->pointerEvent="auto";
@@ -555,7 +569,7 @@ class MainAjax
     
     <tr class=\"tableRow_$radif\">
         <td style=\"padding: 2px;border: 1px solid #ccc;\">$radif</td>
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $this->inputBackground\" $this->readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').DetailedTable.unSaved()\" type=\"text\" name=\"name\" data-id=\"$value[0],$value[1]\" ></td>
+        <td id=\"userTD_$radif\" style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $this->inputBackground\" $this->readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').DetailedTable.unSaved()\" type=\"text\" name=\"name\" data-id=\"$value[0],$value[1]\" ></td>
         
         <td id=\"tdDeleteImg\" style=\"padding: 2px;background-color: $this->backgroundCell;cursor:$this->cursorCell; border: 1px solid #ccc;\"><img style=\"pointer-events:$this->pointerEvent\" onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.removeRow($radif)\"
                                                               src = \"gfx/toolbar/cross.png\" />
@@ -568,12 +582,21 @@ class MainAjax
         return $table;
     }
     private function btnEndList(){
-        $html=" <tr>
+
+        if($this->mode=="edit") {
+
+            $html = " <tr>
             <td style=\"padding: 2px;padding-top: 7px;
         padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5; width: 10%\"><img onclick=\"window.codeSet.addRow()\"
                                                                   src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/></td>
              </tr>";
-        return $html;
+            return $html;
+        }
+        else{
+            return "<tr><td style=\"
+    display: none;
+\"></td></tr>";
+        }
     }
     private function endTableTag(){
 
