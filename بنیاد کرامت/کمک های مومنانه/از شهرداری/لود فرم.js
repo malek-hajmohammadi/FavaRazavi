@@ -3,13 +3,16 @@ listener = function (event) {
         throw new Error()
     } catch (e) {
     }
+
     var form = event.target.tagthis;
+
     form.chartMaker = function (fName, form) {
         try {
             throw new Error()
         } catch (e) {
         }
         var field = form.getItemByName(fName);
+
         var name = 'FIELDPREVIEW_' + field.db.fieldid;
         var nameDiv = name + '_div';
         var nameImg = name + '_img';
@@ -32,6 +35,7 @@ listener = function (event) {
                 throw new Error()
             } catch (e) {
             }
+
             img.chartModalOkBtn = new Button(nameImg + '.chartModalOkBtn', 'اضافه', nameImg + '.chartModalOk');
             var body = '<div style="border-width: 1px 1px 1px 1px; border-style: solid;';
             body += 'border-color: black; padding: 5px; background-color: #FFFFE2;';
@@ -54,7 +58,8 @@ listener = function (event) {
         img.showChart = function (img) {
             img.chartModal = new Modal(nameImg + '.chartModal', 'FIELDPREVIEW-CAHRT-MODAL', 50, 200, 400, 500, 'چارت سازماني', {
                 create: create,
-                reset: reset
+                reset: reset,
+                resetArgs:4
             });
             img.chartModal.open();
         };

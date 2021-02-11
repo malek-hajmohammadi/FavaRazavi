@@ -12,7 +12,8 @@
  */
 class calssName
 {
-    public $userArray=[];
+    private $userArray=[];
+    private $execution;
     public function __construct()
     {
     }
@@ -20,12 +21,31 @@ class calssName
     public function execute(ezcWorkflowExecution $execution)
     {
         /*تعریف کاربرانی که به درخواست بنیاد کرامت باید از کانال دیگری عبور کنند*/
-        $isUserInList=false;
-        $this->fillUserArray();
-        if ($this->isUserInList())
-            $isUserInList=true;
+        $this->execution=$execution;
+        $isUserInList=$this->isUserInListManagerKeramat();
+
+        if($isUserInList){
+            $execution->setVariable('isKeramatManager', 1);
+        }
+        else{
+            $execution->setVariable('isKeramatManager', 0);
+
+        }
+
+
+
 
     }
+     private function isUserInListManagerKeramat(){
+
+         $this->fillUserArray();
+         $currentUserId= $this->execution->workflow->myForm->getFieldValueByName('Field_13');
+         foreach ($this->userArray as $itemInList){
+             if($currentUserId==$itemInList)
+                 return true;
+         }
+         return false;
+     }
 
 
     private function fillUserArray(){
@@ -38,11 +58,6 @@ class calssName
         array_push($this->userArray,5166);
 
     }
-    private function isUserInList(){
-        $result=false;
-        return $result;
-    }
-
 
 }
 

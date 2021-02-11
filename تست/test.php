@@ -8,12 +8,8 @@ class calssName
 
     public function execute(ezcWorkflowExecution $execution)
     {
-        $res = WorkFlowAjaxFunc::getCreatorLevel();
-        Response::getInstance()->response = $res;
-
+        /*Insert Code Here*/
     }
-
-
 
 
 }

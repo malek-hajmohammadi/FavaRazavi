@@ -26,6 +26,12 @@ Class.create({
     }
 });
 
-
+/////////////
+Class.create({
+    load: function (self) {
+        var temp2 = `({"data":[         {"id":"1","text":"اطلاع‌رساني به كاربران","icon":"gfx/letter-grid/message.gif"},         {"id":"2","text":"بروزرساني اطلاعات كاربر","icon":"gfx/toolbar/paraph.png","children":[                                  {"id":"21","text":"شماره تلفن داخلي / مستقيم","icon":"gfx/mainmenu/phone.png"},                                  {"id":"22","text":"اصلاح شماره همراه","icon":"gfx/toolbar/change-password.png"},                                  {"id":"23","text":"تصوير امضا","icon":"gfx/toolbar/sign.png"},                                  {"id":"24","text":"عكس پرسنلي","icon":"gfx/toolbar/online-users.png"}                                   ]},         {"id":"3","text":"ايجاد دسترسي","icon":"gfx/toolbar/paraph.png","children":[                                 {"id":"31","text":"چاپ","icon":"gfx/mainmenu/print-define.png"},                                 {"id":"32","text":"ارجاع به كاربر/ كاربران","icon":"gfx/toolbar/forward.png"},                                 {"id":"33", "text":"مكاتبات حوزه - گزارشات","icon":"gfx/toolbar/forward.png"},                                 {"id":"34","text":"ساير","icon":""}                                   ]},                                 {"id":"4","text":"مكاتبه","icon":"","children":[                                   {"id":"41","text":"موضوع و چكيده","icon":"gfx/toolbar/designForm.png"},                                   {"id":"42","text":"عناوين و رونوشت ها","icon":"gfx/toolbar/performing.png"},                                   {"id":"43","text":"عطف و پيرو","icon":"gfx/toolbar/chart-define.png"},                                   {"id":"44","text":"پيوست","icon":"gfx/toolbar/new-attach.gif"},                                   {"id":"45","text":"متن نامه","icon":"gfx/toolbar/compose.png"}                      ]}          ]})`;
+        return temp2;
+    }
+});
 
 
