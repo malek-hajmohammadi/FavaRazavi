@@ -68,7 +68,7 @@ listener = function (event) {
         throw new Error()
     } catch (e) {
     }
-    if (!FormView.myForm || FormView.myForm.getItemByName('Field_2').mode === 'edit') {
+    if (FormOnly) {
         form.chartMaker('Field_2', form);
         form.chartMaker('Field_13', form);
     }
