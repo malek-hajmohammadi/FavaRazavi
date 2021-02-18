@@ -118,6 +118,7 @@ listener = function (event) {
                 $jq('.tBody>tr>td[id^=tdChart]').eq(i-1).attr('id', 'tdChart_' + i);
 
                 $jq('.tBody>tr>td[id^=tdChart]>div').eq(i-1).attr('id', 'FIELDPREVIEW_'+i+'_div');
+                
                 $jq('.tBody>tr>td[id^=tdChart]>div>div').eq(i-1).attr('id', 'FIELDPREVIEW_'+i+'_div-ROW');
 
 
