@@ -137,7 +137,7 @@ listener = function (event) {
                     }
                     var index = window.arrayDept.indexOf(depId);
                     if (index == -1)
-                        arrayDept.push(depId);
+                        window.arrayDept.push(depId);
                     else {
                         Utils.showModalMessage('ستون ' + columnCounter + 'تکراری است ');
                         return false;
@@ -151,7 +151,18 @@ listener = function (event) {
         };
 
         sendHelpFormsToSelectedGroups(){
-            alert("Malek");
+            let sendResult=Utils.fastAjax('WorkFlowAjaxFunc', 'komakMomenanehSendForms',{
+                title:FormOnly.allFieldsContianer[0].getData() ,depts:window.arrayDept
+            });
+            if(sendResult){
+               /* this.appendToHistory();*/
+                Utils.showModalMessage('ارسال فرم کمک های مومنانه با عنوان و حوزه های هدف با موفقیت انجام شد.');
+            }
+            else {
+                Utils.showModalMessage('ارسال فرم کمک های مومنانه با مشکل مواجه شد.');
+            }
+
+
         }
 
 
