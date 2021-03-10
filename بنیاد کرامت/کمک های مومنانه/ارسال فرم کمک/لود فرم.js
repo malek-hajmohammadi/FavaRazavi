@@ -2,6 +2,8 @@ listener = function (event) {
     class mainClass {
         chartArray = [];
         pointer=1;
+        numberOfForms=0;
+        destinationString="";/*لیست حوزه های هدف*/
 
         loadForm() {
             window.roleArray = [];
@@ -10,6 +12,8 @@ listener = function (event) {
             this.defineTable();
             this.chartMaker(this.pointer);
             this.pointer++;
+
+            this.loadReportHistory();
         }
 
         defineTable() {
@@ -111,12 +115,31 @@ listener = function (event) {
         };
 
         clickOnSendBtn(){
-           if(this.checkValidationBeforeSending()){
-               this.sendHelpFormsToSelectedGroups();
+          if(this.checkValidationBeforeSending()){
+               let sendCounts=this.sendHelpFormsToSelectedGroups();
+
+               if(sendCounts){
+
+                   Utils.showModalMessage('ارسال فرم کمک های مومنانه با عنوان و حوزه های هدف با موفقیت انجام شد.');
+                   this.addToReportHistory(sendCounts);
+
+               }
+               else {
+                   Utils.showModalMessage('ارسال فرم کمک های مومنانه با مشکل مواجه شد.');
+               }
+
+
            }
+
+
+
+
         };
         checkValidationBeforeSending(){
             let title=FormOnly.allFieldsContianer[0].getData();
+
+            this.destinationString="";
+
 
             if(title.length<5) {
                 Utils.showModalMessage('لطفا عنوان طرح را وارد نماييد');
@@ -136,8 +159,12 @@ listener = function (event) {
                         return false;
                     }
                     var index = window.arrayDept.indexOf(depId);
-                    if (index == -1)
+                    if (index == -1) {
                         window.arrayDept.push(depId);
+                        /*ساخت رشته ای از حوزه های هدف برای گزارش*/
+                        this.buildDestinations(depId);
+                    }
+
                     else {
                         Utils.showModalMessage('ستون ' + columnCounter + 'تکراری است ');
                         return false;
@@ -146,27 +173,79 @@ listener = function (event) {
                 }
             }
 
+            this.numberOfForms=columnCounter-1;
+
             return true;
 
         };
 
+        buildDestinations(depId){
+            let index=window.roleArray[1].actb_ids.indexOf(depId);
+            let text=window.roleArray[1].actb_keywords[index];
+            this.destinationString=text+","+this.destinationString;
+        }
+
+        addToReportHistory(sendCounts){
+            let dscString=this.destinationString;
+            let l=dscString.length;
+            dscString = dscString.substring(0, l-1);/*delete last comma*/
+
+
+            let sendResult=Utils.fastAjax('WorkFlowAjaxFunc', 'addToReport',{
+                title:FormOnly.allFieldsContianer[0].getData() ,departsArray:dscString,
+                numberOfForms:sendCounts
+            });
+        }
+
         sendHelpFormsToSelectedGroups(){
             let sendResult=Utils.fastAjax('WorkFlowAjaxFunc', 'komakMomenanehSendForms',{
-                title:FormOnly.allFieldsContianer[0].getData() ,depts:window.arrayDept
-            });
-            if(sendResult){
-               /* this.appendToHistory();*/
-                Utils.showModalMessage('ارسال فرم کمک های مومنانه با عنوان و حوزه های هدف با موفقیت انجام شد.');
-            }
-            else {
-                Utils.showModalMessage('ارسال فرم کمک های مومنانه با مشکل مواجه شد.');
-            }
+                title:FormOnly.allFieldsContianer[0].getData() ,departs:window.arrayDept
 
+            });
+            this.numberOfForms=sendResult;
+
+            return sendResult;
 
         }
 
+        loadReportHistory(){
 
+            let pageNumber=this.getPageNumber();
+            let inputParams={pageNumber:pageNumber};
+            var result = Utils.fastAjax('WorkFlowAjaxFunc', 'loadReportSending',{inputParams:inputParams});
+            $jq('#listContainer').html(result);
+        }
+        getPageNumber(){
+            var pageNumber = parseInt($jq('#pageNumber').val());
+            if (pageNumber < 1)
+                return 1;
+            return pageNumber;
+        }
 
+        getReport(){
+
+            this.loadReportHistory();
+
+        }
+        prevPage(){
+            var pageNumber = parseInt($jq('#pageNumber').val());
+            if (pageNumber > 1){
+                pageNumber --;
+                $jq('#pageNumber').val(pageNumber);
+                this.loadReportHistory();
+            }
+
+        }
+        nextPage(){
+
+            var pageNumber = parseInt($jq('#pageNumber').val());
+            var maxPage = parseInt($jq('#maxPage').val());
+            if (pageNumber < maxPage) {
+                pageNumber ++;
+                $jq('#pageNumber').val(pageNumber);
+                this.loadReportHistory();
+            }
+        }
 
     }
 
