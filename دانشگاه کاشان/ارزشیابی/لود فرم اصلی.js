@@ -3,12 +3,18 @@ listener = function (event) {
     class mainClass {
 
 
-        answers=[];
+
 
 
         setTotalScore(){
-            console.log(this);
-            let total=window.codeSet.getTotalScoreFromList();
+
+            let total=0;
+            let columns=$jq( "div[iamfowner$='3'] input" );
+            for(let i=0;i<columns.length;i++){
+                let temp=parseInt(columns[i].value);
+                total+=temp;
+            }
+
             if(total>10){
                 Utils.showModalMessage('امتیازات اکتسابی از سقف مجاز بیشتر است');
                 return;
@@ -27,6 +33,7 @@ listener = function (event) {
         }
         loadForm() {
             this.setTotalScore();
+            $jq( "div[iamfowner$='3'] input" ).off('keyup keypress blur change').on('keyup keypress blur change',function(){window.codeSet.setTotalScore()});
 
         }
 
