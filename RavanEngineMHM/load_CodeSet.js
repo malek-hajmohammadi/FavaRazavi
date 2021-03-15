@@ -18,7 +18,6 @@ listener = function (event) {
 
             let instance = new mainClass();
             window.codeSet = instance;
-            /*window.codeSet=instance;*/
             window.codeSet.loadForm();
         }
 

@@ -7,8 +7,15 @@ class MainAjax
     public function main()
     {
         $output="";
+        $this->a();
         return $output;
+
     }
+
+    private function a(){
+        $a="malek";
+    }
+
 
 
 

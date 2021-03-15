@@ -9,7 +9,7 @@ class calssName
 
     public function execute(ezcWorkflowExecution $execution)
     {
-        self::setStage($execution);
+        $this->setStage($execution);
 
     }
 
