@@ -6,6 +6,8 @@
  * The Initial Developer of the Original Code is vtiger.
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
+ *
+ * Malek Hajmohammadi
  *************************************************************************************/
 $languageStrings = array(
 	'LBL_ADD_NEW_CURRENCY' => 'افزودن ارز جدید',
