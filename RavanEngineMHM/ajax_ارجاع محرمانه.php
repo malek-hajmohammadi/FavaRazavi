@@ -12,6 +12,7 @@ class MainAjax
         $row = $db->fetchAssoc();
 
         return $row;
+
     }
 
 

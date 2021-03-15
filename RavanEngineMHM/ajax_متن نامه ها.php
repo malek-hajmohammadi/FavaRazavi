@@ -14,6 +14,7 @@ class MainAjax
         while ($row = $db->fetchAssoc())
         {
             $res[] = $row;
+            
         };
 
         return $res;
