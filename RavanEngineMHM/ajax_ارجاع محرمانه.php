@@ -10,7 +10,6 @@ class MainAjax
         $db->executeSelect($sql);
 
         $row = $db->fetchAssoc();
-
         return $row;
 
     }
