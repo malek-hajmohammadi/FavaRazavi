@@ -96,7 +96,7 @@ listener = function (event) {
 
 
 
-            console.log('into setTotalScore');
+
 
            /* let total=0;
             let columns=$jq( "div[iamfowner$='0'] input" );
@@ -112,20 +112,180 @@ listener = function (event) {
             FormView.myForm.getItemByName('Field_50').setData(total);*/
         }
 
+        setSumEraehTarh(){
+            let count=FormView.myForm.getItemByName('Field_38').list.subListView.data.length;
+            let total=0;
+            for(let i=0;i<count;i++){
+                let value=null;
+                try {
+                    value=$jq( ".tdEraehTarh div[iamfowner$='3']" )[i].tagthis.getData();
+                }
+                catch (e) {
+
+                }
+
+                if(value==null)
+                    value=0;
+                value=parseInt(value);
+                if(isNaN(value))
+                    value=0;
+
+                total+=value;
+            }
+            FormView.myForm.getItemByName('Field_82').setData(total);
+
+        }
+
+        setSumOnvanFaliat(){
+            let count=FormView.myForm.getItemByName('Field_42').list.subListView.data.length;
+            let total=0;
+            for(let i=0;i<count;i++){
+                let value=null;
+                try {
+                    value=$jq( ".tdOnvanFaliat div[iamfowner$='3']" )[i].tagthis.getData();
+                }
+                catch (e) {
+
+                }
+
+                if(value==null)
+                    value=0;
+                value=parseInt(value);
+                if(isNaN(value))
+                    value=0;
+
+                total+=value;
+            }
+            FormView.myForm.getItemByName('Field_84').setData(total);
+        }
+
+        setSumVazaef(){
+            let total=0;
+
+            let a=FormView.myForm.getItemByName('Field_51').getData();
+            if(a=="") a=0;
+
+            let b=FormView.myForm.getItemByName('Field_52').getData();
+            if(b=="") b=0;
+
+            let c=FormView.myForm.getItemByName('Field_53').getData();
+            if(c=="") c=0;
+
+            let d=FormView.myForm.getItemByName('Field_54').getData();
+            if(d=="") d=0;
+
+            let e=FormView.myForm.getItemByName('Field_55').getData();
+            if(e=="") e=0;
+
+            let f=FormView.myForm.getItemByName('Field_56').getData();
+            if(f=="") f=0;
+
+            let g=FormView.myForm.getItemByName('Field_57').getData();
+            if(g=="") g=0;
+
+            let h=FormView.myForm.getItemByName('Field_58').getData();
+            if(h=="") h=0;
+
+            let i=FormView.myForm.getItemByName('Field_59').getData();
+            if(i=="") i=0;
+
+            let j=FormView.myForm.getItemByName('Field_60').getData();
+            if(j=="") j=0;
+
+            let l=FormView.myForm.getItemByName('Field_61').getData();
+            if(l=="") l=0;
+
+            total=a+b+c+d+e+f+g+h+i+j+h+i+j+l;
+            FormView.myForm.getItemByName('Field_77').setData(total);
+        }
+
+        setSumTakrim(){
+            let total=0;
+
+            let a=FormView.myForm.getItemByName('Field_62').getData();
+            if(a=="") a=0;
+
+            let b=FormView.myForm.getItemByName('Field_63').getData();
+            if(b=="") b=0;
+
+            let c=FormView.myForm.getItemByName('Field_64').getData();
+            if(c=="") c=0;
+
+            let d=FormView.myForm.getItemByName('Field_65').getData();
+            if(d=="") d=0;
+
+            let e=FormView.myForm.getItemByName('Field_66').getData();
+            if(e=="") e=0;
+
+            let f=FormView.myForm.getItemByName('Field_67').getData();
+            if(f=="") f=0;
+
+            let g=FormView.myForm.getItemByName('Field_68').getData();
+            if(g=="") g=0;
+
+
+
+            total=a+b+c+d+e+f+g;
+            FormView.myForm.getItemByName('Field_78').setData(total);
+        }
+
+        setSumTasalot(){
+            let total=0;
+
+            let a=FormView.myForm.getItemByName('Field_69').getData();
+            if(a=="") a=0;
+
+            let b=FormView.myForm.getItemByName('Field_70').getData();
+            if(b=="") b=0;
+
+
+            total=a+b;
+            FormView.myForm.getItemByName('Field_79').setData(total);
+        }
+
+        setSumHozor(){
+            let total=0;
+
+            let a=FormView.myForm.getItemByName('Field_71').getData();
+            if(a=="") a=0;
+
+            let b=FormView.myForm.getItemByName('Field_72').getData();
+            if(b=="") b=0;
+
+            let c=FormView.myForm.getItemByName('Field_73').getData();
+            if(c=="") c=0;
+
+            total=a+b+c;
+            FormView.myForm.getItemByName('Field_80').setData(total);
+        }
+
+        setSums(){
+            this.setSumTashvigh();
+            this.setSumEraehTarh();
+            this.setSumOnvanFaliat();
+            this.setSumVazaef();
+            this.setSumTakrim();
+            this.setSumTasalot();
+            this.setSumHozor();
+        }
+
 
 
         loadForm() {
-            this.setSumTashvigh();
-            /*$jq( "div[iamfowner$='3'] input" ).off('keyup keypress blur change').on('keyup keypress blur change',function(){window.codeSet.setTotalScore()});*/
-            $jq( "div[iamfowner$='0']" ).parent().css('overflow','visible');
-            this.setIntervalForCompletedField();
+            this.setSums();
             this.setReadOnly();
+            this.setIntervalForCompletedField();
 
         }
+
         setIntervalForCompletedField(){
+
+            let that=this;
             setInterval(function () {
                 $jq( "div[iamfowner$='0']" ).parent().css('overflow','visible');
-                this.setSumT
+                that.setSumTashvigh();
+                that.setSumEraehTarh();
+                that.setSumOnvanFaliat();
                 }
             , 1000);
         }
