@@ -3,13 +3,16 @@ listener = function(event){
 
         if (FormView && FormView.myForm) {
 
-            window.codeSet.setTotalScore();
+            window.codeSet.setSumTashvigh();
             console.log('into change field');
         }
 }
 
 
-
+/*
+*
+*
+* */
 
 
 listener = function(event){
