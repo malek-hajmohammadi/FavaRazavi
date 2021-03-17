@@ -2,9 +2,6 @@ listener = function (event) {
 
     class mainClass {
 
-        pointerTashvigh=0;
-        pointerEraehTarh=0;
-        pointerOnvanFaliat=0;
 
         setTotalScore(){
             let total=0;
@@ -68,6 +65,10 @@ listener = function (event) {
 
             $jq('.onvanFaliat >input').attr("readonly","true");
             $jq('.onvanFaliat >input').css("background","gainsboro");
+
+
+            $jq('.totalScore >input').attr("readonly","true");
+            $jq('.totalScore >input').css("background","gainsboro");
 
         }
 
@@ -136,6 +137,7 @@ listener = function (event) {
 
                 total+=value;
             }
+
             FormView.myForm.getItemByName('Field_82').setData(total);
 
         }
@@ -200,6 +202,7 @@ listener = function (event) {
             if(l=="") l=0;
 
             total=a+b+c+d+e+f+g+h+i+j+h+i+j+l;
+            total=total/10;
             FormView.myForm.getItemByName('Field_77').setData(total);
         }
 
@@ -230,6 +233,7 @@ listener = function (event) {
 
 
             total=a+b+c+d+e+f+g;
+            total=total/100;
             FormView.myForm.getItemByName('Field_78').setData(total);
         }
 
@@ -244,6 +248,7 @@ listener = function (event) {
 
 
             total=a+b;
+            total=total/10;
             FormView.myForm.getItemByName('Field_79').setData(total);
         }
 
@@ -260,6 +265,7 @@ listener = function (event) {
             if(c=="") c=0;
 
             total=a+b+c;
+            total=total/10;
             FormView.myForm.getItemByName('Field_80').setData(total);
         }
 
@@ -274,41 +280,11 @@ listener = function (event) {
         }
 
 
-
         loadForm() {
+            this.setStageAppearance();
             this.setSums();
             this.setReadOnly();
             this.setIntervalForCompletedField();
-
-        }
-
-        setPointerTashvigh(event){
-            console.log('setPointerTashvigh');
-            console.log(event);
-
-        }
-        setPointerEraehTarh(){
-            console.log('setPointerEraehTarh');
-
-        }
-        setPointerOnvanFaliat(){
-            console.log('setPointerOnvanFaliat');
-
-        }
-
-
-        checkAndCorrectTashvigh(pointerTashvigh){
-            console.log('checkAndCorrectTshvigh');
-
-
-        }
-        checkAndCorrectEraehTarh(pointerEraehTarh){
-            console.log('checkAndCorrecEraehTarh');
-
-        }
-
-        checkAndCorrectOnvanFaliat(pointerOnvanFaliat){
-            console.log('pointerOvan');
 
         }
 
@@ -319,17 +295,134 @@ listener = function (event) {
             setInterval(function () {
                 $jq( "div[iamfowner$='0']" ).parent().css('overflow','visible');
                 that.setSumTashvigh();
-                /*that.checkAndCorrectTashvigh(that.pointerTashvigh);*/
 
                 that.setSumEraehTarh();
-               /* that.checkAndCorrectEraehTarh(that.pointerEraehTarh);*/
 
                 that.setSumOnvanFaliat();
-               /* that.checkAndCorrectOnvanFaliat(that.pointerOnvanFaliat);*/
+
                 }
             , 1000);
         }
 
+        checkScoreLimitation(){
+
+            let sumTashvigh=FormView.myForm.getItemByName('Field_50').getData();
+            if(sumTashvigh>10){
+                Utils.showModalMessage('امتیازات تقدیر و تشکر از سقف مجاز بیشتر است');
+                return false;
+            }
+
+
+            let sumEraehTarh=FormView.myForm.getItemByName('Field_82').getData();
+            if(sumEraehTarh>5){
+                Utils.showModalMessage('امتیازات ارائه طرح های اجرایی و پیشنهادها از سقف مجاز بیشتر است');
+                return false;
+            }
+
+
+            let sumOnvanFaliat=FormView.myForm.getItemByName('Field_84').getData();
+            if(sumOnvanFaliat>5){
+                Utils.showModalMessage('امتیازات فعالیتها و کسب موفقیتها از سقف مجاز بیشتر است');
+                return false;
+            }
+
+
+            let sumVazaef=FormView.myForm.getItemByName('Field_77').getData();
+            if(sumVazaef>35){
+                Utils.showModalMessage('امتیازات وظایف و مسئولیتها از سقف مجاز بیشتر است');
+                return false;
+            }
+
+
+
+            let sumTakrim=FormView.myForm.getItemByName('Field_78').getData();
+            if(sumTakrim>8){
+                Utils.showModalMessage('امتیازات تکریم ارباب رجوع از سقف مجاز بیشتر است');
+                return false;
+            }
+
+
+            let sumTasalot=FormView.myForm.getItemByName('Field_79').getData();
+            if(sumTasalot>6){
+                Utils.showModalMessage('امتیازات میزان تسلط در استفاده از نرم افزارهای اداری از سقف مجاز بیشتر است');
+                return false;
+            }
+
+
+            let sumHozor=FormView.myForm.getItemByName('Field_80').getData();
+            if(sumHozor>10){
+                Utils.showModalMessage('امتیازات حضور و غیاب اداری از سقف مجاز بیشتر است');
+                return false;
+            }
+
+            return true;
+        }
+        setStageAppearance(){
+            let stageNumber=FormView.myForm.getItemByName('Field_45').getData();
+            this.hiddenAllFieldset();
+            switch(stageNumber){
+                case "1":
+                    this.showFieldset(0);
+                    this.showFieldset(3);
+                    this.showFieldset(4);
+                    this.showFieldset(5);
+                    break;
+                case "2":
+                    this.showFieldset(3);
+                    this.showFieldset(4);
+                    this.showFieldset(5);
+                    this.showFieldset(7);
+                    break;
+                case "3":
+                    this.showFieldset(3);
+                    this.showFieldset(9);
+                    break;
+                case "4":
+                    this.showFieldset(3);
+                    this.showFieldset(8);
+                    break;
+                case "5":
+                    this.showFieldset(3);
+                    this.showFieldset(4);
+                    this.showFieldset(6);
+                    break;
+                case "6":
+                    this.showFieldset(3);
+                    this.showFieldset(4);
+                    this.showFieldset(5);
+                    this.showFieldset(6);
+                    break;
+                case "7":
+                case "8":
+                case "9":
+                    this.showFieldset(2);
+                    this.showFieldset(3);
+                    this.showFieldset(4);
+                    this.showFieldset(5);
+                    this.showFieldset(6);
+                    this.showFieldset(7);
+                    this.showFieldset(8);
+                    this.showFieldset(9);
+                    this.showFieldset(10);
+                    break;
+
+            }
+        }
+        hiddenAllFieldset(){
+            $jq(".fieldSet0").css("display","none");
+            $jq(".fieldSet2").css("display","none");
+            $jq(".fieldSet3").css("display","none");
+            $jq(".fieldSet4").css("display","none");
+            $jq(".fieldSet5").css("display","none");
+            $jq(".fieldSet6").css("display","none");
+            $jq(".fieldSet7").css("display","none");
+            $jq(".fieldSet8").css("display","none");
+            $jq(".fieldSet9").css("display","none");
+            $jq(".fieldSet10").css("display","none");
+        }
+        showFieldset(stage){
+            $jq(".fieldSet"+stage).css("display","");
+        }
 
     };
 
