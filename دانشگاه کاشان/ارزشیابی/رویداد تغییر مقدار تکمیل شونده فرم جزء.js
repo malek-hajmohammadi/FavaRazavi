@@ -3,8 +3,10 @@ listener = function(event){
 
         if (FormView && FormView.myForm) {
 
+            window.codeSet.setPointerTashvigh(event);
             window.codeSet.setSumTashvigh();
-            console.log('into change field');
+
+            console.log('into change field',this);
         }
 }
 

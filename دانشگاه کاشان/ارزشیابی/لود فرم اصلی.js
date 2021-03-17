@@ -2,6 +2,10 @@ listener = function (event) {
 
     class mainClass {
 
+        pointerTashvigh=0;
+        pointerEraehTarh=0;
+        pointerOnvanFaliat=0;
+
         setTotalScore(){
             let total=0;
             let khodArzyabi=parseInt(FormView.myForm.getItemByName('Field_75').getData());
@@ -278,14 +282,50 @@ listener = function (event) {
 
         }
 
+        setPointerTashvigh(event){
+            console.log('setPointerTashvigh');
+            console.log(event);
+
+        }
+        setPointerEraehTarh(){
+            console.log('setPointerEraehTarh');
+
+        }
+        setPointerOnvanFaliat(){
+            console.log('setPointerOnvanFaliat');
+
+        }
+
+
+        checkAndCorrectTashvigh(pointerTashvigh){
+            console.log('checkAndCorrectTshvigh');
+
+
+        }
+        checkAndCorrectEraehTarh(pointerEraehTarh){
+            console.log('checkAndCorrecEraehTarh');
+
+        }
+
+        checkAndCorrectOnvanFaliat(pointerOnvanFaliat){
+            console.log('pointerOvan');
+
+        }
+
+
         setIntervalForCompletedField(){
 
             let that=this;
             setInterval(function () {
                 $jq( "div[iamfowner$='0']" ).parent().css('overflow','visible');
                 that.setSumTashvigh();
+                /*that.checkAndCorrectTashvigh(that.pointerTashvigh);*/
+
                 that.setSumEraehTarh();
+               /* that.checkAndCorrectEraehTarh(that.pointerEraehTarh);*/
+
                 that.setSumOnvanFaliat();
+               /* that.checkAndCorrectOnvanFaliat(that.pointerOnvanFaliat);*/
                 }
             , 1000);
         }
