@@ -95,6 +95,10 @@ listener = function (event) {
                     value=0;
 
                 total+=value;
+
+                if(total>10)
+                    total=10;
+
             }
             FormView.myForm.getItemByName('Field_50').setData(total);
 
