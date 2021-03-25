@@ -21,6 +21,10 @@ $languageStrings = array(
 	'LBL_SELECT_SOURCE_VALUES' => 'انتخاب منبع مقادیر',
 	'LBL_SOURCE_FIELD' => 'فیلد منبع',
 	'LBL_TARGET_FIELD' => 'فیلد مقصد',
+    'PickListDependency' => 'وابستگی فهرست انتخابی',
+    'LBL_SELECT_ALL_VALUES' => 'انتخاب همه',
+    'LBL_UNSELECT_ALL_VALUES' => 'غیر انتخاب تمام مقادیر',
+    'LBL_CYCLIC_DEPENDENCY_ERROR' => 'This could end up in cyclic redundancy as %s field is already configured for %s field',
 );
 
 $jsLanguageStrings = array(

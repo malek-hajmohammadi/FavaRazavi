@@ -32,9 +32,8 @@ listener = function (event) {
             addRow:function(){
                 var lengthTable = $jq('.detailedTable > tbody > tr').length;
                 var newTr = '<tr class="tableRow_' + (lengthTable ) + '">' + '<td style="padding: 2px;border: 1px solid #ccc;">' + (lengthTable ) + '</td>' +
-                    '<td style="padding: 2px;border: 1px solid #ccc;"><input  onInput="FormOnly.codeSet.DetailedTable.unSaved()" type="text" name="productName" width="30px" value=""></td>' +
-                    '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormOnly.codeSet.DetailedTable.unSaved()" type="text" name="productType" value=""></td>' +
-                    '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormOnly.codeSet.DetailedTable.unSaved()" onkeyup="FormOnly.codeSet.DetailedTable.separateNum(this.value,this)"  dir="ltr" type="text" name="productPrice" min="0" value=""></td>' +
+                    '<td style="padding: 2px;border: 1px solid #ccc;"><input  onInput="FormOnly.codeSet.DetailedTable.unSaved()" type="text" name="presentationName" width="30px" value=""></td>' +
+                    '<td style="padding: 2px;border: 1px solid #ccc;"><input onInput="FormOnly.codeSet.DetailedTable.unSaved()" type="text" name="presentationMax" value=""></td>' +
 
                     '<td id="tdDeleteImg" style="padding: 2px;background-color: #c5e1a5; border: 1px solid #ccc;">' + '<img style="cursor: pointer" onclick="FormOnly.codeSet.DetailedTable.removeRow(' + (lengthTable) + ')"' + 'src="gfx/toolbar/cross.png" />' + '</td>' +
                     '</tr>';
@@ -69,9 +68,8 @@ listener = function (event) {
 
                 for (var count = 1; count <= length; count++) {
                     this.tableArray[count] = [];
-                    this.tableArray[count][0] = $jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'productName\'] ').val();
-                    this.tableArray[count][1] = $jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'productType\'] ').val();
-                    this.tableArray[count][2] = $jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'productPrice\'] ').val();
+                    this.tableArray[count][0] = $jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'presentationName\'] ').val();
+                    this.tableArray[count][1] = $jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'presentationMax\'] ').val();
                 }
             },
             considerSafety:function(){

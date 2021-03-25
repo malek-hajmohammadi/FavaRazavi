@@ -8,12 +8,12 @@ class MainAjax
             $dataInTable = array();
             $db = PDOAdapter::getInstance();
 
-            $sql = "select * FROM dm_datastoretable_26";
+            $sql = "select * FROM dm_datastoretable_40";
             $db->executeSelect($sql);
             $count = 0;
             while ($row = $db->fetchAssoc()) {
                 $dataInTable[$count] = array(
-                    $row['Field_0'], $row['Field_1'], $row['Field_2']
+                    $row['Field_0'], $row['Field_1']
                 );
                 $count++;
             }
@@ -479,9 +479,8 @@ input[name=productName] {
 
         $header = "<tr>
         <th width='10px' style=\"padding: 2px; \">ردیف</th>
-        <th width='100px' style=\"padding: 2px; \">عنوان محصول</th>
-        <th width='20px' style=\"padding: 2px; \">نوع بسته بندی/واحد</th>
-         <th width='10px' style=\"padding: 2px; \">قیمت واحد(ریال)</th>
+        <th width='100px' style=\"padding: 2px; \">نماینده</th>
+         <th width='10px' style=\"padding: 2px; \">سقف اعتبار(ریال)</th>
          <th width='3%' style=\"padding: 2px; \">حذف</th>
          </tr>";
 
@@ -504,11 +503,10 @@ input[name=productName] {
         <td style=\"padding: 2px;border: 1px solid #ccc;\">$radif</td>
         
         
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style='' onInput=\"FormOnly.codeSet.DetailedTable.unSaved()\" type=\"text\" name=\"productName\" value=\"$value[0]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style='' onInput=\"FormOnly.codeSet.DetailedTable.unSaved()\" type=\"text\" name=\"presentationName\" value=\"$value[0]\"></td>
         
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style='' onInput=\"FormOnly.codeSet.DetailedTable.unSaved()\" type='text' name='productType' value=\"$value[1]\"></td>
         
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style='' onInput=\"FormOnly.codeSet.DetailedTable.unSaved()\" class='RavanMask' onkeyup='FormOnly.codeSet.DetailedTable.separateNum(this.value,this)' type='text' min=\"0\" name=\"productPrice\" value=\"$value[2]\"></td>
+        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input style='' onInput=\"FormOnly.codeSet.DetailedTable.unSaved()\" class='RavanMask' onkeyup='FormOnly.codeSet.DetailedTable.separateNum(this.value,this)' type='text' min=\"0\" name=\"presentationMax\" value=\"$value[1]\"></td>
         
         
         <td style='background-color:#c5e1a5' id=\"tdDeleteImg\" style=\"padding: 2px;border: 1px solid #ccc;\"><img style='' onclick=\"FormOnly.codeSet.DetailedTable.removeRow($radif)\"
