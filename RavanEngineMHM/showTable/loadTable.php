@@ -1,6 +1,19 @@
 <?php
 class MainAjax
 {
+    private $tableName="";
+    private function getInput(){
+
+            if (Request::getInstance()->varCleanFromInput('tableName')) {
+                $this->tableName = Request::getInstance()->varCleanFromInput('tableName');
+            }
+
+            return false;
+            /*$this->tableArray[0]=["خمیر مایه نوع یک","asl","23"];
+            $this->tableArray[1]=["خمیر مایه نوع یک","asl","25"];*/
+
+
+    }
     private function getDataFromDatabase()
     {
 
@@ -8,13 +21,19 @@ class MainAjax
             $dataInTable = array();
             $db = PDOAdapter::getInstance();
 
-            $sql = "select * FROM dm_datastoretable_40";
+            $sql = "select * FROM ".$this->tableName." LIMIT 30";
             $db->executeSelect($sql);
             $count = 0;
             while ($row = $db->fetchAssoc()) {
-                $dataInTable[$count] = array(
-                    $row['Field_0'], $row['Field_1']
-                );
+
+                $i=0;
+                $arrayColumn=[];
+                foreach ($row as $column) {
+                    $arrayColumn[]=$column;
+                }
+
+                $dataInTable[$count] =$arrayColumn;
+
                 $count++;
             }
 
@@ -23,7 +42,10 @@ class MainAjax
 
     public function makeHtml()
     {
+        $this->getInput();
         $dataFromDatabase=$this->getDataFromDatabase();
+
+        /*$endHtml = $this->style() . $this->header() . $this->footer();*/
         $endHtml = $this->style() . $this->header() . $this->body($dataFromDatabase) . $this->footer();
         return $endHtml;
     }
@@ -471,18 +493,21 @@ input[name=productName] {
 
     private function header()
     {
-        $header = "";
 
-        $defineTableTag = "<table width=\"100%\" class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"rtl\">
+
+        $defineTableTag = "<table width=\"100%\" class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"ltr\">
     <tbody>";
 
+        $header = "<tr>";
+        $sql = "SHOW COLUMNS FROM ".$this->tableName;
+        $db = PDOAdapter::getInstance();
+        $db->executeSelect($sql);
+        while ($row = $db->fetchAssoc()) {
 
-        $header = "<tr>
-        <th width='10px' style=\"padding: 2px; \">ردیف</th>
-        <th width='100px' style=\"padding: 2px; \">نماینده</th>
-         <th width='10px' style=\"padding: 2px; \">سقف اعتبار(ریال)</th>
-         <th width='3%' style=\"padding: 2px; \">حذف</th>
-         </tr>";
+            $header.="<th>".$row["Field"]."</th>";
+
+        }
+        $header.="</tr>";
 
         return $defineTableTag.$header;
     }
@@ -496,24 +521,12 @@ input[name=productName] {
         /*      1:barrasi 2:mojaz 3:na motaber        */
         foreach ($dataFromDatabase as $value) {
             $radif++;
-            $value[1]=number_format($value[1]);
-            $body .= "
-    
-    <tr class=\"tableRow_$radif\">
-        <td style=\"padding: 2px;border: 1px solid #ccc;\">$radif</td>
-        
-        
-        <td id=\"pName_$radif\" style=\"padding: 2px;border: 1px solid #ccc;\"><input id='inputPName_$radif' style='' onInput=\"FormOnly.codeSet.DetailedTable.unSaved()\" type=\"text\" name=\"presentationName\" value=\"$value[0]\"></td>
-        
-        
-        <td style=\"padding: 2px;border: 1px solid #ccc;\"><input dir='ltr'  style='' onInput=\"FormOnly.codeSet.DetailedTable.unSaved()\" class='RavanMask' onkeyup='FormOnly.codeSet.DetailedTable.separateNum(this.value,this)' type='text' min=\"0\" name=\"presentationMax\" value=\"$value[1]\"></td>
-        
-        
-        <td style='background-color:#c5e1a5' id=\"tdDeleteImg\" style=\"padding: 2px;border: 1px solid #ccc;\"><img style='' onclick=\"FormOnly.codeSet.DetailedTable.removeRow($radif)\"
-                                                              src = \"gfx/toolbar/cross.png\" />
-                                                              
-                                                              </td>
-    </tr>";
+            $value[2]=number_format($value[2]);
+            $body .= "<tr class=\"tableRow_$radif\">";
+            foreach($value as $column) {
+                $body .= "<td >$column</td>";
+            }
+            $body .="</tr>";
         }
 
 

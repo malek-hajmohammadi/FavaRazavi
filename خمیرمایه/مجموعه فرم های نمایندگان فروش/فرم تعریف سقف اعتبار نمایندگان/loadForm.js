@@ -13,12 +13,15 @@ listener = function (event) {
         loadForm() {
             let html = this.showTable();
             $jq('#listContainer').html(html);
+            this.setDataObjectAll();
+
         };
 
 
         removeRow(index) {
             $jq('.tableRow_' + index).remove();
             this.updateFrontAfterRemove();
+
 
         };
 
@@ -49,12 +52,29 @@ listener = function (event) {
 
             var tempArr = Utils.fastAjax('Chart', 'getRolesByGroop', {groupID: 16});
             this.pNameArray[index]= new PRCopyElement('window.codeSet.pNameArray[' + index + ']', 'pName_' + index,'pName_' + index, tempArr);
-            $jq("td#pName_"+index+" img").css("display","none");
+
 
             $jq("td#pName_"+index+" #inputPName_"+index).css("display","none");
 
+            let value=$jq("td#pName_"+index+" #inputPName_"+index).val();
+            value = value.split(",");
+            this.pNameArray[index].setData([{uid: value[0],rid:value[1]}]);
+
+            $jq("td#pName_"+index+" img").css("display","none");
 
         };
+
+        setDataObjectAll() {
+
+            var lengthTable = $jq('.detailedTable > tbody > tr').length;
+           /* lengthTable=lengthTable-1; */
+
+            for (var i = 1; i < lengthTable; i++) {
+                this.setDateobjectOneForAdd(i);
+
+            }
+        }
+
 
         separateNum(value, input) {
             /* seprate number input 3 number */
@@ -87,7 +107,10 @@ listener = function (event) {
 
             for (var count = 1; count <= length; count++) {
                 this.tableArray[count] = [];
-                this.tableArray[count][0] = $jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'presentationName\'] ').val();
+
+
+                this.tableArray[count][0] =this.pNameArray[count].getData();
+
                 this.tableArray[count][1] = $jq('.detailedTable>tbody>tr.tableRow_' + count + ' input[name=\'presentationMax\'] ').val();
             }
         };
@@ -97,7 +120,7 @@ listener = function (event) {
         };
 
         saveToDatabase() {
-            var result = Utils.fastAjax('WorkFlowAjaxFunc', 'saveCreditList', {tableArray: this.tableArray});
+            var result = Utils.fastAjax('WorkFlowAjaxFunc', 'saveCreditTable', {tableArray: this.tableArray});
             Utils.showModalMessage(result);
         };
 
