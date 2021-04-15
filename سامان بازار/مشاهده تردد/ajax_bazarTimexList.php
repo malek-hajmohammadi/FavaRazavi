@@ -3,14 +3,14 @@ $db = MySQLAdapter::getInstance();
 
 $status = Request::getInstance()->varCleanFromInput('status');
 $mm = Request::getInstance()->varCleanFromInput('mm');
-$yy = Request::getInstance()->varCleanFromInput('yy');
+$yy =   Request::getInstance()->varCleanFromInput('yy');
 $aztd = Request::getInstance()->varCleanFromInput('aztd');
 $aztm = Request::getInstance()->varCleanFromInput('aztm');
 $azty = Request::getInstance()->varCleanFromInput('azty');
 $tatd = Request::getInstance()->varCleanFromInput('tatd');
 $tatm = Request::getInstance()->varCleanFromInput('tatm');
 $taty = Request::getInstance()->varCleanFromInput('taty');
-$PID = Request::getInstance()->varCleanFromInput('PID');
+$PID =  Request::getInstance()->varCleanFromInput('PID');
 
 //---
 

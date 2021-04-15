@@ -44,7 +44,7 @@ class calssName
     public function execute(ezcWorkflowExecution $execution)
     {
         $docID="123";
-        $res=self::template($docID);
+        $res=$this->template($docID);
     }
 
     protected function template($docID)

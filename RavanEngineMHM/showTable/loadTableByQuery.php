@@ -1,16 +1,16 @@
 <?php
 class MainAjax
 {
-    private $tableName="";
+    private $query="";
     private function getInput(){
 
-            if (Request::getInstance()->varCleanFromInput('tableName')) {
-                $this->tableName = Request::getInstance()->varCleanFromInput('tableName');
-            }
+        if (Request::getInstance()->varCleanFromInput('query')) {
+            $this->query = Request::getInstance()->varCleanFromInput('query');
+        }
 
-            return false;
-            /*$this->tableArray[0]=["خمیر مایه نوع یک","asl","23"];
-            $this->tableArray[1]=["خمیر مایه نوع یک","asl","25"];*/
+        return false;
+        /*$this->tableArray[0]=["خمیر مایه نوع یک","asl","23"];
+        $this->tableArray[1]=["خمیر مایه نوع یک","asl","25"];*/
 
 
     }
@@ -18,24 +18,24 @@ class MainAjax
     {
 
 
-            $dataInTable = array();
-            $db = PDOAdapter::getInstance();
+        $dataInTable = array();
+        $db = PDOAdapter::getInstance();
 
-            $sql = "select * FROM ".$this->tableName." LIMIT 30";
-            $db->executeSelect($sql);
-            $count = 0;
-            while ($row = $db->fetchAssoc()) {
+        $sql = $this->query;
+        $db->executeSelect($sql);
+        $count = 0;
+        while ($row = $db->fetchAssoc()) {
 
-                $i=0;
-                $arrayColumn=[];
-                foreach ($row as $column) {
-                    $arrayColumn[]=$column;
-                }
-
-                $dataInTable[$count] =$arrayColumn;
-
-                $count++;
+            $i=0;
+            $arrayColumn=[];
+            foreach ($row as $column) {
+                $arrayColumn[]=$column;
             }
+
+            $dataInTable[$count] =$arrayColumn;
+
+            $count++;
+        }
 
         return $dataInTable;
     }
@@ -498,7 +498,8 @@ input[name=productName] {
         $defineTableTag = "<table width=\"100%\" class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"ltr\">
     <tbody>";
 
-        $header = "<tr>";
+        $header="";
+        /*$header = "<tr>";
         $sql = "SHOW COLUMNS FROM ".$this->tableName;
         $db = PDOAdapter::getInstance();
         $db->executeSelect($sql);
@@ -507,7 +508,8 @@ input[name=productName] {
             $header.="<th>".$row["Field"]."</th>";
 
         }
-        $header.="</tr>";
+        $header.="</tr>";*/
+
 
         return $defineTableTag.$header;
     }
@@ -546,6 +548,7 @@ input[name=productName] {
 $mainAjax=new MainAjax();
 Response::getInstance()->response = $mainAjax->makeHtml();
 return $mainAjax;
+
 
 
 

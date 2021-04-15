@@ -5,6 +5,8 @@
 
 class calssName
 {
+    private $employeeID;
+
     public function __construct()
     {
     }
@@ -25,18 +27,47 @@ class calssName
         $uid = $acm->getUserID();
         $db = PDOAdapter::getInstance();
        // $sql = "SELECT Field_1 FROM dm_datastoretable_40 WHERE Field_1 LIKE '$uid,%'";
-        $sql = "SELECT Field_1 FROM dm_datastoretable_40 WHERE Field_1 like '$uid,%'";
+        $sql = "SELECT Field_1 FROM dm_datastoretable_40 WHERE Field_0 like '$uid,%'";
         $db->executeSelect($sql);
-        $res = $db->fetchAssoc();
-        $result=$res?$res['Field_1']:"0";
+
+        if($row = $db->fetchAssoc())
+            $result=$row;
+        else
+            $result=0;
 
         $execution->workflow->myForm->setFieldValueByName('Field_17', $result);
-        $execution->workflow->myForm->setFieldValueByName('Field_4', $result);
     }
+
 
     protected function getRemainCredit($execution){
         $result="0";
+
+        try {
+
+            $client = new SoapClient("http://192.168.0.121/WSStaffInOut/StaffInOut.asmx?wsdl");
+            $client->soap_defencoding = 'UTF-8';
+            $params = array("uname" => 'bf6db9a036816352f2a5128417ad3154', "pass" => 'dbe99b52bf0008708dc38373490d1526',
+                            "Xcode" => $this->employeeID);
+
+            $result = $client->GetCustomer($params);
+
+            $result=$result->GetCustomerResult->data->Customer->GBes;
+
+            $result=intval($result);
+
+
+
+            // $res = get_object_vars($res->Xname)["StaffOutIn"];
+
+
+        } catch (SoapFaultException $e) {
+            $result=$e;
+        } catch (Exception $e) {
+            $result= $e;
+        }
+
         $execution->workflow->myForm->setFieldValueByName('Field_18', $result);
+
     }
 
     protected function getRepresentationInfoAndSet($execution)
@@ -58,6 +89,8 @@ class calssName
         $naturalId = $person['NationalCode'] != NULL ? $person['NationalCode'] : '-';
         $phone = $person['mobile'] != NULL ? $person['mobile'] : '';
         $address = $person['address'] != NULL ? $person['address'] : '';
+
+        $this->employeeID=$person['employeeID'] != NULL ? $person['employeeID'] : '0';
 
         $execution->workflow->myForm->setFieldValueByName('Field_1', $name);
         $execution->workflow->myForm->setFieldValueByName('Field_2', $naturalId);

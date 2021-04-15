@@ -16,11 +16,6 @@ class MainAjax
         $a="malek";
     }
 
-
-
-
-
-
 }
 
 $mainAjax = new MainAjax();

@@ -393,6 +393,16 @@ listener = function (event) {
         }
         checkValidationOrders() {
 
+            let totalPrice=$jq("input[name='totalPrice']").val();
+            totalPrice=this.numberWithoutComma(totalPrice);
+
+            let remainedCredit=FormView.myForm.getItemByName('Field_18').getData();
+            if(remainedCredit-totalPrice<0){
+                Utils.showModalMessage("سقف اعتبار کافی نمی باشد!");
+                return false;
+            }
+
+
             return true;
         }
         checkValidationAnswers() {

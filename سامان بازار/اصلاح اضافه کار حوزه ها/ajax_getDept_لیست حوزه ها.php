@@ -1,5 +1,5 @@
 <?php
-$db = MySQLAdapter::getInstance();
+$db = Adapter::getInstance();
 $parent="2529"; /*شبکه بازار rid */
 $pathsql = ' ';
 if (!empty($parent))
