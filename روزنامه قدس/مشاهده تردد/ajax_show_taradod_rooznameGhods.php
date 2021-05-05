@@ -8,24 +8,22 @@ class MainAjax
     private $trNumber=0;
 
 
-    const MORKHASI_SAATI_FORM_ID=10;
-    const MORKHASI_ROOZANEH_FORM_ID=11;
-    const MAMORIAT_SAATI_FORM_ID=12;
-    const MAMORIAT_ROOZANEH_FORM_ID=13;
-    const ESLAH_FORM_ID=14;
-
-
     public function main()
     {
         $this->getInput();
       /*  $this->beginDate="1399/10/10";
         $this->endDate="1399/11/24";
         $this->personalId="850";*/
-        $this->getDataViaWebserviceBySoup();
 
-        $html="";
-        $html=$this->buildCalendarTable();
-        return $html;
+
+        $webResult= $this->getDataViaWebserviceBySoup();
+       if($webResult==0)
+           return "شماره پرسنلی معتبر نمی باشد";
+       else{
+
+           $html=$this->buildCalendarTable();
+           return $html;
+       }
 
     }
     private function getInput(){
@@ -59,6 +57,7 @@ class MainAjax
     private function getDataViaWebserviceBySoup()
     {
 
+        $soapStatus=1;
         try {
 
             $client = new SoapClient("http://192.168.110.119:82/TimeX.asmx?wsdl");
@@ -76,16 +75,26 @@ class MainAjax
             /*to get the result you should write like below*/
             //$res=$res[0]['recs']['string'];
 
-            $this->webserviceData = $res;
+            $count = count($res);
+
+            if ($count <1)
+                $soapStatus=0;
+            else
+                $soapStatus=1;
+
+            $this->webserviceData=$res;
+
+
 
 
         } catch (SoapFaultException $e) {
-            $SoapStatus = 0;
-            $this->webserviceData = $e;
+            $soapStatus = 0;
+            $this->webserviceData[0] = "خطا در کچ اول";
         } catch (Exception $e) {
-            $SoapStatus = 0;
-            $this->webserviceData = $e;
+            $soapStatus = 0;
+            $this->webserviceData[0]="خطا در کچ دوم";
         }
+        return $soapStatus;
 
     }
 
@@ -153,7 +162,7 @@ class MainAjax
        $tableRow.=$this->buildDateTd($row);
        $tableRow.=$this->buildSituationTd($row);
        $tableRow.=$this->buildTimeTableTd($row);
-       $tableRow.=$this->buildCreateFormBoxTd($row);
+       //$tableRow.=$this->buildCreateFormBoxTd($row);
        $tableRow.=$this->buildLowWorkTd($row);
        $tableRow.=$this->buildWorkOvertimeTd($row);
 
@@ -294,7 +303,9 @@ class MainAjax
 
 
         $date = urldecode($row[2]);
-        $date="13".$date;
+
+
+        $btnsBox='';
 
 
         $btnsBox = '<div class="f-button-1" onmousedown="window.codeSet.createMamoriatRoozaneh('.$wfidMamoriatR.',\''.$date.'\')">ماموريت<br>روزانه</div>';
@@ -306,8 +317,8 @@ class MainAjax
         //   $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].CreateFormTaradodA($wfidMorkhasiS,$date2[0],$date2[1],$date2[2],$CodeM)'>افزودن<br>تردد</div>";
 
         //  $creat .= "<div class='f-button-1' onmousedown='FormOnly.allFieldsContianer[3].MorkhasiS($wfidMorkhasiS,'$date')'>مرخصي<br>ساعتی</div>";
-        $btnsBox .= '<div class="f-button-1" onmousedown="window.codeSet.createMamoriatSaati('.$wfidMorkhasiS.',\''.$date.'\')">ماموریت<br>ساعتی</div>';
-        $btnsBox .= '<div class="f-button-1" onmousedown="window.codeSet.createMorkhasiSaati('.$wfidMamoriatR.',\''.$date.'\')">مرخصی<br>ساعتی</div>';
+        $btnsBox .= '<div class="f-button-1" onmousedown="window.codeSet.createMamoriatSaati('.$wfidMamoriatS.',\''.$date.'\')">ماموریت<br>ساعتی</div>';
+        $btnsBox .= '<div class="f-button-1" onmousedown="window.codeSet.createMorkhasiSaati('.$wfidMorkhasiS.',\''.$date.'\')">مرخصی<br>ساعتی</div>';
 
 
         $link = "

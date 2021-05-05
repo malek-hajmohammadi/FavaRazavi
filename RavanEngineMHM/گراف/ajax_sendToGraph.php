@@ -8,8 +8,51 @@ class MainAjax
         //return $this->morakhasiRoozaneh();
         //return $this->morakhasiSaati();
         //return $this->mamooriatRoozahen();
-        return $this->mamooriatSaati();
+        //return $this->mamooriatSaati();
+        return $this->sabtTaradod();
 
+
+    }
+    private function sabtTaradod(){
+
+        /*
+        * شماره پرسنلی شخص هست که باید در گراف هم همین باشد
+        * "123"
+        * $execution->workflow->myForm->getFieldValueByName('Field_5')
+        * */
+        $geraphId="850";
+
+        /*
+        * تاریخ  با فرمت 1396/05/15 است
+
+        *
+        *  $dateR = $execution->workflow->myForm->getFieldValueByName('Field_2'); //date
+        * */
+        $date='1399/12/02';
+
+        /*
+        * یک عدد هست از ضرب ساعت بعلاوه دقیقه
+        * برای مرخصی روزانه صفر می گذاریم
+        * $startTime=540;
+        * */
+        $time=600;
+
+        /*
+       * توضیحات سیستمی هست که اون رو به صورت اختیاری با WB شروع می کنیم
+       * و بعد شماره فرم رو در آن می گذاریم
+       *
+       *  $docID = $execution->workflow->myForm->instanceID;
+       * $commentSys="WB$docID"
+       *
+       * */
+        $commentSys="WB1234";
+
+        $type="0";
+
+
+        $query = "EXEC [adon].[IOData_ins] " . $geraphId . ", '" . $date . "', " . $time . ", " . $type . ",'$commentSys';";
+
+        return $this->runService($query);
 
     }
 

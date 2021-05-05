@@ -22,6 +22,7 @@ class MainAjax
             $db = WFPDOAdapter::getInstance();
 
             $sql = "select * FROM ".$this->tableName." LIMIT 30";
+            die($sql);
             $db->executeSelect($sql);
             $count = 0;
             while ($row = $db->fetchAssoc()) {

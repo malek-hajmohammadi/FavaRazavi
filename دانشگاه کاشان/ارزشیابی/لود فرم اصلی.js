@@ -309,6 +309,7 @@ listener = function (event) {
         }
 
         checkScoreLimitation(){
+            /*
 
             let sumTashvigh=FormView.myForm.getItemByName('Field_50').getData();
             if(sumTashvigh>10){
@@ -358,6 +359,8 @@ listener = function (event) {
                 Utils.showModalMessage('امتیازات حضور و غیاب اداری از سقف مجاز بیشتر است');
                 return false;
             }
+
+             */
 
             return true;
         }

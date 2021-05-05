@@ -93,13 +93,14 @@ listener = function (event) {
             var FLocation = $jq('#f-Location').text();*/
             var res = WFInfo.startWorkflow(workflowId);
 
-            /*Utils.fastAjax('NForms', 'setData', {
-                data: '{"11929":"' + date + '","11935":"0","11933":"' + codem + '","11928":"' + Name + '","11932":"' + CodeTural + '","11934":"' + FLocation + '"}',
+            let formDateTime=formDate+ " 00:00";
+            Utils.fastAjax('NForms', 'setData', {
+                data: '{"17799":"' + formDateTime + '"}',
                 docid: res.docID,
                 fieldid: res.formID,
                 referid: res.referID,
                 ttype: 'form'
-            });*/
+            });
             Utils.showProgress(false);
             Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
 
@@ -117,6 +118,7 @@ listener = function (event) {
             var MandeMorkhasiMerg = $jq('#f-MandeMorkhasiMerg').text();*/
 
             var res = WFInfo.startWorkflow(workflowId);
+
 
             Utils.fastAjax('NForms', 'setData', {
                 /*data: '{"12436":"' + MandeMorkhasiMerg + '","12386":"' + MandeMorkhasi + '","11557":"' + date + '","11563":"0","11561":"' + codem + '","11556":"' + Name + '","11560":"' + CodeTural + '","11562":"' + FLocation + '"}',*/
@@ -143,13 +145,13 @@ listener = function (event) {
 
             var res = WFInfo.startWorkflow(workflowId);
 
-           /* Utils.fastAjax('NForms', 'setData', {
-                data: '{"11962":"' + date + '","11970":"0","11965":"' + codem + '","11961":"' + Name + '","11966":"' + CodeTural + '","11968":"' + FLocation + '"}',
+           Utils.fastAjax('NForms', 'setData', {
+                data: '{"17806":"' + formDate + '"}',
                 docid: res.docID,
                 fieldid: res.formID,
                 referid: res.referID,
                 ttype: 'form'
-            });*/
+            });
 
             Utils.showProgress(false);
 
@@ -171,13 +173,13 @@ listener = function (event) {
 
             var res = WFInfo.startWorkflow(workflowId);
 
-            /*Utils.fastAjax('NForms', 'setData', {
-                data: '{"11957":"' + MandeMorkhasiMerg + '","11955":"' + MandeMorkhasi + '","11946":"' + date + '","11954":"0","11949":"' + codem + '","11945":"' + Name + '","11950":"' + CodeGPersonal + '","13804":"'+CodeGCard+'","11952":"' + FLocation + '"}',
+            Utils.fastAjax('NForms', 'setData', {
+                data: '{"17732":"' + formDate + '"}',
                 docid: res.docID,
                 fieldid: res.formID,
                 referid: res.referID,
                 ttype: 'form'
-            });*/
+            });
 
             Utils.showProgress(false);
 

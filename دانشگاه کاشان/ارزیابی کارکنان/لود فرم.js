@@ -60,8 +60,9 @@ listener = function (event) {
                 value = parseInt(value);
                 if (isNaN(value)) value = 0;
                 total += value;
-                if (total > 10) total = 10;
+
             }
+            if (total > 10) total = 10;
             FormView.myForm.getItemByName('Field_24').setData(total); /* let total=0;             let columns=$jq( "div[iamfowner$='0'] input" );             for(let i=0;i<columns.length;i++){                 let temp=parseInt(columns[i].value);                 total+=temp;             }              if(total>10){                 Utils.showModalMessage('امتيازات اكتسابي از سقف مجاز بيشتر است');                 return;             }             FormView.myForm.getItemByName('Field_24').setData(total);*/
         }
 
@@ -78,6 +79,8 @@ listener = function (event) {
                 value = parseInt(value);
                 if (isNaN(value)) value = 0;
                 total += value;
+
+
             }
             FormView.myForm.getItemByName('Field_56').setData(total);
         }
@@ -217,6 +220,7 @@ listener = function (event) {
         }
 
         checkScoreLimitation() {
+            /*
             let sumTashvigh = FormView.myForm.getItemByName('Field_24').getData();
             if (sumTashvigh > 10) {
                 Utils.showModalMessage('امتيازات تقدير و تشكر از سقف مجاز بيشتر است');
@@ -252,6 +256,8 @@ listener = function (event) {
                 Utils.showModalMessage('امتيازات حضور و غياب اداري از سقف مجاز بيشتر است');
                 return false;
             }
+
+             */
             return true;
         }
 

@@ -1,0 +1,80 @@
+html,
+body {
+    color: #454545;
+}
+
+.wrapper {
+    margin: 0 auto;
+}
+
+div {
+    margin: 0 auto;
+    display: table;
+}
+
+ul {
+    margin: 1.25rem 0;
+}
+
+li {
+    width: 5rem;
+    height: 3.125rem;
+    text-align: center;
+    list-style: none;
+    display: inline-block;
+}
+
+i[class*=arrow] {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 0.125rem solid;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 1px;
+    text-indent: -624.9375rem;
+}
+i[class*=arrow][class*=-blue] {
+    border-color: #2d86f7;
+}
+i[class*=arrow][class*=-green] {
+    border-color: #86bb00;
+}
+i[class*=arrow][class*=-orange] {
+    border-color: #ed9c00;
+}
+i[class*=arrow][class*=-up] {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+i[class*=arrow][class*=-right] {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+i[class*=arrow][class*=-down] {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    transform: rotate(135deg);
+}
+i[class*=arrow][class*=-left] {
+    -webkit-transform: rotate(225deg);
+    -moz-transform: rotate(225deg);
+    -ms-transform: rotate(225deg);
+    -o-transform: rotate(225deg);
+    transform: rotate(225deg);
+}
+i[class*=arrow][class*=-heavy] {
+    border-width: 0.25rem;
+}
+i[class*=arrow][class*=-sm] {
+    width: 0.5rem;
+    height: 0.5rem;
+}

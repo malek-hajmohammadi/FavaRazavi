@@ -23,4 +23,3 @@ listener = function (event) {
     }, 300);
 
 };
-

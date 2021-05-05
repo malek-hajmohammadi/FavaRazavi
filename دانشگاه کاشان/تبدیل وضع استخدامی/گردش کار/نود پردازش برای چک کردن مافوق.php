@@ -10,6 +10,7 @@ class calssName
         $res=$this->haveSuperior($execution);
 
         $execution->setVariable('haveSuperior',$res);
+        $execution->setVariable('fillFormFlag',0);
 
     }
 

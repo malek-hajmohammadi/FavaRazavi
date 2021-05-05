@@ -25,7 +25,7 @@ listener = function (event) {
                 edate: endDate
             }, true);
 
-            var ModatMorkhasi = parseInt(diffWithoutHoliday)+1;
+            var ModatMorkhasi = parseInt(diffWithoutHoliday);
 
             if (ModatMorkhasi.length == 1)
                 ModatMorkhasi = '0' + ModatMorkhasi;
