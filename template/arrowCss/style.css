@@ -24,6 +24,7 @@ li {
     display: inline-block;
 }
 
+
 i[class*=arrow] {
     display: inline-block;
     width: 1rem;
