@@ -259,6 +259,26 @@ listener = function(event) {
       }
       FormView.myForm.getItemByName('Field_86').setData(total);
     }
+
+    setSumReport() {
+      let count = FormView.myForm.getItemByName('Field_72').list.subListView.data.length;
+      let total = 0;
+      for (let i = 0; i < count; i++) {
+        let value = null;
+        try {
+          value = $jq(".tdReport div[iamfowner$='3']")[i].tagthis.getData();
+        } catch (e) {}
+        if (value == null) value = 0;
+        value = parseInt(value);
+        if (isNaN(value)) value = 0;
+        total += value;
+      }
+
+      total = count * 3;
+      if (total > 20) total = 20;
+      FormView.myForm.getItemByName('Field_71').setData(total);
+    }
+
     setSumReport() {
       let count = FormView.myForm.getItemByName('Field_72').list.subListView.data.length;
       let total = 0;

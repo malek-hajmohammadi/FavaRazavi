@@ -63,6 +63,8 @@ class MainAjax
             $client = new SoapClient("http://192.168.110.119:82/TimeX.asmx?wsdl");
             $client->soap_defencoding = 'UTF-8';
             $queryString = "EXEC [adon].[TimeSheetView] " . $this->personalId . ",'" . $this->beginDate . "','" . $this->endDate . "'";
+            $queryString = "EXEC [adon].[TimeSheetView] 55,'1400/01/01','1400/01/20'";
+
             $params = array("username" => '3ef1b48067e4f2ac9913141d77e847dd', "password" => '9a3f5b14f1737c15e86680d9cd40b840',
                             "objStr"   => $queryString
             );
