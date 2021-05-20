@@ -164,7 +164,7 @@ listener = function (event) {
             FormView.myForm.getItemByName('Field_71').setData(total);
         }
 
-        setSumTashvigh() {
+        setSum_taghdirVaTashvigh() {
             /*$jq( "div[iamfowner$='0']" ).parent().css('overflow','visible');*/
             let count = FormView.myForm.getItemByName('Field_87').list.subListView.data.length;
             let total = 0;
@@ -172,7 +172,7 @@ listener = function (event) {
                 let value = null;
                 try {
                     /* let value = FormView.myForm.getItemByName('Field_87').list.subListView.data[i].DMSFields[0].value;*/
-                    value = $jq(".fieldSet_tashvigh div[iamfowner$='0']")[i].tagthis.getData();
+                    value = $jq(".fieldSet_tashvigh div[iamfowner$='3']")[i].tagthis.getData();
                 } catch (e) {}
                 if (value == null) value = 0;
                 value = parseInt(value);
@@ -198,6 +198,22 @@ listener = function (event) {
             FormView.myForm.getItemByName('Field_111').setData(total);
         }
 
+        setSum_maghamBartar(){
+            let count = FormView.myForm.getItemByName('Field_85').list.subListView.data.length;
+            let total = 0;
+            for (let i = 0; i < count; i++) {
+                let value = null;
+                try {
+                    value = $jq(".fieldSet_maghamBartar div[iamfowner$='1']")[i].tagthis.getData();
+                } catch (e) {}
+                if (value == null) value = 0;
+                value = parseInt(value);
+                if (isNaN(value)) value = 0;
+                total += value;
+            }
+            FormView.myForm.getItemByName('Field_86').setData(total);
+        }
+
         setMarginForDetailedForms(){
             $jq(".b-inbox-box").css("margin-top","30px");
         };
@@ -210,7 +226,8 @@ listener = function (event) {
                 that.setSumKhedmat();
                 that.setSumKargorooh();
                 that.setSumReportMoredi();
-
+                that.setSum_taghdirVaTashvigh();
+                that.setSum_maghamBartar();
 
             }
             ,1000);
