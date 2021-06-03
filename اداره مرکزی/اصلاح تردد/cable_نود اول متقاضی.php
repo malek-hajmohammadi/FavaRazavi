@@ -47,6 +47,8 @@ class calssName // do not change this line
             MySQLAdapter::getInstance()->execute("UPDATE oa_document SET Subject = '$subject', DocDesc='$subject' WHERE RowID = " . $execution->workflow->myForm->instanceID);
 
             ///اتمام ////
+
+
         }
 
 

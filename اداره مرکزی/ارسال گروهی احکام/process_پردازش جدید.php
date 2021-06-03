@@ -19,7 +19,7 @@ class calssName
         $strHTML1 .= '<tr><th>شماره پرسنلي</th><th width="120"> نام و نام خانوادگي</th><th>سمت</th><th>رئيس</th><th>شماره فرم</th><th>نتیجه عملیات</th></tr>';
         //---------------------------------------
         //$pathst="/datastorage/form-storage/ahkam/";
-        $pathst = "/opt/storage/Ahkam/ReceivedFiles/";
+        $pathst = "/opt/storage/Ahkam/";
         $pathstdes = "/opt/storage/Ahkam/SendedFiles/";
         //$pathstdes="./SendedFiles/";
 

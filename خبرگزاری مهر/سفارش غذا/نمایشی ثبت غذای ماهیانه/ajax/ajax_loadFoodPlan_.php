@@ -1,57 +1,47 @@
 <?php
+
+
 class MainAjax
 {
-    private $tableName="";
-    private function getInput(){
+    private $year;
+    private $month;
 
-            if (Request::getInstance()->varCleanFromInput('tableName')) {
-                $this->tableName = Request::getInstance()->varCleanFromInput('tableName');
-                //dm_datastoretable_34
-            } else
-                return false;
 
+
+
+    public function main()
+    {
+       // $this->getInputParameters();
+
+     //   $this->getDataTableFromDatabase();
+
+    //    $this->endTableTag();
+
+   //     $output=$this->style.$this->header.$this->tableBody().$this->btnEndList().$this->endTableTag();
+
+
+        $output=$this->defineStyleAndHeader().$this->btnEndList().$this->endTableTag();
+        return $output;
 
     }
-    private function getDataFromDatabase()
-    {
 
+    private function getInputParameters(){
+        if (Request::getInstance()->varCleanFromInput('year'))
+            $this->year = Request::getInstance()->varCleanFromInput('year');
+        else {
+            Response::getInstance()->response = "There is no year";
+            return;
+        }
 
-            $dataInTable = array();
-            $db = WFPDOAdapter::getInstance();
-
-            $sql = "select * FROM ".$this->tableName." LIMIT 30";
-
-            $db->executeSelect($sql);
-            $count = 0;
-            while ($row = $db->fetchAssoc()) {
-
-                $i=0;
-                $arrayColumn=[];
-                foreach ($row as $column) {
-                    $arrayColumn[]=$column;
-                }
-
-                $dataInTable[$count] =$arrayColumn;
-
-                $count++;
-            }
-
-        return $dataInTable;
+        if (Request::getInstance()->varCleanFromInput('month'))
+            $this->month = Request::getInstance()->varCleanFromInput('month');
+        else {
+            Response::getInstance()->response = "There is no month";
+            return;
+        }
     }
 
-    public function makeHtml()
-    {
-        $this->getInput();
-        $dataFromDatabase=$this->getDataFromDatabase();
-
-        /*$endHtml = $this->style() . $this->header() . $this->footer();*/
-        $endHtml = $this->style() . $this->header() . $this->body($dataFromDatabase) . $this->footer();
-        return $endHtml;
-    }
-
-    private function style()
-    {
-        $style = "";
+    private function defineStyleAndHeader(){
         $style = "<style>
 
     .f-box td {
@@ -458,92 +448,103 @@ class MainAjax
     }
     </style>";
         /*سایز ستون ها*/
-        $style .= "<style>
-input[name=productName] {
-        width: 340px;
-        text-align: right !important;
-        padding: 0;
-    }
-    input[name=productType] {
-        width: 150px;
-        text-align: right !important;
-        padding: 0;
-    }
-    input[name=productPrice] {
-        width: 120px;
-        text-align: left !important;
-        padding: 0;
-        padding-left:2px;
-    }
-   
-    
-   
-    
-    
-    
-    
+        $style .="<style>
 
+    input[name=name] {
+        width: 50px;
+        text-align: right !important;
+        padding: 0;
+    }
 
 </style>";
-
-
-        return $style;
-    }
-
-    private function header()
-    {
-
-
-        $defineTableTag = "<table width=\"100%\" class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"ltr\">
+        $defineTableTag = "<table style='width:100% !important;'  class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"rtl\">
     <tbody>";
 
-        $header = "<tr>";
-        $sql = "SHOW COLUMNS FROM ".$this->tableName;
-        $db = WFPDOAdapter::getInstance();
-        $db->executeSelect($sql);
-        while ($row = $db->fetchAssoc()) {
 
-            $header.="<th>".$row["Field"]."</th>";
-
-        }
-        $header.="</tr>";
-
-        return $defineTableTag.$header;
+        $header =$defineTableTag. "<tr>
+        <th width=\"3px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">ردیف</th>
+        <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">روز هفته</th>
+        <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">تاریخ</th>
+        <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">نوع اول</th>
+        <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">نوع دوم</th>
+         <th width=\"3px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">حذف</th>
+         </tr>";
+        return $style.$header;
     }
 
-    private function body($dataFromDatabase)
+
+    private function getDataTableFromDatabase()
     {
-        $body = "";
+
+        $db = WFPDOAdapter::getInstance();
+
+        $sql = "select * FROM dm_datastoretable_30" .
+            " where Field_0=$this->year and Field_1=$this->month ORDER BY RowID";
+        $db->executeSelect($sql);
+        $count = 0;
+        while ($row = $db->fetchAssoc()) {
+            $this->dataTable[$count] = array(
+                $row['Field_0'], $row['Field_1'],$row['Field_2'], $row['Field_3'],$row['Field_4'],$row['Field_5']
+            ); //0:userId and 1: roledId
+            $count++;
+        }
+    }
+
+
+
+    private function tableBody(){
 
         $radif = 0;
         $table = "";
         /*      1:barrasi 2:mojaz 3:na motaber        */
-        foreach ($dataFromDatabase as $value) {
+        foreach ($this->dataTable as $value) {
             $radif++;
-            $value[2]=number_format($value[2]);
-            $body .= "<tr class=\"tableRow_$radif\">";
-            foreach($value as $column) {
-                $body .= "<td >$column</td>";
-            }
-            $body .="</tr>";
+            $table .= "
+    
+    <tr class=\"tableRow_$radif\">
+        <td style=\"padding: 2px;border: 1px solid #ccc;\">$radif</td>
+        <td id=\"userTD_$radif\" style=\"padding: 2px;border: 1px solid #ccc;\"><input style=\"background: $this->inputBackground\" $this->readOnlyForInput onInput=\"FormView.myForm.getItemByName('Field_0').DetailedTable.unSaved()\" type=\"text\" name=\"name\" data-id=\"$value[0],$value[1]\" ></td>
+        
+        <td id=\"tdDeleteImg\" style=\"padding: 2px;background-color: $this->backgroundCell;cursor:$this->cursorCell; border: 1px solid #ccc;\"><img style=\"pointer-events:$this->pointerEvent\" onclick=\"FormView.myForm.getItemByName('Field_0').DetailedTable.removeRow($radif)\"
+                                                              src = \"gfx/toolbar/cross.png\" />
+                                                              
+                                                              </td>
+    </tr>";
         }
 
 
-
-
-        return $body;
+        return $table;
     }
 
-    private function footer()
-    {
-        $footer = "";
-        $footer = "</tbody> </table>";
-        return $footer;
+    private function btnEndList(){
+
+
+
+            $html = " <tr>
+            <td style=\"padding: 2px;padding-top: 7px;
+        padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5; width: 10%\"><img onclick=\"window.codeSet.addRow()\"
+                                                                  src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/></td>
+             </tr>";
+            return $html;
+
+
     }
+
+    private function endTableTag(){
+
+        $html = "
+      </tbody>
+      </table>";
+
+        return $html;
+    }
+
+
+
 }
 
-$mainAjax=new MainAjax();
-Response::getInstance()->response = $mainAjax->makeHtml();
+$mainAjax = new MainAjax();
+Response::getInstance()->response = $mainAjax->main();
 return $mainAjax;
 
 

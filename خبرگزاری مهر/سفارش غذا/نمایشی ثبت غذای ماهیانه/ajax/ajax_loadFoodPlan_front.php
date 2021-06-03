@@ -1,57 +1,32 @@
 <?php
+
+
 class MainAjax
 {
-    private $tableName="";
-    private function getInput(){
+    private $year;
+    private $month;
 
-            if (Request::getInstance()->varCleanFromInput('tableName')) {
-                $this->tableName = Request::getInstance()->varCleanFromInput('tableName');
-                //dm_datastoretable_34
-            } else
-                return false;
 
+    public function main()
+    {
+        // $this->getInputParameters();
+
+        //   $this->getDataTableFromDatabase();
+
+        //    $this->endTableTag();
+
+        //     $output=$this->style.$this->header.$this->tableBody().$this->btnEndList().$this->endTableTag();
+
+
+        $output = $this->defineStyleAndHeader() . $this->btnEndList() . $this->endTableTag();
+        return $output;
 
     }
-    private function getDataFromDatabase()
+
+
+
+    private function defineStyleAndHeader()
     {
-
-
-            $dataInTable = array();
-            $db = WFPDOAdapter::getInstance();
-
-            $sql = "select * FROM ".$this->tableName." LIMIT 30";
-
-            $db->executeSelect($sql);
-            $count = 0;
-            while ($row = $db->fetchAssoc()) {
-
-                $i=0;
-                $arrayColumn=[];
-                foreach ($row as $column) {
-                    $arrayColumn[]=$column;
-                }
-
-                $dataInTable[$count] =$arrayColumn;
-
-                $count++;
-            }
-
-        return $dataInTable;
-    }
-
-    public function makeHtml()
-    {
-        $this->getInput();
-        $dataFromDatabase=$this->getDataFromDatabase();
-
-        /*$endHtml = $this->style() . $this->header() . $this->footer();*/
-        $endHtml = $this->style() . $this->header() . $this->body($dataFromDatabase) . $this->footer();
-        return $endHtml;
-    }
-
-    private function style()
-    {
-        $style = "";
         $style = "<style>
 
     .f-box td {
@@ -459,91 +434,63 @@ class MainAjax
     </style>";
         /*سایز ستون ها*/
         $style .= "<style>
-input[name=productName] {
-        width: 340px;
-        text-align: right !important;
-        padding: 0;
-    }
-    input[name=productType] {
-        width: 150px;
-        text-align: right !important;
-        padding: 0;
-    }
-    input[name=productPrice] {
-        width: 120px;
-        text-align: left !important;
-        padding: 0;
-        padding-left:2px;
-    }
-   
-    
-   
-    
-    
-    
-    
 
+    input[name=name] {
+        width: 50px;
+        text-align: right !important;
+        padding: 0;
+    }
 
 </style>";
-
-
-        return $style;
-    }
-
-    private function header()
-    {
-
-
-        $defineTableTag = "<table width=\"100%\" class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"ltr\">
+        $defineTableTag = "<table style='width:100% !important;'  class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"rtl\">
     <tbody>";
 
-        $header = "<tr>";
-        $sql = "SHOW COLUMNS FROM ".$this->tableName;
-        $db = WFPDOAdapter::getInstance();
-        $db->executeSelect($sql);
-        while ($row = $db->fetchAssoc()) {
 
-            $header.="<th>".$row["Field"]."</th>";
-
-        }
-        $header.="</tr>";
-
-        return $defineTableTag.$header;
+        $header = $defineTableTag . "<tr>
+        <th width=\"3px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">ردیف</th>
+        <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">روز هفته</th>
+        <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">تاریخ</th>
+        <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">نوع اول</th>
+        <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">نوع دوم</th>
+         <th width=\"3px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">حذف</th>
+         </tr>";
+        return $style . $header;
     }
 
-    private function body($dataFromDatabase)
+
+
+
+
+
+    private function btnEndList()
     {
-        $body = "";
-
-        $radif = 0;
-        $table = "";
-        /*      1:barrasi 2:mojaz 3:na motaber        */
-        foreach ($dataFromDatabase as $value) {
-            $radif++;
-            $value[2]=number_format($value[2]);
-            $body .= "<tr class=\"tableRow_$radif\">";
-            foreach($value as $column) {
-                $body .= "<td >$column</td>";
-            }
-            $body .="</tr>";
-        }
 
 
+        $html = " <tr>
+            <td style=\"padding: 2px;padding-top: 7px;
+        padding-bottom: 7px;border: 1px solid #ccc;background-color: #c5e1a5; width: 10%\"><img onclick=\"window.codeSet.addRow()\"
+                                                                  src=\"gfx/toolbar/plus.png\" style=\"cursor: pointer;\"/></td>
+             </tr>";
+        return $html;
 
 
-        return $body;
     }
 
-    private function footer()
+    private function endTableTag()
     {
-        $footer = "";
-        $footer = "</tbody> </table>";
-        return $footer;
+
+        $html = "
+      </tbody>
+      </table>";
+
+        return $html;
     }
+
+
 }
 
-$mainAjax=new MainAjax();
-Response::getInstance()->response = $mainAjax->makeHtml();
+$mainAjax = new MainAjax();
+Response::getInstance()->response = $mainAjax->main();
 return $mainAjax;
 
 

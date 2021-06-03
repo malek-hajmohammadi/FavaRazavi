@@ -1,57 +1,23 @@
 <?php
+
+
 class MainAjax
 {
-    private $tableName="";
-    private function getInput(){
-
-            if (Request::getInstance()->varCleanFromInput('tableName')) {
-                $this->tableName = Request::getInstance()->varCleanFromInput('tableName');
-                //dm_datastoretable_34
-            } else
-                return false;
+    private $year;
+    private $month;
 
 
-    }
-    private function getDataFromDatabase()
+    public function main()
     {
 
+        $output = $this->defineStyleAndHeader() . $this->endTableTag();
+        return $output;
 
-            $dataInTable = array();
-            $db = WFPDOAdapter::getInstance();
-
-            $sql = "select * FROM ".$this->tableName." LIMIT 30";
-
-            $db->executeSelect($sql);
-            $count = 0;
-            while ($row = $db->fetchAssoc()) {
-
-                $i=0;
-                $arrayColumn=[];
-                foreach ($row as $column) {
-                    $arrayColumn[]=$column;
-                }
-
-                $dataInTable[$count] =$arrayColumn;
-
-                $count++;
-            }
-
-        return $dataInTable;
     }
 
-    public function makeHtml()
-    {
-        $this->getInput();
-        $dataFromDatabase=$this->getDataFromDatabase();
 
-        /*$endHtml = $this->style() . $this->header() . $this->footer();*/
-        $endHtml = $this->style() . $this->header() . $this->body($dataFromDatabase) . $this->footer();
-        return $endHtml;
-    }
-
-    private function style()
+    private function defineStyleAndHeader()
     {
-        $style = "";
         $style = "<style>
 
     .f-box td {
@@ -459,93 +425,147 @@ class MainAjax
     </style>";
         /*سایز ستون ها*/
         $style .= "<style>
-input[name=productName] {
-        width: 340px;
-        text-align: right !important;
-        padding: 0;
-    }
-    input[name=productType] {
-        width: 150px;
-        text-align: right !important;
-        padding: 0;
-    }
-    input[name=productPrice] {
-        width: 120px;
-        text-align: left !important;
-        padding: 0;
-        padding-left:2px;
-    }
-   
-    
-   
-    
-    
-    
-    
 
+    input[name=foodCount] {
+        width: 50px;
+        text-align: right !important;
+        padding: 0;
+    }
 
 </style>";
-
-
-        return $style;
-    }
-
-    private function header()
-    {
-
-
-        $defineTableTag = "<table width=\"100%\" class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"ltr\">
-    <tbody>";
-
-        $header = "<tr>";
-        $sql = "SHOW COLUMNS FROM ".$this->tableName;
-        $db = WFPDOAdapter::getInstance();
-        $db->executeSelect($sql);
-        while ($row = $db->fetchAssoc()) {
-
-            $header.="<th>".$row["Field"]."</th>";
-
-        }
-        $header.="</tr>";
-
-        return $defineTableTag.$header;
-    }
-
-    private function body($dataFromDatabase)
-    {
-        $body = "";
-
-        $radif = 0;
-        $table = "";
-        /*      1:barrasi 2:mojaz 3:na motaber        */
-        foreach ($dataFromDatabase as $value) {
-            $radif++;
-            $value[2]=number_format($value[2]);
-            $body .= "<tr class=\"tableRow_$radif\">";
-            foreach($value as $column) {
-                $body .= "<td >$column</td>";
-            }
-            $body .="</tr>";
-        }
+        /*Radio Group Style*/
+        $style .='<style>
 
 
 
 
-        return $body;
-    }
 
-    private function footer()
-    {
-        $footer = "";
-        $footer = "</tbody> </table>";
-        return $footer;
-    }
+/* CONTAINERS */
+
+.container {max-width: 850px; width: 100%; margin: 0 auto;}
+.four { width: 32.26%; max-width: 32.26%;}
+
+
+/* COLUMNS */
+
+.col {
+    display: block;
+    float:left;
+    margin: 1% 0 1% 1.6%;
+
 }
 
-$mainAjax=new MainAjax();
-Response::getInstance()->response = $mainAjax->makeHtml();
+.col:first-of-type { margin-left: 0; }
+
+/* CLEARFIX */
+
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1;
+}
+
+/* FORM */
+
+.form .plan input, .form .payment-plan input, .form .payment-type input{
+    display: none;
+}
+
+.form label{
+    position: relative;
+    color: #fff;
+    background-color: #aaa;
+    font-size: 16px;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    display: block;
+    cursor: pointer;
+    border: 1px solid transparent;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form .plan input[id^="type1_"]:checked + label, .form .payment-plan input:checked + label, .form .payment-type input:checked + label{
+    border: 2px solid #333;
+    background-color: #2fcc71;
+}
+.form .plan input[id^="type2_"]:checked + label, .form .payment-plan input:checked + label, .form .payment-type input:checked + label{
+    border: 2px solid #333;
+    background-color: #2fcc71;
+}
+.form .plan input[id^="none_"]:checked + label, .form .payment-plan input:checked + label, .form .payment-type input:checked + label{
+    border: 2px solid #333;
+    background-color: #5e6e5e;
+}
+
+
+.form .plan input:checked + label:after, form .payment-plan input:checked + label:after, .form .payment-type input:checked + label:after{
+    content: "\2713";
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 100%;
+    border: 1px solid #333;
+    background-color: #2fcc71;
+    z-index: 999;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+
+
+
+</style>';
+        $style .='<style>
+    .trReadonly:hover > td{
+        background-color: #c5cae9 !important;
+    }
+ .trReadonly > td{
+        background-color: #c5cae9 !important;
+    }
+
+</style>';
+
+        $defineTableTag = "<table style='width:100% !important;'  class=\"f-table detailedTable\" cellpadding=\"0\" cellspacing=\"1\" dir=\"rtl\">
+    <tbody>";
+
+
+        $header = $defineTableTag . "<tr>
+        <th width=\"3px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">ردیف</th>
+        <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">تاریخ</th>
+        <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">انتخاب غذا</th>
+        <th width=\"3px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">تعداد</th>
+      
+         </tr>";
+        return $style . $header;
+    }
+
+
+
+    private function endTableTag()
+    {
+
+        $html = "
+      </tbody>
+      </table>";
+
+        return $html;
+    }
+
+
+}
+
+$mainAjax = new MainAjax();
+Response::getInstance()->response = $mainAjax->main();
 return $mainAjax;
-
-
-
 
