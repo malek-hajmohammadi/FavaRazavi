@@ -186,6 +186,33 @@ listener = function (event) {
             Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
 
         }
+        createAfzoodanTaradod(workflowId,formDate){
+
+            Utils.showProgress(true);
+
+            /*var codem = FormOnly.allFieldsContianer[0].getData();
+            var Name = $jq('#f-Name').text();
+            var CodeGPersonal = $jq('#f-GpersonalID').text();
+            var CodeGCard = $jq('#f-CodeTural').text();
+            var FLocation = $jq('#f-Location').text();
+            var MandeMorkhasi = $jq('#f-MandeMorkhasi').text();
+            var MandeMorkhasiMerg = $jq('#f-MandeMorkhasiMerg').text();*/
+
+            var res = WFInfo.startWorkflow(workflowId);
+
+            Utils.fastAjax('NForms', 'setData', {
+                data: '{"17885":"' + formDate + '"}',
+                docid: res.docID,
+                fieldid: res.formID,
+                referid: res.referID,
+                ttype: 'form'
+            });
+
+            Utils.showProgress(false);
+
+            Viewer.init(null, res.referID, true, false, null, true, '../Runtime/process.php?module=Inbox&action=inboxData&draft=1', false, false, -1, null, null, null, '');
+
+        }
 
 
 

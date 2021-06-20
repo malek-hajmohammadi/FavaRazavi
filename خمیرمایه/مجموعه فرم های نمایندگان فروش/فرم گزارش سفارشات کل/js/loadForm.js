@@ -171,6 +171,7 @@ listener = function (event) {
             $jq(".productUnit input").css("background-color","#e0e0e0");
         }
 
+        /*ساخت یک select box*/
         createProductSelectedList(){
             this.definedProducts = Utils.fastAjax('WorkFlowAjaxFunc', 'getDefinedProducts');
             let tag;

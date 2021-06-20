@@ -7,17 +7,33 @@ class calssName
 
     public function execute(ezcWorkflowExecution $execution)
     {
-        $this->sabtTaradod($execution);
+
+        $this->call_sabtTaradod($execution);
+
 
     }
-    private function sabtTaradod(ezcWorkflowExecution $execution){
+    private function call_sabtTaradod($execution){
+        $geraphId=$execution->workflow->myForm->getFieldValueByName('Field_0');
+        $geraphId=substr($geraphId,4);
+
+        $date = $execution->workflow->myForm->getFieldValueByName('Field_2');
+
+        //8:30
+        $time=$execution->workflow->myForm->getFieldValueByName('Field_3');
+
+        //----------------------------
+        $this->sabtTaradod($geraphId,$date,$time,$execution);
+    }
+
+    private function sabtTaradod($geraphId,$date,$time,$execution){
 
         /*
         * شماره پرسنلی شخص هست که باید در گراف هم همین باشد
         * "123"
         * $execution->workflow->myForm->getFieldValueByName('Field_5')
         * */
-        $geraphId="850";
+        //$geraphId="850";
+        //-------------------------------------------------
 
         /*
         * تاریخ  با فرمت 1396/05/15 است
@@ -26,19 +42,19 @@ class calssName
         *  $dateR = $execution->workflow->myForm->getFieldValueByName('Field_2'); //date
         * */
         //$date='1399/12/02';
-        $date = $execution->workflow->myForm->getFieldValueByName('Field_2'); //date
+        //$date = $execution->workflow->myForm->getFieldValueByName('Field_2'); //date
+        //------------------------------------------
 
         /*
         * یک عدد هست از ضرب ساعت بعلاوه دقیقه
         * برای مرخصی روزانه صفر می گذاریم
         * $startTime=540;
         * */
-        $time=$execution->workflow->myForm->getFieldValueByName('Field_3');
+        //$time=$execution->workflow->myForm->getFieldValueByName('Field_3');
         $timeArray = explode(':', $time);
-
-
         $time=$timeArray[0]*60+$timeArray[1];
 
+        //------------------------------------------
 
         /*
        * توضیحات سیستمی هست که اون رو به صورت اختیاری با WB شروع می کنیم

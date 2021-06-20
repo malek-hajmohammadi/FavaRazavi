@@ -167,6 +167,7 @@ listener = function (event) {
         saveList(){
             this.fillTableArray();
             this.callAjaxToSave();
+            Utils.showModalMessage('منو غذا شما با موفقیت ذخیره شد');
 
         }
         callAjaxToSave(){

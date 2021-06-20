@@ -14,15 +14,28 @@ class calssName
             $rid = AccessControlManager::getInstance()->getRoleID();
             $uid = AccessControlManager::getInstance()->getUserID();
 
-            $q = "SELECT employeeID from oa_users where UserID=" . $uid;
+            $employeeID="";
+            $sql = "SELECT fname,lname,employeeID,sex,mobile FROM oa_users WHERE UserID=" . $uid;
             $db = WFPDOAdapter::getInstance();
-            $result = $db->executeScalar($q);
-            $execution->workflow->myForm->setFieldValueByName('Field_4', $result);
+            $db->executeSelect($sql);
+            $person = $db->fetchAssoc();
+            if ($person) {
+                $employeeID = $person['employeeID'];
+                $name=$person['fname']." ".$person['lname'];
+
+                $subject="درخواست مرخصی روزانه ".$name;
+
+                WFPDOAdapter::getInstance()->execute("UPDATE oa_document SET Subject = '$subject', DocDesc='$subject' WHERE RowID = " . $execution->workflow->myForm->instanceID . " limit 1;");
+            }
+
+            $execution->workflow->myForm->setFieldValueByName('Field_4', $employeeID);
 
 
 
         }
 
     }
+
+
 }
 

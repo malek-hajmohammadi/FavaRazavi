@@ -543,7 +543,7 @@ class MainAjax
         $header = $defineTableTag . "<tr>
         <th width=\"3px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">ردیف</th>
         <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">تاریخ</th>
-        <th width=\"10px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">انتخاب غذا</th>
+        <th width=\"10px\" style=\"width: 250px; padding: 2px;background-color: $this->backgroundHeader \">انتخاب غذا</th>
         <th width=\"3px\" style=\"padding: 2px;background-color: $this->backgroundHeader \">تعداد</th>
       
          </tr>";

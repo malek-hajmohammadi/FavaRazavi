@@ -8,7 +8,7 @@ class calssName
         $message = 'كاربراني كه فرم برايشان ايجاد ميشود';
         $strHTML = '<h5 >' . $message . '</h5><div style="font-size:18px;font-weight:bold;"><table dir="rtl" style="font-size:18px;font-weight:bold;text-align:center" cellpadding="3" cellspacing="0" border="1" >';
         $strHTML .= '<tr><td>شماره پرسنلي</td><td width="120"> نام و نام خانوادگي</td><td style="direction:ltr">پيوست</td></tr>';
-        //$pathst = "/mnt/fish/";
+       /* $pathst = "/mnt/fish/";*/
         $pathst="/opt/storage/Fish/";
         $output="";
         if (is_readable($pathst))

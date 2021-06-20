@@ -141,6 +141,7 @@ listener = function (event) {
         saveList(){
             this.fillTableArray();
             this.callAjaxToSave();
+            Utils.showModalMessage('منو غذا با موفقیت ذخیره شد');
 
         };
         callAjaxToSave(){
@@ -148,6 +149,8 @@ listener = function (event) {
 
                let year=$jq("select[name=selectedYear").val();
                let month=$jq("select[name=selectedMonth").val();
+
+
                let res = Utils.fastAjax('WorkFlowAjaxFunc', 'saveFoodPlan', {tableArray:this.tableArray,
                 year:year,month:month});
 

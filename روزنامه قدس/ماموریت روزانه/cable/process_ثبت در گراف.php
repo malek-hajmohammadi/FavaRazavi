@@ -74,14 +74,16 @@ class calssName
         $dateB = $execution->workflow->myForm->getFieldValueByName('Field_3'); //date bargasht
          *
          * */
-        $startDateTime = $execution->workflow->myForm->getFieldValueByName('Field_1');
-        $startDateTimeArray=explode(' ',$startDateTime);
-        $startDate=$startDateTimeArray[0];
 
 
-        $endtDateTime = $execution->workflow->myForm->getFieldValueByName('Field_2');
-        $endDateTimeArray=explode(' ',$endtDateTime);
-        $endDate =$endDateTimeArray[0];
+        $startDate = $execution->workflow->myForm->getFieldValueByName('Field_5');
+
+
+
+
+
+        $endDate = $execution->workflow->myForm->getFieldValueByName('Field_6');
+
         //$endDate='1399/12/11';
 
         /*
