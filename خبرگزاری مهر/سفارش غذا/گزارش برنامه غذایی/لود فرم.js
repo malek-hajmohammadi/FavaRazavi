@@ -9,6 +9,7 @@ listener = function (event) {
         searchFields = {};
         dataTable;
         total;
+        sum;
         pageNumber=1;
         pageSize=10;
 
@@ -120,7 +121,7 @@ listener = function (event) {
             var answers = Utils.fastAjax('WorkFlowAjaxFunc', 'reportFoodData',{searchFields:this.searchFields});
             this.dataTable=answers['dataTable'];
             this.total=answers['total'];
-
+            this.sum=answers['sum'];
 
         }
 
@@ -253,7 +254,7 @@ listener = function (event) {
 
         /*ساخت جدول جستجو*/
         createSearchGrid(){
-            var paging=this.gridPagingPart()+this.gridHeader()+this.gridBody()+this.gridFooter();
+            var paging=this.gridPagingPart()+this.gridHeader()+this.gridBody()+this.gridStatisticRow()+this.gridFooter();
             $jq('#listContainer').html(paging);
         }
 
@@ -275,7 +276,7 @@ listener = function (event) {
         /*قسمت هیدر گرید*/
         gridHeader(){
 
-            var html = '<table width="100%" class="f-table accessTable" cellpadding="0" cellspacing="1" >'+
+            var html = '<div class="outDataTable"><table style="direction:rtl" width="100%" class="f-table accessTable" cellpadding="0" cellspacing="1" >'+
                 '<tbody>'+
                 '<tr>'+
                 '<th width="3%" style="padding: 2px; ">رديف</th>'+
@@ -290,10 +291,23 @@ listener = function (event) {
             return html;
         }
 
+        gridStatisticRow(){
+            var html= '<tr>'+
+                '<td style="background: white !important;" ></td>'+
+                '<td style="background: white !important;" ></td>'+
+                '<td style="background: white !important;" ></td>'+
+                '<td style="background: white !important;" ></td>'+
+                '<td style="background: white !important;" ></td>'+
+                '<td style="padding: 2px;border: 1px solid #ccc;direction: ltr;background: #81D4FA !important; font-weight:bold !important; " >' + 'جمع کل' + '</td>'+
+                '<td style="padding: 2px;border: 1px solid #ccc;direction: ltr;background: #81D4FA !important; font-weight: bold !important;" >' + this.sum + '</td>'+
+                '</tr>';
+            return html;
+        }
+
         /*قسمت فوتر گرید*/
         gridFooter(){
             var ft=' </tbody>'+
-                '</table>';
+                '</table></div>';
             return ft;
         }
 
@@ -308,10 +322,19 @@ listener = function (event) {
             for(i=0;i<this.dataTable.length;i++){
                 var value=this.dataTable[i];
                 radif++;
+
+                /*برای نمایش مهمان*/
+                var personName="";
+                if(value[1]==""){
+                    personName="<b>مهمان</b>"
+                }
+                else
+                    personName=value[1];
+
                 bodyPart+= '<tr id="accessRow_' + (radif) + '" >'+
                 '<td style="padding: 2px;border: 1px solid #ccc;" >' + radif + '</td>'+
                     '<td style="padding: 2px;border: 1px solid #ccc;" >' + value[0] + '</td>'+
-                    '<td style="padding: 2px;border: 1px solid #ccc;" >' + value[1] + '</td>'+
+                    '<td style="padding: 2px;border: 1px solid #ccc;" >' + personName + '</td>'+
                     '<td style="padding: 2px;border: 1px solid #ccc;direction: ltr" >' + value[2] + ' '+value[3]+ '</td>'+
                     '<td style="padding: 2px;border: 1px solid #ccc;direction: ltr" >' + value[4] + '</td>'+
                     '<td style="padding: 2px;border: 1px solid #ccc;direction: ltr" >' + value[5] + '</td>'+
@@ -321,6 +344,33 @@ listener = function (event) {
             return bodyPart;
 
         }
+
+        /*پرینت گزارش*/
+        reportPrint(){
+           /* var company = FormView.myForm.getItemByName('Field_0').getData();
+            var bank=FormView.myForm.getItemByName('Field_40').currentData[1];
+            var shobeh=FormView.myForm.getItemByName('Field_26').getData();
+            var template=FormView.myForm.getItemByName('Field_30').getData();
+*/
+           /* var company = "نام شرکت";
+            var bank="نام بانک";
+            var shobeh="نام شعبه";
+            var template="نام قالب";*/
+
+            var styleJq=$jq("#FORMONLY-FORM-MAINDIV style").html();
+            var style="<style>"+styleJq+"</style>";
+            var body=$jq("div .outDataTable").html();
+            var html="<!DOCTYPE html> <html lang='fa'> <head>"+style+
+                "<meta charset='UTF-8'> <title>Title</title> </head>  <body>"+body+"</body></html>";
+
+            var printWin = window.open('','A','left=0,top=0,height='+screen.height+',width='+screen.width+',resizable=0,toolbar=0,scrollbars=0,status=0,fullscreen=1');
+            printWin.document.write(html);
+            printWin.document.close();
+            printWin.focus();
+            printWin.print();
+            printWin.close();
+
+        };
 
 
     };

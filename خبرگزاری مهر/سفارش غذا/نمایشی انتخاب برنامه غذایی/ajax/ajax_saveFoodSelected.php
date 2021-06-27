@@ -5,6 +5,7 @@ class MainAjax
 {
 
     private $userId;
+    private $roleId;
     private $tableArray = [];
 
 
@@ -43,6 +44,7 @@ class MainAjax
         }
         $acm = AccessControlManager::getInstance();
         $this->userId = $acm->getUserID();
+        $this->roleId=$acm->getRoleID();
     }
 
     private function saveToDb()
@@ -52,13 +54,14 @@ class MainAjax
 
         foreach ($this->tableArray as $row) {
            // die('rowId='.$row->rowId.' ,userId='.$this->userId.' ,selected='.$row->selected);
-            $sql = "INSERT INTO dm_datastoretable_32 (Field_0,Field_1,Field_2,Field_3)
- VALUES (:rowId,:userId,:selected,:count)";
+            $sql = "INSERT INTO dm_datastoretable_32 (Field_0,Field_1,Field_2,Field_3,Field_4)
+ VALUES (:rowId,:userId,:selected,:count,:roleId)";
             $PDOParams = array(
                 array('name' => 'rowId', 'value' => $row->rowId, 'type' => PDO::PARAM_INT),
                 array('name' => 'userId', 'value' => $this->userId, 'type' => PDO::PARAM_INT),
                 array('name' => 'selected', 'value' => $row->selected, 'type' => PDO::PARAM_INT),
                 array('name' => 'count', 'value' => $row->count, 'type' => PDO::PARAM_INT),
+                array('name' => 'roleId', 'value' => $this->roleId, 'type' => PDO::PARAM_INT),
 
             );
             $db->execute($sql, $PDOParams);

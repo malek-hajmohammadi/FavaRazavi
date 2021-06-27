@@ -38,20 +38,20 @@ class calssName
         AND `Field_8` = '$codem' 
         AND `Field_2` between '$dd1' AND '$dd2' 
         ";
-        $tedad = MySQLAdapter::getInstance()->executeScalar($sql);
+        $tedad = WFPDOAdapter::getInstance()->executeScalar($sql);
         $ACM = AccessControlManager::getInstance();
         $RID = $ACM->getRoleID();
         //RID = 8651 مدير امور اداري موسسه تامين و پشتيباني رضوي
 
-        if(false){ //چون فعلا نمی خواهیم که شرط تعداد رو در فرم نداشته باشیم این رو بلاک کردم//
-        // if ($RID != 8651 && $tedad > 4) {
+
+        if ($RID != 8651 && $tedad > 5) {
             $execution->setVariable('statuslevel', 90);
             $execution->workflow->myForm->setFieldValueByName('Field_9', $tedad . ' / تعداد اصلاح بیش از حد است!');
             $execution->workflow->myForm->setFieldValueByName('Field_7', 'در گراف ثبت نشد / برگشت از پردازش درج');
         } else {
 
             if (intval($type) == 11) /*افزودن تردد*/ {
-                $result=self::insertToGraph($execution);
+                $result = self::insertToGraph($execution);
                 if ($result) {
                     $execution->setVariable('statuslevel', 4);
                     $execution->workflow->myForm->setFieldValueByName('Field_7', 'در گراف ثبت شد');
@@ -59,9 +59,8 @@ class calssName
                     $execution->setVariable('statuslevel', 3);
                     $execution->workflow->myForm->setFieldValueByName('Field_7', 'در گراف ثبت نشد / برگشت از پردازش درج');
                 }
-            } else if (intval($type) == 12) /*حذف تردد*/
-            {
-                $result=self::deleteFromGraph($execution);
+            } else if (intval($type) == 12) /*حذف تردد*/ {
+                $result = self::deleteFromGraph($execution);
                 if ($result) {
                     $execution->setVariable('statuslevel', 4);
                     $execution->workflow->myForm->setFieldValueByName('Field_7', 'در گراف ثبت شد');
@@ -79,10 +78,11 @@ class calssName
 				AND `Field_8` = '$codem' 
 				AND `Field_2` between '$dd1' AND '$dd2' 
 				";
-            $tedad = MySQLAdapter::getInstance()->executeScalar($sql);
+            $tedad = WFPDOAdapter::getInstance()->executeScalar($sql);
             $execution->workflow->myForm->setFieldValueByName('Field_9', $tedad);
         }
     }
+
 
     protected function insertToGraph($execution)
     {

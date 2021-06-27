@@ -3,12 +3,12 @@ this.jcode = function (self) {
         self.RunJS = function (fw) {
             var msg = '';
             var PID = FormView.myForm.getItemByName('Field_2').getData();
-            var TimeR = FormView.myForm.getItemByName('Field_6').data;
-            if (TimeR == '') FormView.myForm.getItemByName('Field_6').setData('0:0');
-            var TimeB = FormView.myForm.getItemByName('Field_7').data;
-            if (TimeB == '') FormView.myForm.getItemByName('Field_7').setData('0:0');
-            var DateD = FormView.myForm.getItemByName('Field_5').getData();
-            var Type = FormView.myForm.getItemByName('Field_3').getData();
+            var TimeR = FormView.myForm.getItemByName('Field_5').data;
+            if (TimeR == '') FormView.myForm.getItemByName('Field_5').setData('0:0');
+            var TimeB = FormView.myForm.getItemByName('Field_6').data;
+            if (TimeB == '') FormView.myForm.getItemByName('Field_6').setData('0:0');
+            var DateD = FormView.myForm.getItemByName('Field_4').getData();
+            var Type = FormView.myForm.getItemByName('Field_21').getData();
             var modat = '0:0';
             var TimeRsplit = TimeR.split(":");
             var ah = parseInt(TimeRsplit[0]);
@@ -29,7 +29,7 @@ this.jcode = function (self) {
                 }
                 modat = fh + ":" + fm;
             } else if (az > ta && TimeB != "") modat = '0:0'; else modat = '0:0';
-            $jq('#f-Modat').html('مدت: ' + modat);
+            $jq('#f-Modat-MoSMaS').html('مدت ' + modat);
             if (PID == '' || PID == '0') {
                 msg += 'شماره پرسنلي صحيح نيست' + '<br>';
             } else if (DateD == '') {

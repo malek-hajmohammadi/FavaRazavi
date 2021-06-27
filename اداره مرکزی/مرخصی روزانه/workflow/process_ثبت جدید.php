@@ -160,7 +160,7 @@ class calssName
         {
             $execution->setVariable('csvok', '1');
         } else {
-            $csv_handler = fopen('/opt/storage/Ahkam/Morkhasi/NewCsv/' . $empuid . '_' . $year . '_' . $regcode . '.csv', 'w+');
+            $csv_handler = fopen('/opt/storage/Morkhasi/' . $empuid . '_' . $year . '_' . $regcode . '.csv', 'w+');
 
             if (!$csv_handler) {
                 $error = error_get_last();
@@ -176,7 +176,7 @@ class calssName
             fclose($csv_handler);
 
 
-            if (!(file_exists('/opt/storage/Ahkam/Morkhasi/NewCsv/' . $empuid . '_' . $year . '_' . $regcode . '.csv'))) {
+            if (!(file_exists('/opt/storage/Morkhasi/' . $empuid . '_' . $year . '_' . $regcode . '.csv'))) {
                 $execution->setVariable('csvok', '0');
             }
         }//end if checkup

@@ -51,6 +51,7 @@ class calssName
             $execution->setVariable('toprole', 1);
         }
 
+
         $execution->workflow->myForm->setFieldValueByName('Field_15', $parent);
     }
 
@@ -86,7 +87,7 @@ class calssName
         $ACM = AccessControlManager::getInstance();
         $RID = $ACM->getRoleID();
         //RID = 8651 مدير امور اداري موسسه تامين و پشتيباني رضوي
-        if ($RID != 8651 && $tedad > 4) {
+        if ($RID != 8651 && $tedad > 5) {
             $execution->workflow->myForm->setFieldValueByName('Field_9', $tedad . ' / تعداد اصلاح بیش از حد است!');
         } else {
             $execution->workflow->myForm->setFieldValueByName('Field_9', $tedad );

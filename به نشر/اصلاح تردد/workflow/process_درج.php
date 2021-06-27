@@ -170,7 +170,8 @@ class calssName
             $res = $res->RunQueryResult;
             $res = json_decode(json_encode($res), true);
 
-            if ($res == 'true' || $res == true) {
+            //این شرط با True بود که ظاهرا کار نمی کرد با false جایگیزین کردم
+            if ($res !='false' && $res != false) {
                 $execution->setVariable('status', 1);
                 $res = 'TrueTrue';
 

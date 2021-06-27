@@ -1,10 +1,11 @@
 <?php
 
+
 class MainAjax
 {
     /*
      * Malek Hajmohammadi
-     * 1400/03/26
+     * 1400/04/02
      * */
     private $searchFields;
     private $reportData = [];
@@ -55,61 +56,35 @@ class MainAjax
             listFood.Field_5 as type2,
             selectedFood.Field_2 as selectedType,
             listFood.RowID as rowId,
-            oa_users.EmployeeID as empId,
-            concat(oa_users.fname,' ',oa_users.lname) as user ,
-            if(selectedFood.Field_2 = '1',listFood.Field_4,listFood.Field_5) as foodName,
-            if(selectedFood.Field_2 = '1','نوع اول','نوع دوم')as typeFood
-            
-            
+            selectedFood.Field_1 as userId,
+            selectedFood.Field_4 as roleId,
+            selectedFood.Field_2 as foodType,
+            listFood.Field_4 as firstFood,
+            listFood.Field_5 as secondFood
+                        
             FROM dm_datastoretable_30 as listFood  
             left join dm_datastoretable_32 as selectedFood ON (listFood.RowID = selectedFood.Field_0 )
-            left join oa_users on (oa_users.userid=selectedFood.Field_1)
             
             where selectedFood.Field_2 <> '0' and " . $this->whereClause() .
 
-            " ORDER BY oa_users.fname LIMIT $rowStart," . $this->searchFields->pageSize;
+            " ORDER BY listFood.RowID LIMIT $rowStart," . $this->searchFields->pageSize;
 
 
         $db->executeSelect($sql);
         $count = 0;
         while ($row = $db->fetchAssoc()) {
 
-            $dateDay = $this->alterShamsiDate($row['dateDay']);
-
             $dataTable[$count] = array(
-                $row['empId'], $row['user'], $row['weekDay'], $dateDay, $row['typeFood'],
-                $row['foodName'], $row['count'], $row['total']
+
+
+                $row['rowId'], $row['userId'],$row['roleId'], $row['foodType'],
+                $row['firstFood'],$row['secondFood'], $row['count']
 
             ); //0:userId and 1: roledId  //, $row['selectedType']
             $count++;
         }
 
         $this->reportData['dataTable'] = $dataTable;
-//-------------count
-
-        $sql = "SELECT count(*) as total 
-            
-            FROM dm_datastoretable_30 as listFood  
-            left join dm_datastoretable_32 as selectedFood ON (listFood.RowID = selectedFood.Field_0 )
-            left join oa_users on (oa_users.userid=selectedFood.Field_1)
-            
-            where selectedFood.Field_2 <> '0' and " . $this->whereClause();
-
-        $total = $db->executeScalar($sql);
-        $this->reportData['total'] = $total;
-
-        //-----------sum-----------------------
-
-        $sqlSum = "SELECT sum(selectedFood.Field_3) as sum 
-            FROM dm_datastoretable_30 as listFood  
-            left join dm_datastoretable_32 as selectedFood ON (listFood.RowID = selectedFood.Field_0 )
-            left join oa_users on (oa_users.userid=selectedFood.Field_1)
-            
-            where selectedFood.Field_2 <> '0' and " . $this->whereClause();
-
-        $sum = $db->executeScalar($sqlSum);
-        $this->reportData['sum'] = $sum;
-
 
     }
 
@@ -131,31 +106,12 @@ class MainAjax
          *
          * */
         $whereString = "";
-        $userId = $this->searchFields->userId;
-        $userId = trim($userId);
-        if ($userId != -1 && is_numeric($userId))
-            $whereString .= "selectedFood.Field_1=$userId and ";
 
-        $firstDate = $this->searchFields->firstDate;
+
+        $firstDate = $this->searchFields->date;
         $firstDate = trim($firstDate);
         if ($firstDate != -1 && strlen($firstDate) >= 8)
-            $whereString .= "listFood.Field_3 >='$firstDate' and ";
-
-        $endDate = $this->searchFields->endDate;
-        $endDate = trim($endDate);
-        if ($endDate != -1 && strlen($endDate) >= 8)
-            $whereString .= "listFood.Field_3 <='$endDate' and ";
-
-        $foodType = $this->searchFields->foodType;
-        $foodType = trim($foodType);
-        if ($foodType != -1)
-            $whereString .= "selectedFood.Field_2 = '$foodType' and ";
-
-        $foodName = $this->searchFields->foodName;
-        $foodName = trim($foodName);
-        if ($foodName != -1)
-            $whereString .= "(listFood.Field_4 like '$foodName' or listFood.Field_5 like '$foodName') and ";
-
+            $whereString .= "listFood.Field_3 ='$firstDate' and ";
 
         $whereString .= "1";
         return $whereString;
@@ -174,5 +130,6 @@ class MainAjax
 $mainAjax = new MainAjax();
 Response::getInstance()->response = $mainAjax->main();
 return $mainAjax;
+
 
 

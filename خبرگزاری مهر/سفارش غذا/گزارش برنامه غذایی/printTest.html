@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="panel2">
+    <div class="f-font-1" id="listContainer" style="border: 1px solid #ccc;padding-bottom: 50px;">
+        <div style="text-align: center;padding: 2px;"><span style="float: right;padding: 5px;font-weight: bold;">5 مورد يافت شد</span>
+            <button onclick="window.codeSet.prevPage()" id="prevPage" tabindex="4001">صفحه قبل</button>
+            صفحه<input id="pageNumber" class="f-input" tabindex="6001" style="width: 50px;" value="1"> از 1<input
+                    type="hidden" value="1" id="maxPage" tabindex="4001">
+            <button onclick="window.codeSet.showSpecificPage()" id="showPage" style="background-color:#b7f7ab"
+                    tabindex="4001">نمايش صفحه وارد شده
+            </button>
+            <button tabindex="6001" onclick="window.codeSet.nextPage()"
+                    onkeydown="return FormBuilder.designFormModal.setLFocus(event)" id="textPage">صفحه بعد
+            </button>
+        </div>
+        <table width="100%" class="f-table accessTable" cellpadding="0" cellspacing="1">
+            <tbody>
+            <tr>
+                <th width="3%" style="padding: 2px; ">رديف</th>
+                <th width="4%" style="padding: 2px; ">شماره پرسنلي</th>
+                <th width="20%" style="padding: 2px; ">نام و نام خانوادگي</th>
+                <th width="15%" style="padding: 2px; ">تاريخ</th>
+                <th width="10%" style="padding: 2px; ">نوع غذا</th>
+                <th width="25%" style="padding: 2px; ">نام غذا</th>
+                <th width="3%" style="padding: 2px; ">تعداد</th>
+            </tr>
+            <tr id="accessRow_1">
+                <td style="padding: 2px;border: 1px solid #ccc;">1</td>
+                <td style="padding: 2px;border: 1px solid #ccc;"></td>
+                <td style="padding: 2px;border: 1px solid #ccc;"> فاوا رضوي</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">دوشنبه 1400/03/14</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">نوع دوم</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">چلو ماهي كبابي</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">2</td>
+            </tr>
+            <tr id="accessRow_2">
+                <td style="padding: 2px;border: 1px solid #ccc;">2</td>
+                <td style="padding: 2px;border: 1px solid #ccc;"></td>
+                <td style="padding: 2px;border: 1px solid #ccc;"> فاوا رضوي</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">شنبه 1400/03/19</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">نوع دوم</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">چلو كباب بختياري</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">1</td>
+            </tr>
+            <tr id="accessRow_3">
+                <td style="padding: 2px;border: 1px solid #ccc;">3</td>
+                <td style="padding: 2px;border: 1px solid #ccc;"></td>
+                <td style="padding: 2px;border: 1px solid #ccc;"> فاوا رضوي</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">پنجشنبه 1400/03/17</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">نوع اول</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">چلو كباب تبريزي</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">1</td>
+            </tr>
+            <tr id="accessRow_4">
+                <td style="padding: 2px;border: 1px solid #ccc;">4</td>
+                <td style="padding: 2px;border: 1px solid #ccc;"></td>
+                <td style="padding: 2px;border: 1px solid #ccc;"> فاوا رضوي</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">چهارشنبه 1400/03/16</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">نوع اول</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">ته چين لوبيا پلو با گوشت (گوسفندي)</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">0</td>
+            </tr>
+            <tr id="accessRow_5">
+                <td style="padding: 2px;border: 1px solid #ccc;">5</td>
+                <td style="padding: 2px;border: 1px solid #ccc;"></td>
+                <td style="padding: 2px;border: 1px solid #ccc;"> فاوا رضوي</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">سه شنبه 1400/03/15</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">نوع دوم</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">ته چين سبزي پلو با گوشت (گوساله)</td>
+                <td style="padding: 2px;border: 1px solid #ccc;direction: ltr">5</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
