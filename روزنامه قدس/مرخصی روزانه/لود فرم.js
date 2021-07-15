@@ -42,6 +42,9 @@ listener = function (event) {
             $jq("[rowid='17748']>input").attr('readonly',true);
             $jq("[rowid='17748']>input").css("background-color", "#e0e0e0");
 
+
+
+
         }
 
         isFilledValues(){

@@ -35,7 +35,7 @@ class calssName
          * */
 
         $geraphId=$execution->workflow->myForm->getFieldValueByName('Field_1');
-        $geraphId=substr($geraphId,4);
+        //$geraphId=substr($geraphId,4);
         //$geraphId="850";
 
         /*
@@ -180,4 +180,6 @@ class calssName
     }
 
 }
+
+
 

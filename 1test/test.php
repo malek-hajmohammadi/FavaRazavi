@@ -1,44 +1,32 @@
 <?php
-
-class MainAjax
+class calssName
 {
-
-
-    public
-
-    function main()
-    {
-        $output = "";
-        $output = $this -> ifTime();
-              return $output;
-
-      }
-
-    private
-
-    function ifTime($wfid = "")
+    public function __construct(){}
+    public function execute(ezcWorkflowExecution $execution, ezcWorkflowNodeAction $caller = null)
     {
 
-        $db = MySQLAdapter::getInstance();
-        $vade1= $execution->workflow->myForm->getFieldValueByName('Field_2');
+        $tamir = $execution->workflow->myForm->getFieldValueByName('Field_4');//فیلد تعمیر
 
-        $vade1 = "SELECT Field_2   FROM dm_datastoretable_98   ";
-        $vade2 = "SELECT Field_7   FROM dm_datastoretable_98   ";
-        $flagID = $db -> executeScalar($vade1, $vade2);
-              $date = new DateTime("now", new DateTimeZone("Asia/Tehran"));
-              $timezone = $date -> format("H");
-              if ((intval($flagID) == 0) && $timezone >= 14) {
-        return ('كاربرگرامي از ساعت 14 به بعد درخواست فرم غذا براي ناهار امكان پذير نمي باشد');
+        if ($tamir == 1)//اگر فیلد تعمیر دارد باشد
+            $execution->setVariable('choice',1);//متغییر خط انتخاب شود خط 1
+        if ($tamir == 2) //اگر فیلد تعمیر ندارد باشد
+            $execution->setVariable('choice',10);//متغییر خط انتخاب ست شود 10
 
-    } else {
-        return false;
-    }
+        $dakhelOrKHarej = $execution->workflow->myForm->getFieldValueByName('Field_6');//فیلد داخل کارخانه/بیرون
+
+        if ($dakhelOrKHarej == 1) //اگر فیلد تعمیر داخل کارخانه دارد باشد
+            $execution->setVariable('choice',20);//متفییر خط انتخاب ست شود 20
+        if ($dakhelOrKHarej == 2)   //اگر فیلد تعمیر داخل کارخانه ندارد باشد
+            $execution->setVariable('choice',30);//متفییر خط انتخاب ست شود 30
+
+
+        $Kharid = $execution->workflow->myForm->getFieldValueByName('Field_5');
+
+        if ($Kharid == 1) //اگر فیلد خرید دارد باشد
+            $execution->setVariable('choice',40);//متفییر خط انتخاب ست شود 40
+        if ($Kharid == 2)//اگر فیلد خرید ندارد باشد
+            $execution->setVariable('choice', 50);//متفییر خط انتخاب ست شود 50
+
+    }//end func
 }
-}
-
-
-$mainAjax = new MainAjax();
-    Response::getInstance() -> response = $mainAjax -> main();
-return $mainAjax;
-
-
+?>

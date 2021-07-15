@@ -23,6 +23,36 @@ Response::getInstance()->response = $mainAjax->main();
 return $mainAjax;
 
 
+/////////////////////////////////////////////////
+
+class MainAjax
+{
+    private $resultJson=[];
+
+
+    public function main()
+    {
+        $output = "";
+        $this->a();
+        return $output;
+
+    }
+    private function test(){
+
+    }
+
+    private function a()
+    {
+        $a = "malek";
+    }
+
+}
+
+$mainAjax = new MainAjax();
+Response::getInstance()->response = $mainAjax->main();
+return $mainAjax;
+
+
 
 
 

@@ -24,7 +24,12 @@ class MainAjax
         $stringOut="";
         //$fileList = glob('/opt/storage/Ahkam/Morkhasi/NewCsv/*');
         //$fileList = glob('/mnt/ahkam/Morkhasi/*');
-        $fileList = glob('/opt/storage/Morkhasi/*');
+        //$fileList = glob('/opt/storage/Morkhasi/*');
+        $fileList = glob('/opt/storage/Ahkam/Morkhasi/*');
+        $fileList = glob('/opt/storage/Ahkam/Morkhasi/BKNewCsv/*');
+
+
+
 
         foreach ($fileList as $filename) {
             if (is_file($filename)) {

@@ -59,8 +59,8 @@ class MainAjax
 
         $sql = "select listFood.Field_2 as weekDay,listFood.Field_3 as dateDay,selectedFood.Field_3 as count ".
             ",listFood.Field_4 as type1,listFood.Field_5 as type2,selectedFood.Field_2 as selectedType,listFood.RowID as rowId  ".
-            "FROM dm_datastoretable_30 as listFood  left join dm_datastoretable_32 as selectedFood ON (listFood.RowID = selectedFood.Field_0 )".
-            " where listFood.Field_0='$this->year' and listFood.Field_1='$this->month'";
+            "FROM dm_datastoretable_30 as listFood  left join dm_datastoretable_32 as selectedFood ON (listFood.RowID = selectedFood.Field_0 and selectedFood.Field_1='$this->userId' )".
+            " where listFood.Field_0='$this->year' and listFood.Field_1='$this->month' ";
         $db->executeSelect($sql);
         $count = 0;
         while ($row = $db->fetchAssoc()) {

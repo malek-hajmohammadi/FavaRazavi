@@ -13,8 +13,24 @@ listener = function (event) {
 
         loadForm() {
 
+            this.loadCurrentDate();
+
+
+
 
         }
+
+        loadCurrentDate() {
+            var today = Main["FirstPageParameters"]["datetime"]["todayDate"];
+            var todayArray=today.split('/');
+            var month=+todayArray[1];
+
+            let year=$jq("select[name=selectedMonth").val(month);
+
+
+        }
+
+
         showClick(){
             $jq('#listContainer').html();
             this.rowCounter=0;

@@ -14,7 +14,7 @@ class calssName
     }
     private function call_sabtTaradod($execution){
         $geraphId=$execution->workflow->myForm->getFieldValueByName('Field_0');
-        $geraphId=substr($geraphId,4);
+        //$geraphId=substr($geraphId,4);
 
         $date = $execution->workflow->myForm->getFieldValueByName('Field_2');
 

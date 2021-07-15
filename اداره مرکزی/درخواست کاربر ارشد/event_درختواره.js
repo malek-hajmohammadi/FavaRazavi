@@ -1,5 +1,3 @@
 listener = function(event){
-    if (true) {
-        Utils.showMessage('پیغام');
-    }
+    window.testEvent=event;
 }

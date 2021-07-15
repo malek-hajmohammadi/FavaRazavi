@@ -74,7 +74,7 @@ AND `Field_2` between '$dd1' AND '$dd2'
         else if ($RID != 8651 && $tedad > 5 && $shahrestan == 0) {
 
             /*زمانیکه toprole=90 باشد از نود شرط بر می گردد به نود متقاضی*/
-            $execution->setVariable('toprole', 90);
+            ezcWorkflowExecution $execution
 
             $execution->workflow->myForm->setFieldValueByName('Field_9', $tedad . ' / تعداد اصلاح بيش از حد است!');
 

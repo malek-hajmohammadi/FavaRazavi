@@ -34,8 +34,8 @@ class calssName
          * $execution->workflow->myForm->getFieldValueByName('Field_5')
          * */
 
-        //$geraphId=$execution->workflow->myForm->getFieldValueByName('Field_1');
-        $geraphId="850";
+        $geraphId=$execution->workflow->myForm->getFieldValueByName('Field_4');
+        //$geraphId="850";
 
         /*
          * تاریخ درخواست هست که تاریخ جاری رو می گذاریم
